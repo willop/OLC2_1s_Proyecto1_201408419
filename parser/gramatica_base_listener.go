@@ -27,8 +27,56 @@ func (s *BasegramaticaListener) EnterStart(ctx *StartContext) {}
 // ExitStart is called when production start is exited.
 func (s *BasegramaticaListener) ExitStart(ctx *StartContext) {}
 
-// EnterExpresiones is called when production expresiones is entered.
-func (s *BasegramaticaListener) EnterExpresiones(ctx *ExpresionesContext) {}
+// EnterInstrucciones is called when production instrucciones is entered.
+func (s *BasegramaticaListener) EnterInstrucciones(ctx *InstruccionesContext) {}
 
-// ExitExpresiones is called when production expresiones is exited.
-func (s *BasegramaticaListener) ExitExpresiones(ctx *ExpresionesContext) {}
+// ExitInstrucciones is called when production instrucciones is exited.
+func (s *BasegramaticaListener) ExitInstrucciones(ctx *InstruccionesContext) {}
+
+// EnterDeclaracion is called when production declaracion is entered.
+func (s *BasegramaticaListener) EnterDeclaracion(ctx *DeclaracionContext) {}
+
+// ExitDeclaracion is called when production declaracion is exited.
+func (s *BasegramaticaListener) ExitDeclaracion(ctx *DeclaracionContext) {}
+
+// EnterTipovariable is called when production tipovariable is entered.
+func (s *BasegramaticaListener) EnterTipovariable(ctx *TipovariableContext) {}
+
+// ExitTipovariable is called when production tipovariable is exited.
+func (s *BasegramaticaListener) ExitTipovariable(ctx *TipovariableContext) {}
+
+// EnterIgualacion is called when production igualacion is entered.
+func (s *BasegramaticaListener) EnterIgualacion(ctx *IgualacionContext) {}
+
+// ExitIgualacion is called when production igualacion is exited.
+func (s *BasegramaticaListener) ExitIgualacion(ctx *IgualacionContext) {}
+
+// EnterIdentificadores is called when production identificadores is entered.
+func (s *BasegramaticaListener) EnterIdentificadores(ctx *IdentificadoresContext) {}
+
+// ExitIdentificadores is called when production identificadores is exited.
+func (s *BasegramaticaListener) ExitIdentificadores(ctx *IdentificadoresContext) {}
+
+// EnterValores is called when production valores is entered.
+func (s *BasegramaticaListener) EnterValores(ctx *ValoresContext) {}
+
+// ExitValores is called when production valores is exited.
+func (s *BasegramaticaListener) ExitValores(ctx *ValoresContext) {}
+
+// EnterExpresion is called when production expresion is entered.
+func (s *BasegramaticaListener) EnterExpresion(ctx *ExpresionContext) {}
+
+// ExitExpresion is called when production expresion is exited.
+func (s *BasegramaticaListener) ExitExpresion(ctx *ExpresionContext) {}
+
+// EnterImpresion is called when production impresion is entered.
+func (s *BasegramaticaListener) EnterImpresion(ctx *ImpresionContext) {}
+
+// ExitImpresion is called when production impresion is exited.
+func (s *BasegramaticaListener) ExitImpresion(ctx *ImpresionContext) {}
+
+// EnterImpresioncomas is called when production impresioncomas is entered.
+func (s *BasegramaticaListener) EnterImpresioncomas(ctx *ImpresioncomasContext) {}
+
+// ExitImpresioncomas is called when production impresioncomas is exited.
+func (s *BasegramaticaListener) ExitImpresioncomas(ctx *ImpresioncomasContext) {}

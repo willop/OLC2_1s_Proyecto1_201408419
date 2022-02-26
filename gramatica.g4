@@ -1,6 +1,15 @@
 //gramatica.g4
 grammar gramatica;
 
+
+@parser::header{
+    import "proyecto1/Interfaces"
+}
+
+// insertar atributos en la clase generada
+@parser::members{
+}
+
 //Tokens
 //retorno up presedencia
 TK_flecha: '->';
@@ -39,18 +48,8 @@ TK_sig_admiracion: '!';
 TK_sig_interrogacion: '?';
 
 
-//reglas gramaticales
-TK_entero: [0-9]+;
-TK_decimal: TK_entero('.'TK_entero+|'.');
-TK_id: Letra (Letra | TK_entero)*;
-Letra : 'a'..'z'|'A'..'Z'|'_' ;	
-
-TK_cadena:  '"'~["]*'"';
-TK_caracter:'\''~["]*'\'';
-
-
 //espacios en blanco
-WHITESPACE: [\r\n\t]+ -> skip;
+WHITESPACE: [ \r\n\t]+ -> skip;
 TK_comentario_multi: '/*' .*? '*/' -> skip;
 TK_comentario_lineal: '//' ~[\r\n]* -> skip;
 
@@ -58,6 +57,9 @@ TK_comentario_lineal: '//' ~[\r\n]* -> skip;
 //Palabras reservadas
 TKR_numericos_enteros: 'i64';
 TKR_numericos_flotantes: 'f64';
+TKR_pow: 'pow';  //creo que les falta
+TKR_vec: 'vec';  //creo que les falta
+TKR_powf: 'powf';
 TKR_bool: 'bool';
 TKR_char: 'char';
 TKR_String: '&str'|'String';
@@ -85,9 +87,89 @@ TKR_capacity: 'capacity';
 TKR_with_capacity: 'witch_capacity';
 
 
-//Rules
-start : expresiones EOF;
+//reglas gramaticales
+TK_entero: [0-9]+;
+TK_decimal: TK_entero('.'TK_entero+|'.');
+TK_id: Letra(Letra|TK_entero)*;
+Letra : 'a'..'z'|'A'..'Z'|'_' ;	
 
-expresiones: TKR_println TK_par_apertura TK_entero TK_par_cierre
+TK_cadena:  '"'~["]*'"';
+TK_caracter:'\''~["]*'\'';
+//Rules
+
+
+
+
+start : instrucciones* EOF                                                                              //{fmt.Println("Inicio de gramatica: "+ $expresiones.value)}
 ;
 
+instrucciones: expresion                                                                {fmt.Println("mensaje en instrucciones: ",$expresion.valorexpresion)}
+            |impresion
+            |declaracion
+            |identificadores
+;
+
+declaracion: TKR_let TKR_mut TK_id TK_dosPuntos tipovariable igualacion TK_pcoma
+        |TKR_let TKR_mut TK_id igualacion TK_pcoma //mutables
+        |TKR_let TK_id TK_dosPuntos tipovariable igualacion TK_pcoma
+        |TKR_let TK_id igualacion TK_pcoma
+;
+
+tipovariable: TKR_numericos_enteros
+            |TKR_numericos_flotantes
+            |TKR_String
+            |TKR_bool
+            |TKR_char
+            |TKR_usize
+;
+
+igualacion: TK_igual expresion 
+;
+
+identificadores: TK_id igualacion TK_pcoma
+;
+
+valores: TK_entero
+        |TK_decimal
+        |TK_cadena
+        |TK_caracter
+        |TKR_true
+        |TKR_false
+        |TK_id
+;
+
+expresion returns [string valorexpresion]
+        : TK_menos expresion  
+        |e1=expresion op=TK_suma e2=expresion                                      {$valorexpresion=Interfaces.OperacionAritmetica($e1.text,$op.text,$e2.text)}
+        |e1=expresion op=TK_menos e2=expresion                                     {$valorexpresion=Interfaces.OperacionAritmetica($e1.text,$op.text,$e2.text)}
+        |e1=expresion op=TK_por e2=expresion                                       {$valorexpresion=Interfaces.OperacionAritmetica($e1.text,$op.text,$e2.text)}
+        |e1=expresion op=TK_diagonal e2=expresion                                  {$valorexpresion=Interfaces.OperacionAritmetica($e1.text,$op.text,$e2.text)}
+        |TKR_pow TK_par_apertura expresion TK_coma expresion TK_par_cierre
+        |TKR_powf TK_par_apertura expresion TK_coma expresion TK_par_cierre
+        |expresion TK_porcentaje expresion
+        |expresion TK_menor expresion
+        |expresion TK_mayor expresion
+        |expresion TK_mayor_igual expresion
+        |expresion TK_menor_igual expresion
+        |expresion TK_igualacion expresion
+        |expresion TK_diferente expresion
+        |expresion TK_or expresion
+        |expresion TK_and expresion
+        |expresion TK_sig_admiracion expresion
+        |TK_par_apertura expresion TK_par_cierre
+        |valores TKR_as TKR_numericos_enteros 
+        |valores TKR_as TKR_numericos_flotantes 
+        |valores
+; 
+
+impresion: TKR_println TK_par_apertura expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")}
+        |TKR_println TK_par_apertura expresion impresioncomas TK_pcoma
+;
+
+impresioncomas: impresioncomas TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
+                |TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
+
+;
+
+//expresiones returns[string value] : TKR_println TK_par_apertura TK_entero TK_par_cierre               {$value = $TK_entero.text;}
+//;

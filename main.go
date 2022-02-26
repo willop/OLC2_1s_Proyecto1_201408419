@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"image/color"
 
+	"proyecto1/Interfaces"
+	"proyecto1/parser"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
@@ -12,13 +15,19 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"main.go/parser"
 )
 
+//incializanod
+type gramaticaListener struct {
+	*parser.BasegramaticaListener
+}
+
 func main() {
+
 	a := app.New()
 	w := a.NewWindow("Proyecto 1 - OLC2")
-
+	temp := Interfaces.ConstructorSimbolo("AA", "", "", 2)
+	fmt.Println("la importacion ", temp.GetID())
 	entradacodigo := widget.NewMultiLineEntry()
 	entradacodigo.Resize(fyne.NewSize(500, 780))
 	entradacodigo.Move(fyne.NewPos(5, 5))
@@ -29,7 +38,11 @@ func main() {
 		salidacodigo.SetText(entradacodigo.Text)
 		is := antlr.NewInputStream(entradacodigo.Text)
 		lexer := parser.NewgramaticaLexer(is)
-		for {
+		stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+		//incluyendo el parser
+		p := parser.NewgramaticaParser(stream)
+		antlr.ParseTreeWalkerDefault.Walk(gramaticaListener{}, p.Start())
+		/*for {
 			t := lexer.NextToken()
 			if t.GetTokenType() == antlr.TokenEOF {
 				break
@@ -37,7 +50,7 @@ func main() {
 			fmt.Printf("%s (%q)\n",
 				lexer.SymbolicNames[t.GetTokenType()], t.GetText())
 
-		}
+		}*/
 	})
 	boton.Move(fyne.NewPos(530, 390))
 	boton.Resize(fyne.NewSize(100, 30))
