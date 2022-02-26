@@ -105,14 +105,14 @@ start : instrucciones* EOF                                                      
 
 instrucciones: expresion                                                                {fmt.Println("mensaje en instrucciones: ",$expresion.valorexpresion)}
             |impresion
-            |declaracion
+            |declaracion                                                                {fmt.Println("mensaje en declaracion: ",$declaracion.decla)}
             |identificadores
 ;
 
-declaracion: TKR_let TKR_mut TK_id TK_dosPuntos tipovariable igualacion TK_pcoma
+declaracion returns[interface{} decla]: TKR_let TKR_mut TK_id TK_dosPuntos tipovariable igualacion TK_pcoma    
         |TKR_let TKR_mut TK_id igualacion TK_pcoma //mutables
         |TKR_let TK_id TK_dosPuntos tipovariable igualacion TK_pcoma
-        |TKR_let TK_id igualacion TK_pcoma
+        |TKR_let idd=TK_id TK_igual expresion TK_pcoma                       {$decla = Interfaces.ConstructorSimbolo($idd.text,50,false,2)}
 ;
 
 tipovariable: TKR_numericos_enteros
@@ -129,7 +129,7 @@ igualacion: TK_igual expresion
 identificadores: TK_id igualacion TK_pcoma
 ;
 
-valores: TK_entero
+valores: TK_entero    
         |TK_decimal
         |TK_cadena
         |TK_caracter

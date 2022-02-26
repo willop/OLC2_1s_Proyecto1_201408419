@@ -18,92 +18,93 @@ var _ = reflect.Copy
 var _ = strconv.Itoa
 
 var parserATN = []uint16{
-	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 70, 199,
+	3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 70, 203,
 	4, 2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7,
 	4, 8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 4, 11, 9, 11, 3, 2, 7, 2, 24, 10,
 	2, 12, 2, 14, 2, 27, 11, 2, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-	3, 5, 3, 37, 10, 3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3,
+	3, 3, 3, 3, 3, 5, 3, 39, 10, 3, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3,
 	4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3,
-	4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 5, 4, 65, 10, 4, 3, 5, 3, 5, 3, 6, 3,
-	6, 3, 6, 3, 7, 3, 7, 3, 7, 3, 7, 3, 8, 3, 8, 3, 9, 3, 9, 3, 9, 3, 9, 3,
+	4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 5, 4, 69, 10,
+	4, 3, 5, 3, 5, 3, 6, 3, 6, 3, 6, 3, 7, 3, 7, 3, 7, 3, 7, 3, 8, 3, 8, 3,
 	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3,
 	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3,
-	9, 3, 9, 5, 9, 108, 10, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3,
+	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 5, 9, 112, 10, 9, 3, 9, 3, 9, 3, 9, 3,
 	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3,
 	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3,
 	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3,
-	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 7, 9, 160, 10, 9, 12, 9, 14, 9,
-	163, 11, 9, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 3,
-	10, 3, 10, 3, 10, 3, 10, 3, 10, 5, 10, 178, 10, 10, 3, 11, 3, 11, 3, 11,
+	9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 3, 9, 7, 9, 164,
+	10, 9, 12, 9, 14, 9, 167, 11, 9, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 3,
+	10, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 3, 10, 5, 10, 182, 10, 10,
 	3, 11, 3, 11, 3, 11, 3, 11, 3, 11, 3, 11, 3, 11, 3, 11, 3, 11, 3, 11, 3,
-	11, 7, 11, 194, 10, 11, 12, 11, 14, 11, 197, 11, 11, 3, 11, 2, 4, 16, 20,
-	12, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 2, 4, 4, 2, 35, 36, 40, 43, 5,
-	2, 49, 50, 65, 67, 69, 70, 2, 217, 2, 25, 3, 2, 2, 2, 4, 36, 3, 2, 2, 2,
-	6, 64, 3, 2, 2, 2, 8, 66, 3, 2, 2, 2, 10, 68, 3, 2, 2, 2, 12, 71, 3, 2,
-	2, 2, 14, 75, 3, 2, 2, 2, 16, 107, 3, 2, 2, 2, 18, 177, 3, 2, 2, 2, 20,
-	179, 3, 2, 2, 2, 22, 24, 5, 4, 3, 2, 23, 22, 3, 2, 2, 2, 24, 27, 3, 2,
-	2, 2, 25, 23, 3, 2, 2, 2, 25, 26, 3, 2, 2, 2, 26, 28, 3, 2, 2, 2, 27, 25,
-	3, 2, 2, 2, 28, 29, 7, 2, 2, 3, 29, 3, 3, 2, 2, 2, 30, 31, 5, 16, 9, 2,
-	31, 32, 8, 3, 1, 2, 32, 37, 3, 2, 2, 2, 33, 37, 5, 18, 10, 2, 34, 37, 5,
-	6, 4, 2, 35, 37, 5, 12, 7, 2, 36, 30, 3, 2, 2, 2, 36, 33, 3, 2, 2, 2, 36,
-	34, 3, 2, 2, 2, 36, 35, 3, 2, 2, 2, 37, 5, 3, 2, 2, 2, 38, 39, 7, 44, 2,
-	2, 39, 40, 7, 45, 2, 2, 40, 41, 7, 67, 2, 2, 41, 42, 7, 14, 2, 2, 42, 43,
-	5, 8, 5, 2, 43, 44, 5, 10, 6, 2, 44, 45, 7, 16, 2, 2, 45, 65, 3, 2, 2,
-	2, 46, 47, 7, 44, 2, 2, 47, 48, 7, 45, 2, 2, 48, 49, 7, 67, 2, 2, 49, 50,
-	5, 10, 6, 2, 50, 51, 7, 16, 2, 2, 51, 65, 3, 2, 2, 2, 52, 53, 7, 44, 2,
-	2, 53, 54, 7, 67, 2, 2, 54, 55, 7, 14, 2, 2, 55, 56, 5, 8, 5, 2, 56, 57,
-	5, 10, 6, 2, 57, 58, 7, 16, 2, 2, 58, 65, 3, 2, 2, 2, 59, 60, 7, 44, 2,
-	2, 60, 61, 7, 67, 2, 2, 61, 62, 5, 10, 6, 2, 62, 63, 7, 16, 2, 2, 63, 65,
-	3, 2, 2, 2, 64, 38, 3, 2, 2, 2, 64, 46, 3, 2, 2, 2, 64, 52, 3, 2, 2, 2,
-	64, 59, 3, 2, 2, 2, 65, 7, 3, 2, 2, 2, 66, 67, 9, 2, 2, 2, 67, 9, 3, 2,
-	2, 2, 68, 69, 7, 22, 2, 2, 69, 70, 5, 16, 9, 2, 70, 11, 3, 2, 2, 2, 71,
-	72, 7, 67, 2, 2, 72, 73, 5, 10, 6, 2, 73, 74, 7, 16, 2, 2, 74, 13, 3, 2,
-	2, 2, 75, 76, 9, 3, 2, 2, 76, 15, 3, 2, 2, 2, 77, 78, 8, 9, 1, 2, 78, 79,
-	7, 24, 2, 2, 79, 108, 5, 16, 9, 23, 80, 81, 7, 37, 2, 2, 81, 82, 7, 20,
-	2, 2, 82, 83, 5, 16, 9, 2, 83, 84, 7, 15, 2, 2, 84, 85, 5, 16, 9, 2, 85,
-	86, 7, 21, 2, 2, 86, 108, 3, 2, 2, 2, 87, 88, 7, 39, 2, 2, 88, 89, 7, 20,
-	2, 2, 89, 90, 5, 16, 9, 2, 90, 91, 7, 15, 2, 2, 91, 92, 5, 16, 9, 2, 92,
-	93, 7, 21, 2, 2, 93, 108, 3, 2, 2, 2, 94, 95, 7, 20, 2, 2, 95, 96, 5, 16,
-	9, 2, 96, 97, 7, 21, 2, 2, 97, 108, 3, 2, 2, 2, 98, 99, 5, 14, 8, 2, 99,
-	100, 7, 47, 2, 2, 100, 101, 7, 35, 2, 2, 101, 108, 3, 2, 2, 2, 102, 103,
-	5, 14, 8, 2, 103, 104, 7, 47, 2, 2, 104, 105, 7, 36, 2, 2, 105, 108, 3,
-	2, 2, 2, 106, 108, 5, 14, 8, 2, 107, 77, 3, 2, 2, 2, 107, 80, 3, 2, 2,
-	2, 107, 87, 3, 2, 2, 2, 107, 94, 3, 2, 2, 2, 107, 98, 3, 2, 2, 2, 107,
-	102, 3, 2, 2, 2, 107, 106, 3, 2, 2, 2, 108, 161, 3, 2, 2, 2, 109, 110,
-	12, 22, 2, 2, 110, 111, 7, 23, 2, 2, 111, 112, 5, 16, 9, 23, 112, 113,
-	8, 9, 1, 2, 113, 160, 3, 2, 2, 2, 114, 115, 12, 21, 2, 2, 115, 116, 7,
-	24, 2, 2, 116, 117, 5, 16, 9, 22, 117, 118, 8, 9, 1, 2, 118, 160, 3, 2,
-	2, 2, 119, 120, 12, 20, 2, 2, 120, 121, 7, 25, 2, 2, 121, 122, 5, 16, 9,
-	21, 122, 123, 8, 9, 1, 2, 123, 160, 3, 2, 2, 2, 124, 125, 12, 19, 2, 2,
-	125, 126, 7, 26, 2, 2, 126, 127, 5, 16, 9, 20, 127, 128, 8, 9, 1, 2, 128,
-	160, 3, 2, 2, 2, 129, 130, 12, 16, 2, 2, 130, 131, 7, 27, 2, 2, 131, 160,
-	5, 16, 9, 17, 132, 133, 12, 15, 2, 2, 133, 134, 7, 17, 2, 2, 134, 160,
-	5, 16, 9, 16, 135, 136, 12, 14, 2, 2, 136, 137, 7, 18, 2, 2, 137, 160,
-	5, 16, 9, 15, 138, 139, 12, 13, 2, 2, 139, 140, 7, 8, 2, 2, 140, 160, 5,
-	16, 9, 14, 141, 142, 12, 12, 2, 2, 142, 143, 7, 9, 2, 2, 143, 160, 5, 16,
-	9, 13, 144, 145, 12, 11, 2, 2, 145, 146, 7, 6, 2, 2, 146, 160, 5, 16, 9,
-	12, 147, 148, 12, 10, 2, 2, 148, 149, 7, 7, 2, 2, 149, 160, 5, 16, 9, 11,
-	150, 151, 12, 9, 2, 2, 151, 152, 7, 4, 2, 2, 152, 160, 5, 16, 9, 10, 153,
-	154, 12, 8, 2, 2, 154, 155, 7, 5, 2, 2, 155, 160, 5, 16, 9, 9, 156, 157,
-	12, 7, 2, 2, 157, 158, 7, 30, 2, 2, 158, 160, 5, 16, 9, 8, 159, 109, 3,
-	2, 2, 2, 159, 114, 3, 2, 2, 2, 159, 119, 3, 2, 2, 2, 159, 124, 3, 2, 2,
-	2, 159, 129, 3, 2, 2, 2, 159, 132, 3, 2, 2, 2, 159, 135, 3, 2, 2, 2, 159,
-	138, 3, 2, 2, 2, 159, 141, 3, 2, 2, 2, 159, 144, 3, 2, 2, 2, 159, 147,
-	3, 2, 2, 2, 159, 150, 3, 2, 2, 2, 159, 153, 3, 2, 2, 2, 159, 156, 3, 2,
-	2, 2, 160, 163, 3, 2, 2, 2, 161, 159, 3, 2, 2, 2, 161, 162, 3, 2, 2, 2,
-	162, 17, 3, 2, 2, 2, 163, 161, 3, 2, 2, 2, 164, 165, 7, 48, 2, 2, 165,
-	166, 7, 20, 2, 2, 166, 167, 5, 16, 9, 2, 167, 168, 7, 21, 2, 2, 168, 169,
-	7, 16, 2, 2, 169, 170, 8, 10, 1, 2, 170, 178, 3, 2, 2, 2, 171, 172, 7,
-	48, 2, 2, 172, 173, 7, 20, 2, 2, 173, 174, 5, 16, 9, 2, 174, 175, 5, 20,
-	11, 2, 175, 176, 7, 16, 2, 2, 176, 178, 3, 2, 2, 2, 177, 164, 3, 2, 2,
-	2, 177, 171, 3, 2, 2, 2, 178, 19, 3, 2, 2, 2, 179, 180, 8, 11, 1, 2, 180,
-	181, 7, 15, 2, 2, 181, 182, 5, 16, 9, 2, 182, 183, 7, 21, 2, 2, 183, 184,
-	7, 16, 2, 2, 184, 185, 8, 11, 1, 2, 185, 195, 3, 2, 2, 2, 186, 187, 12,
-	4, 2, 2, 187, 188, 7, 15, 2, 2, 188, 189, 5, 16, 9, 2, 189, 190, 7, 21,
-	2, 2, 190, 191, 7, 16, 2, 2, 191, 192, 8, 11, 1, 2, 192, 194, 3, 2, 2,
-	2, 193, 186, 3, 2, 2, 2, 194, 197, 3, 2, 2, 2, 195, 193, 3, 2, 2, 2, 195,
-	196, 3, 2, 2, 2, 196, 21, 3, 2, 2, 2, 197, 195, 3, 2, 2, 2, 10, 25, 36,
-	64, 107, 159, 161, 177, 195,
+	11, 3, 11, 3, 11, 3, 11, 7, 11, 198, 10, 11, 12, 11, 14, 11, 201, 11, 11,
+	3, 11, 2, 4, 16, 20, 12, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 2, 4, 4, 2,
+	35, 36, 40, 43, 5, 2, 49, 50, 65, 67, 69, 70, 2, 221, 2, 25, 3, 2, 2, 2,
+	4, 38, 3, 2, 2, 2, 6, 68, 3, 2, 2, 2, 8, 70, 3, 2, 2, 2, 10, 72, 3, 2,
+	2, 2, 12, 75, 3, 2, 2, 2, 14, 79, 3, 2, 2, 2, 16, 111, 3, 2, 2, 2, 18,
+	181, 3, 2, 2, 2, 20, 183, 3, 2, 2, 2, 22, 24, 5, 4, 3, 2, 23, 22, 3, 2,
+	2, 2, 24, 27, 3, 2, 2, 2, 25, 23, 3, 2, 2, 2, 25, 26, 3, 2, 2, 2, 26, 28,
+	3, 2, 2, 2, 27, 25, 3, 2, 2, 2, 28, 29, 7, 2, 2, 3, 29, 3, 3, 2, 2, 2,
+	30, 31, 5, 16, 9, 2, 31, 32, 8, 3, 1, 2, 32, 39, 3, 2, 2, 2, 33, 39, 5,
+	18, 10, 2, 34, 35, 5, 6, 4, 2, 35, 36, 8, 3, 1, 2, 36, 39, 3, 2, 2, 2,
+	37, 39, 5, 12, 7, 2, 38, 30, 3, 2, 2, 2, 38, 33, 3, 2, 2, 2, 38, 34, 3,
+	2, 2, 2, 38, 37, 3, 2, 2, 2, 39, 5, 3, 2, 2, 2, 40, 41, 7, 44, 2, 2, 41,
+	42, 7, 45, 2, 2, 42, 43, 7, 67, 2, 2, 43, 44, 7, 14, 2, 2, 44, 45, 5, 8,
+	5, 2, 45, 46, 5, 10, 6, 2, 46, 47, 7, 16, 2, 2, 47, 69, 3, 2, 2, 2, 48,
+	49, 7, 44, 2, 2, 49, 50, 7, 45, 2, 2, 50, 51, 7, 67, 2, 2, 51, 52, 5, 10,
+	6, 2, 52, 53, 7, 16, 2, 2, 53, 69, 3, 2, 2, 2, 54, 55, 7, 44, 2, 2, 55,
+	56, 7, 67, 2, 2, 56, 57, 7, 14, 2, 2, 57, 58, 5, 8, 5, 2, 58, 59, 5, 10,
+	6, 2, 59, 60, 7, 16, 2, 2, 60, 69, 3, 2, 2, 2, 61, 62, 7, 44, 2, 2, 62,
+	63, 7, 67, 2, 2, 63, 64, 7, 22, 2, 2, 64, 65, 5, 16, 9, 2, 65, 66, 7, 16,
+	2, 2, 66, 67, 8, 4, 1, 2, 67, 69, 3, 2, 2, 2, 68, 40, 3, 2, 2, 2, 68, 48,
+	3, 2, 2, 2, 68, 54, 3, 2, 2, 2, 68, 61, 3, 2, 2, 2, 69, 7, 3, 2, 2, 2,
+	70, 71, 9, 2, 2, 2, 71, 9, 3, 2, 2, 2, 72, 73, 7, 22, 2, 2, 73, 74, 5,
+	16, 9, 2, 74, 11, 3, 2, 2, 2, 75, 76, 7, 67, 2, 2, 76, 77, 5, 10, 6, 2,
+	77, 78, 7, 16, 2, 2, 78, 13, 3, 2, 2, 2, 79, 80, 9, 3, 2, 2, 80, 15, 3,
+	2, 2, 2, 81, 82, 8, 9, 1, 2, 82, 83, 7, 24, 2, 2, 83, 112, 5, 16, 9, 23,
+	84, 85, 7, 37, 2, 2, 85, 86, 7, 20, 2, 2, 86, 87, 5, 16, 9, 2, 87, 88,
+	7, 15, 2, 2, 88, 89, 5, 16, 9, 2, 89, 90, 7, 21, 2, 2, 90, 112, 3, 2, 2,
+	2, 91, 92, 7, 39, 2, 2, 92, 93, 7, 20, 2, 2, 93, 94, 5, 16, 9, 2, 94, 95,
+	7, 15, 2, 2, 95, 96, 5, 16, 9, 2, 96, 97, 7, 21, 2, 2, 97, 112, 3, 2, 2,
+	2, 98, 99, 7, 20, 2, 2, 99, 100, 5, 16, 9, 2, 100, 101, 7, 21, 2, 2, 101,
+	112, 3, 2, 2, 2, 102, 103, 5, 14, 8, 2, 103, 104, 7, 47, 2, 2, 104, 105,
+	7, 35, 2, 2, 105, 112, 3, 2, 2, 2, 106, 107, 5, 14, 8, 2, 107, 108, 7,
+	47, 2, 2, 108, 109, 7, 36, 2, 2, 109, 112, 3, 2, 2, 2, 110, 112, 5, 14,
+	8, 2, 111, 81, 3, 2, 2, 2, 111, 84, 3, 2, 2, 2, 111, 91, 3, 2, 2, 2, 111,
+	98, 3, 2, 2, 2, 111, 102, 3, 2, 2, 2, 111, 106, 3, 2, 2, 2, 111, 110, 3,
+	2, 2, 2, 112, 165, 3, 2, 2, 2, 113, 114, 12, 22, 2, 2, 114, 115, 7, 23,
+	2, 2, 115, 116, 5, 16, 9, 23, 116, 117, 8, 9, 1, 2, 117, 164, 3, 2, 2,
+	2, 118, 119, 12, 21, 2, 2, 119, 120, 7, 24, 2, 2, 120, 121, 5, 16, 9, 22,
+	121, 122, 8, 9, 1, 2, 122, 164, 3, 2, 2, 2, 123, 124, 12, 20, 2, 2, 124,
+	125, 7, 25, 2, 2, 125, 126, 5, 16, 9, 21, 126, 127, 8, 9, 1, 2, 127, 164,
+	3, 2, 2, 2, 128, 129, 12, 19, 2, 2, 129, 130, 7, 26, 2, 2, 130, 131, 5,
+	16, 9, 20, 131, 132, 8, 9, 1, 2, 132, 164, 3, 2, 2, 2, 133, 134, 12, 16,
+	2, 2, 134, 135, 7, 27, 2, 2, 135, 164, 5, 16, 9, 17, 136, 137, 12, 15,
+	2, 2, 137, 138, 7, 17, 2, 2, 138, 164, 5, 16, 9, 16, 139, 140, 12, 14,
+	2, 2, 140, 141, 7, 18, 2, 2, 141, 164, 5, 16, 9, 15, 142, 143, 12, 13,
+	2, 2, 143, 144, 7, 8, 2, 2, 144, 164, 5, 16, 9, 14, 145, 146, 12, 12, 2,
+	2, 146, 147, 7, 9, 2, 2, 147, 164, 5, 16, 9, 13, 148, 149, 12, 11, 2, 2,
+	149, 150, 7, 6, 2, 2, 150, 164, 5, 16, 9, 12, 151, 152, 12, 10, 2, 2, 152,
+	153, 7, 7, 2, 2, 153, 164, 5, 16, 9, 11, 154, 155, 12, 9, 2, 2, 155, 156,
+	7, 4, 2, 2, 156, 164, 5, 16, 9, 10, 157, 158, 12, 8, 2, 2, 158, 159, 7,
+	5, 2, 2, 159, 164, 5, 16, 9, 9, 160, 161, 12, 7, 2, 2, 161, 162, 7, 30,
+	2, 2, 162, 164, 5, 16, 9, 8, 163, 113, 3, 2, 2, 2, 163, 118, 3, 2, 2, 2,
+	163, 123, 3, 2, 2, 2, 163, 128, 3, 2, 2, 2, 163, 133, 3, 2, 2, 2, 163,
+	136, 3, 2, 2, 2, 163, 139, 3, 2, 2, 2, 163, 142, 3, 2, 2, 2, 163, 145,
+	3, 2, 2, 2, 163, 148, 3, 2, 2, 2, 163, 151, 3, 2, 2, 2, 163, 154, 3, 2,
+	2, 2, 163, 157, 3, 2, 2, 2, 163, 160, 3, 2, 2, 2, 164, 167, 3, 2, 2, 2,
+	165, 163, 3, 2, 2, 2, 165, 166, 3, 2, 2, 2, 166, 17, 3, 2, 2, 2, 167, 165,
+	3, 2, 2, 2, 168, 169, 7, 48, 2, 2, 169, 170, 7, 20, 2, 2, 170, 171, 5,
+	16, 9, 2, 171, 172, 7, 21, 2, 2, 172, 173, 7, 16, 2, 2, 173, 174, 8, 10,
+	1, 2, 174, 182, 3, 2, 2, 2, 175, 176, 7, 48, 2, 2, 176, 177, 7, 20, 2,
+	2, 177, 178, 5, 16, 9, 2, 178, 179, 5, 20, 11, 2, 179, 180, 7, 16, 2, 2,
+	180, 182, 3, 2, 2, 2, 181, 168, 3, 2, 2, 2, 181, 175, 3, 2, 2, 2, 182,
+	19, 3, 2, 2, 2, 183, 184, 8, 11, 1, 2, 184, 185, 7, 15, 2, 2, 185, 186,
+	5, 16, 9, 2, 186, 187, 7, 21, 2, 2, 187, 188, 7, 16, 2, 2, 188, 189, 8,
+	11, 1, 2, 189, 199, 3, 2, 2, 2, 190, 191, 12, 4, 2, 2, 191, 192, 7, 15,
+	2, 2, 192, 193, 5, 16, 9, 2, 193, 194, 7, 21, 2, 2, 194, 195, 7, 16, 2,
+	2, 195, 196, 8, 11, 1, 2, 196, 198, 3, 2, 2, 2, 197, 190, 3, 2, 2, 2, 198,
+	201, 3, 2, 2, 2, 199, 197, 3, 2, 2, 2, 199, 200, 3, 2, 2, 2, 200, 21, 3,
+	2, 2, 2, 201, 199, 3, 2, 2, 2, 10, 25, 38, 68, 111, 163, 165, 181, 199,
 }
 var literalNames = []string{
 	"", "'->'", "'||'", "'&&'", "'=='", "'!='", "'>='", "'<='", "'{'", "'}'",
@@ -394,8 +395,14 @@ type IInstruccionesContext interface {
 	// Get_expresion returns the _expresion rule contexts.
 	Get_expresion() IExpresionContext
 
+	// Get_declaracion returns the _declaracion rule contexts.
+	Get_declaracion() IDeclaracionContext
+
 	// Set_expresion sets the _expresion rule contexts.
 	Set_expresion(IExpresionContext)
+
+	// Set_declaracion sets the _declaracion rule contexts.
+	Set_declaracion(IDeclaracionContext)
 
 	// IsInstruccionesContext differentiates from other interfaces.
 	IsInstruccionesContext()
@@ -403,8 +410,9 @@ type IInstruccionesContext interface {
 
 type InstruccionesContext struct {
 	*antlr.BaseParserRuleContext
-	parser     antlr.Parser
-	_expresion IExpresionContext
+	parser       antlr.Parser
+	_expresion   IExpresionContext
+	_declaracion IDeclaracionContext
 }
 
 func NewEmptyInstruccionesContext() *InstruccionesContext {
@@ -431,7 +439,11 @@ func (s *InstruccionesContext) GetParser() antlr.Parser { return s.parser }
 
 func (s *InstruccionesContext) Get_expresion() IExpresionContext { return s._expresion }
 
+func (s *InstruccionesContext) Get_declaracion() IDeclaracionContext { return s._declaracion }
+
 func (s *InstruccionesContext) Set_expresion(v IExpresionContext) { s._expresion = v }
+
+func (s *InstruccionesContext) Set_declaracion(v IDeclaracionContext) { s._declaracion = v }
 
 func (s *InstruccionesContext) Expresion() IExpresionContext {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExpresionContext)(nil)).Elem(), 0)
@@ -516,7 +528,7 @@ func (p *gramaticaParser) Instrucciones() (localctx IInstruccionesContext) {
 		}
 	}()
 
-	p.SetState(34)
+	p.SetState(36)
 	p.GetErrorHandler().Sync(p)
 	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 1, p.GetParserRuleContext()) {
 	case 1:
@@ -541,13 +553,17 @@ func (p *gramaticaParser) Instrucciones() (localctx IInstruccionesContext) {
 		p.EnterOuterAlt(localctx, 3)
 		{
 			p.SetState(32)
-			p.Declaracion()
+
+			var _x = p.Declaracion()
+
+			localctx.(*InstruccionesContext)._declaracion = _x
 		}
+		fmt.Println("mensaje en declaracion: ", localctx.(*InstruccionesContext).Get_declaracion().GetDecla())
 
 	case 4:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(33)
+			p.SetState(35)
 			p.Identificadores()
 		}
 
@@ -563,6 +579,18 @@ type IDeclaracionContext interface {
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
+	// GetIdd returns the idd token.
+	GetIdd() antlr.Token
+
+	// SetIdd sets the idd token.
+	SetIdd(antlr.Token)
+
+	// GetDecla returns the decla attribute.
+	GetDecla() interface{}
+
+	// SetDecla sets the decla attribute.
+	SetDecla(interface{})
+
 	// IsDeclaracionContext differentiates from other interfaces.
 	IsDeclaracionContext()
 }
@@ -570,6 +598,8 @@ type IDeclaracionContext interface {
 type DeclaracionContext struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
+	decla  interface{}
+	idd    antlr.Token
 }
 
 func NewEmptyDeclaracionContext() *DeclaracionContext {
@@ -593,6 +623,14 @@ func NewDeclaracionContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 }
 
 func (s *DeclaracionContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *DeclaracionContext) GetIdd() antlr.Token { return s.idd }
+
+func (s *DeclaracionContext) SetIdd(v antlr.Token) { s.idd = v }
+
+func (s *DeclaracionContext) GetDecla() interface{} { return s.decla }
+
+func (s *DeclaracionContext) SetDecla(v interface{}) { s.decla = v }
 
 func (s *DeclaracionContext) TKR_let() antlr.TerminalNode {
 	return s.GetToken(gramaticaParserTKR_let, 0)
@@ -632,6 +670,20 @@ func (s *DeclaracionContext) Igualacion() IIgualacionContext {
 
 func (s *DeclaracionContext) TK_pcoma() antlr.TerminalNode {
 	return s.GetToken(gramaticaParserTK_pcoma, 0)
+}
+
+func (s *DeclaracionContext) TK_igual() antlr.TerminalNode {
+	return s.GetToken(gramaticaParserTK_igual, 0)
+}
+
+func (s *DeclaracionContext) Expresion() IExpresionContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IExpresionContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpresionContext)
 }
 
 func (s *DeclaracionContext) GetRuleContext() antlr.RuleContext {
@@ -677,108 +729,122 @@ func (p *gramaticaParser) Declaracion() (localctx IDeclaracionContext) {
 		}
 	}()
 
-	p.SetState(62)
+	p.SetState(66)
 	p.GetErrorHandler().Sync(p)
 	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 2, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(36)
+			p.SetState(38)
 			p.Match(gramaticaParserTKR_let)
 		}
 		{
-			p.SetState(37)
+			p.SetState(39)
 			p.Match(gramaticaParserTKR_mut)
 		}
 		{
-			p.SetState(38)
+			p.SetState(40)
 			p.Match(gramaticaParserTK_id)
 		}
 		{
-			p.SetState(39)
+			p.SetState(41)
 			p.Match(gramaticaParserTK_dosPuntos)
 		}
 		{
-			p.SetState(40)
+			p.SetState(42)
 			p.Tipovariable()
 		}
 		{
-			p.SetState(41)
+			p.SetState(43)
 			p.Igualacion()
 		}
 		{
-			p.SetState(42)
+			p.SetState(44)
 			p.Match(gramaticaParserTK_pcoma)
 		}
 
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(44)
+			p.SetState(46)
 			p.Match(gramaticaParserTKR_let)
 		}
 		{
-			p.SetState(45)
+			p.SetState(47)
 			p.Match(gramaticaParserTKR_mut)
 		}
 		{
-			p.SetState(46)
+			p.SetState(48)
 			p.Match(gramaticaParserTK_id)
 		}
 		{
-			p.SetState(47)
+			p.SetState(49)
 			p.Igualacion()
 		}
 		{
-			p.SetState(48)
+			p.SetState(50)
 			p.Match(gramaticaParserTK_pcoma)
 		}
 
 	case 3:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(50)
+			p.SetState(52)
 			p.Match(gramaticaParserTKR_let)
 		}
 		{
-			p.SetState(51)
+			p.SetState(53)
 			p.Match(gramaticaParserTK_id)
 		}
 		{
-			p.SetState(52)
+			p.SetState(54)
 			p.Match(gramaticaParserTK_dosPuntos)
 		}
 		{
-			p.SetState(53)
+			p.SetState(55)
 			p.Tipovariable()
 		}
 		{
-			p.SetState(54)
+			p.SetState(56)
 			p.Igualacion()
 		}
 		{
-			p.SetState(55)
+			p.SetState(57)
 			p.Match(gramaticaParserTK_pcoma)
 		}
 
 	case 4:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(57)
+			p.SetState(59)
 			p.Match(gramaticaParserTKR_let)
 		}
 		{
-			p.SetState(58)
-			p.Match(gramaticaParserTK_id)
-		}
-		{
-			p.SetState(59)
-			p.Igualacion()
-		}
-		{
 			p.SetState(60)
+
+			var _m = p.Match(gramaticaParserTK_id)
+
+			localctx.(*DeclaracionContext).idd = _m
+		}
+		{
+			p.SetState(61)
+			p.Match(gramaticaParserTK_igual)
+		}
+		{
+			p.SetState(62)
+			p.expresion(0)
+		}
+		{
+			p.SetState(63)
 			p.Match(gramaticaParserTK_pcoma)
 		}
+		localctx.(*DeclaracionContext).decla = Interfaces.ConstructorSimbolo((func() string {
+			if localctx.(*DeclaracionContext).GetIdd() == nil {
+				return ""
+			} else {
+				return localctx.(*DeclaracionContext).GetIdd().GetText()
+			}
+		}()), 50, false, 2)
 
 	}
 
@@ -893,7 +959,7 @@ func (p *gramaticaParser) Tipovariable() (localctx ITipovariableContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(64)
+		p.SetState(68)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(((_la-33)&-(0x1f+1)) == 0 && ((1<<uint((_la-33)))&((1<<(gramaticaParserTKR_numericos_enteros-33))|(1<<(gramaticaParserTKR_numericos_flotantes-33))|(1<<(gramaticaParserTKR_bool-33))|(1<<(gramaticaParserTKR_char-33))|(1<<(gramaticaParserTKR_String-33))|(1<<(gramaticaParserTKR_usize-33)))) != 0) {
@@ -1004,11 +1070,11 @@ func (p *gramaticaParser) Igualacion() (localctx IIgualacionContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(66)
+		p.SetState(70)
 		p.Match(gramaticaParserTK_igual)
 	}
 	{
-		p.SetState(67)
+		p.SetState(71)
 		p.expresion(0)
 	}
 
@@ -1116,15 +1182,15 @@ func (p *gramaticaParser) Identificadores() (localctx IIdentificadoresContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(69)
+		p.SetState(73)
 		p.Match(gramaticaParserTK_id)
 	}
 	{
-		p.SetState(70)
+		p.SetState(74)
 		p.Igualacion()
 	}
 	{
-		p.SetState(71)
+		p.SetState(75)
 		p.Match(gramaticaParserTK_pcoma)
 	}
 
@@ -1243,7 +1309,7 @@ func (p *gramaticaParser) Valores() (localctx IValoresContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(73)
+		p.SetState(77)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(((_la-47)&-(0x1f+1)) == 0 && ((1<<uint((_la-47)))&((1<<(gramaticaParserTKR_true-47))|(1<<(gramaticaParserTKR_false-47))|(1<<(gramaticaParserTK_entero-47))|(1<<(gramaticaParserTK_decimal-47))|(1<<(gramaticaParserTK_id-47))|(1<<(gramaticaParserTK_cadena-47))|(1<<(gramaticaParserTK_caracter-47)))) != 0) {
@@ -1515,75 +1581,61 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(105)
+	p.SetState(109)
 	p.GetErrorHandler().Sync(p)
 	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 3, p.GetParserRuleContext()) {
 	case 1:
 		{
-			p.SetState(76)
+			p.SetState(80)
 			p.Match(gramaticaParserTK_menos)
 		}
 		{
-			p.SetState(77)
+			p.SetState(81)
 			p.expresion(21)
 		}
 
 	case 2:
 		{
-			p.SetState(78)
+			p.SetState(82)
 			p.Match(gramaticaParserTKR_pow)
 		}
 		{
-			p.SetState(79)
+			p.SetState(83)
 			p.Match(gramaticaParserTK_par_apertura)
 		}
 		{
-			p.SetState(80)
+			p.SetState(84)
 			p.expresion(0)
 		}
 		{
-			p.SetState(81)
+			p.SetState(85)
 			p.Match(gramaticaParserTK_coma)
 		}
 		{
-			p.SetState(82)
+			p.SetState(86)
 			p.expresion(0)
 		}
 		{
-			p.SetState(83)
+			p.SetState(87)
 			p.Match(gramaticaParserTK_par_cierre)
 		}
 
 	case 3:
 		{
-			p.SetState(85)
+			p.SetState(89)
 			p.Match(gramaticaParserTKR_powf)
 		}
 		{
-			p.SetState(86)
+			p.SetState(90)
 			p.Match(gramaticaParserTK_par_apertura)
 		}
 		{
-			p.SetState(87)
+			p.SetState(91)
 			p.expresion(0)
 		}
-		{
-			p.SetState(88)
-			p.Match(gramaticaParserTK_coma)
-		}
-		{
-			p.SetState(89)
-			p.expresion(0)
-		}
-		{
-			p.SetState(90)
-			p.Match(gramaticaParserTK_par_cierre)
-		}
-
-	case 4:
 		{
 			p.SetState(92)
-			p.Match(gramaticaParserTK_par_apertura)
+			p.Match(gramaticaParserTK_coma)
 		}
 		{
 			p.SetState(93)
@@ -1594,21 +1646,21 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 			p.Match(gramaticaParserTK_par_cierre)
 		}
 
-	case 5:
+	case 4:
 		{
 			p.SetState(96)
-			p.Valores()
+			p.Match(gramaticaParserTK_par_apertura)
 		}
 		{
 			p.SetState(97)
-			p.Match(gramaticaParserTKR_as)
+			p.expresion(0)
 		}
 		{
 			p.SetState(98)
-			p.Match(gramaticaParserTKR_numericos_enteros)
+			p.Match(gramaticaParserTK_par_cierre)
 		}
 
-	case 6:
+	case 5:
 		{
 			p.SetState(100)
 			p.Valores()
@@ -1619,18 +1671,32 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 		}
 		{
 			p.SetState(102)
+			p.Match(gramaticaParserTKR_numericos_enteros)
+		}
+
+	case 6:
+		{
+			p.SetState(104)
+			p.Valores()
+		}
+		{
+			p.SetState(105)
+			p.Match(gramaticaParserTKR_as)
+		}
+		{
+			p.SetState(106)
 			p.Match(gramaticaParserTKR_numericos_flotantes)
 		}
 
 	case 7:
 		{
-			p.SetState(104)
+			p.SetState(108)
 			p.Valores()
 		}
 
 	}
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(159)
+	p.SetState(163)
 	p.GetErrorHandler().Sync(p)
 	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 5, p.GetParserRuleContext())
 
@@ -1640,27 +1706,27 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 				p.TriggerExitRuleEvent()
 			}
 			_prevctx = localctx
-			p.SetState(157)
+			p.SetState(161)
 			p.GetErrorHandler().Sync(p)
 			switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 4, p.GetParserRuleContext()) {
 			case 1:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				localctx.(*ExpresionContext).e1 = _prevctx
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(107)
+				p.SetState(111)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 20)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 20)", ""))
 				}
 				{
-					p.SetState(108)
+					p.SetState(112)
 
 					var _m = p.Match(gramaticaParserTK_suma)
 
 					localctx.(*ExpresionContext).op = _m
 				}
 				{
-					p.SetState(109)
+					p.SetState(113)
 
 					var _x = p.expresion(21)
 
@@ -1690,20 +1756,20 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				localctx.(*ExpresionContext).e1 = _prevctx
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(112)
+				p.SetState(116)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 19)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 19)", ""))
 				}
 				{
-					p.SetState(113)
+					p.SetState(117)
 
 					var _m = p.Match(gramaticaParserTK_menos)
 
 					localctx.(*ExpresionContext).op = _m
 				}
 				{
-					p.SetState(114)
+					p.SetState(118)
 
 					var _x = p.expresion(20)
 
@@ -1733,20 +1799,20 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				localctx.(*ExpresionContext).e1 = _prevctx
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(117)
+				p.SetState(121)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 18)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 18)", ""))
 				}
 				{
-					p.SetState(118)
+					p.SetState(122)
 
 					var _m = p.Match(gramaticaParserTK_por)
 
 					localctx.(*ExpresionContext).op = _m
 				}
 				{
-					p.SetState(119)
+					p.SetState(123)
 
 					var _x = p.expresion(19)
 
@@ -1776,20 +1842,20 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				localctx.(*ExpresionContext).e1 = _prevctx
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(122)
+				p.SetState(126)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 17)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 17)", ""))
 				}
 				{
-					p.SetState(123)
+					p.SetState(127)
 
 					var _m = p.Match(gramaticaParserTK_diagonal)
 
 					localctx.(*ExpresionContext).op = _m
 				}
 				{
-					p.SetState(124)
+					p.SetState(128)
 
 					var _x = p.expresion(18)
 
@@ -1818,177 +1884,177 @@ func (p *gramaticaParser) expresion(_p int) (localctx IExpresionContext) {
 			case 5:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(127)
+				p.SetState(131)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 14)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 14)", ""))
 				}
 				{
-					p.SetState(128)
+					p.SetState(132)
 					p.Match(gramaticaParserTK_porcentaje)
 				}
 				{
-					p.SetState(129)
+					p.SetState(133)
 					p.expresion(15)
 				}
 
 			case 6:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(130)
+				p.SetState(134)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 13)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 13)", ""))
 				}
 				{
-					p.SetState(131)
+					p.SetState(135)
 					p.Match(gramaticaParserTK_menor)
 				}
 				{
-					p.SetState(132)
+					p.SetState(136)
 					p.expresion(14)
 				}
 
 			case 7:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(133)
+				p.SetState(137)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 12)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 12)", ""))
 				}
 				{
-					p.SetState(134)
+					p.SetState(138)
 					p.Match(gramaticaParserTK_mayor)
 				}
 				{
-					p.SetState(135)
+					p.SetState(139)
 					p.expresion(13)
 				}
 
 			case 8:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(136)
+				p.SetState(140)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 11)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 11)", ""))
 				}
 				{
-					p.SetState(137)
+					p.SetState(141)
 					p.Match(gramaticaParserTK_mayor_igual)
 				}
 				{
-					p.SetState(138)
+					p.SetState(142)
 					p.expresion(12)
 				}
 
 			case 9:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(139)
+				p.SetState(143)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 10)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 10)", ""))
 				}
 				{
-					p.SetState(140)
+					p.SetState(144)
 					p.Match(gramaticaParserTK_menor_igual)
 				}
 				{
-					p.SetState(141)
+					p.SetState(145)
 					p.expresion(11)
 				}
 
 			case 10:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(142)
+				p.SetState(146)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 9)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 9)", ""))
 				}
 				{
-					p.SetState(143)
+					p.SetState(147)
 					p.Match(gramaticaParserTK_igualacion)
 				}
 				{
-					p.SetState(144)
+					p.SetState(148)
 					p.expresion(10)
 				}
 
 			case 11:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(145)
+				p.SetState(149)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 8)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 8)", ""))
 				}
 				{
-					p.SetState(146)
+					p.SetState(150)
 					p.Match(gramaticaParserTK_diferente)
 				}
 				{
-					p.SetState(147)
+					p.SetState(151)
 					p.expresion(9)
 				}
 
 			case 12:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(148)
+				p.SetState(152)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 7)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 7)", ""))
 				}
 				{
-					p.SetState(149)
+					p.SetState(153)
 					p.Match(gramaticaParserTK_or)
 				}
 				{
-					p.SetState(150)
+					p.SetState(154)
 					p.expresion(8)
 				}
 
 			case 13:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(151)
+				p.SetState(155)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 6)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
 				}
 				{
-					p.SetState(152)
+					p.SetState(156)
 					p.Match(gramaticaParserTK_and)
 				}
 				{
-					p.SetState(153)
+					p.SetState(157)
 					p.expresion(7)
 				}
 
 			case 14:
 				localctx = NewExpresionContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_expresion)
-				p.SetState(154)
+				p.SetState(158)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 5)) {
 					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
 				}
 				{
-					p.SetState(155)
+					p.SetState(159)
 					p.Match(gramaticaParserTK_sig_admiracion)
 				}
 				{
-					p.SetState(156)
+					p.SetState(160)
 					p.expresion(6)
 				}
 
 			}
 
 		}
-		p.SetState(161)
+		p.SetState(165)
 		p.GetErrorHandler().Sync(p)
 		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 5, p.GetParserRuleContext())
 	}
@@ -2113,29 +2179,29 @@ func (p *gramaticaParser) Impresion() (localctx IImpresionContext) {
 		}
 	}()
 
-	p.SetState(175)
+	p.SetState(179)
 	p.GetErrorHandler().Sync(p)
 	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 6, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(162)
+			p.SetState(166)
 			p.Match(gramaticaParserTKR_println)
 		}
 		{
-			p.SetState(163)
+			p.SetState(167)
 			p.Match(gramaticaParserTK_par_apertura)
 		}
 		{
-			p.SetState(164)
+			p.SetState(168)
 			p.expresion(0)
 		}
 		{
-			p.SetState(165)
+			p.SetState(169)
 			p.Match(gramaticaParserTK_par_cierre)
 		}
 		{
-			p.SetState(166)
+			p.SetState(170)
 			p.Match(gramaticaParserTK_pcoma)
 		}
 		fmt.Println("Impresion")
@@ -2143,23 +2209,23 @@ func (p *gramaticaParser) Impresion() (localctx IImpresionContext) {
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(169)
+			p.SetState(173)
 			p.Match(gramaticaParserTKR_println)
 		}
 		{
-			p.SetState(170)
+			p.SetState(174)
 			p.Match(gramaticaParserTK_par_apertura)
 		}
 		{
-			p.SetState(171)
+			p.SetState(175)
 			p.expresion(0)
 		}
 		{
-			p.SetState(172)
+			p.SetState(176)
 			p.impresioncomas(0)
 		}
 		{
-			p.SetState(173)
+			p.SetState(177)
 			p.Match(gramaticaParserTK_pcoma)
 		}
 
@@ -2294,25 +2360,25 @@ func (p *gramaticaParser) impresioncomas(_p int) (localctx IImpresioncomasContex
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(178)
+		p.SetState(182)
 		p.Match(gramaticaParserTK_coma)
 	}
 	{
-		p.SetState(179)
+		p.SetState(183)
 		p.expresion(0)
 	}
 	{
-		p.SetState(180)
+		p.SetState(184)
 		p.Match(gramaticaParserTK_par_cierre)
 	}
 	{
-		p.SetState(181)
+		p.SetState(185)
 		p.Match(gramaticaParserTK_pcoma)
 	}
 	fmt.Println("Impresion especial")
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(193)
+	p.SetState(197)
 	p.GetErrorHandler().Sync(p)
 	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 7, p.GetParserRuleContext())
 
@@ -2324,31 +2390,31 @@ func (p *gramaticaParser) impresioncomas(_p int) (localctx IImpresioncomasContex
 			_prevctx = localctx
 			localctx = NewImpresioncomasContext(p, _parentctx, _parentState)
 			p.PushNewRecursionContext(localctx, _startState, gramaticaParserRULE_impresioncomas)
-			p.SetState(184)
+			p.SetState(188)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 2)) {
 				panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 2)", ""))
 			}
 			{
-				p.SetState(185)
+				p.SetState(189)
 				p.Match(gramaticaParserTK_coma)
 			}
 			{
-				p.SetState(186)
+				p.SetState(190)
 				p.expresion(0)
 			}
 			{
-				p.SetState(187)
+				p.SetState(191)
 				p.Match(gramaticaParserTK_par_cierre)
 			}
 			{
-				p.SetState(188)
+				p.SetState(192)
 				p.Match(gramaticaParserTK_pcoma)
 			}
 			fmt.Println("Impresion especial")
 
 		}
-		p.SetState(195)
+		p.SetState(199)
 		p.GetErrorHandler().Sync(p)
 		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 7, p.GetParserRuleContext())
 	}

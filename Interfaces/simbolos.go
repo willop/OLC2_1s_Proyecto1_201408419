@@ -1,5 +1,7 @@
 package Interfaces
 
+import "fmt"
+
 //es un enum para saber el tipo de la expresion
 type tipoexpresion int
 
@@ -26,7 +28,9 @@ type Simbolo struct {
 	Tipo  tipoexpresion
 }
 
-func ContructorSimbolo(_id interface{}, _valor interface{}, _mut interface{}, _tipo tipoexpresion) *Simbolo {
+func ConstructorSimbolo(_id interface{}, _valor interface{}, _mut interface{}, _tipo tipoexpresion) *Simbolo {
+	fmt.Println("Dentro del constructro de un simbolo")
+	fmt.Println("Valores recividos: ", _valor, _mut, _tipo, _id)
 	return &Simbolo{Id: _id, Valor: _valor, Mut: _mut, Tipo: _tipo}
 }
 

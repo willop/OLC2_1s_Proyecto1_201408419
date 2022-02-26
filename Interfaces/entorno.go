@@ -5,17 +5,16 @@ import (
 )
 
 type Entorno struct {
-	prev        interface{}
-	nombre      interface{}
-	numero      interface{}
-	Variables   map[interface{}]*Simbolo
-	funciones   interface{}
-	estructuras interface{}
+	prev      interface{}
+	nombre    interface{}
+	Variables map[interface{}]*Simbolo
+	//funciones   interface{}
+	//estructuras interface{}
 }
 
 //metodo constructor para un entorno
 func ConstructorEntorno(_prev interface{}, _nombre interface{}, _numero interface{}, _variables interface{}, _funciones interface{}, estructuras interface{}) *Entorno {
-	return &Entorno{}
+	return &Entorno{_prev, _nombre, make(map[interface{}]*Simbolo)}
 }
 
 func (_Entorno Entorno) GuardarSimbolo(_valor interface{}, _identificador interface{}, _tipo int, _mutable interface{}) {
