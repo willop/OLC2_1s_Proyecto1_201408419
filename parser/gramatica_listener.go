@@ -14,14 +14,14 @@ type gramaticaListener interface {
 	// EnterInstrucciones is called when entering the instrucciones production.
 	EnterInstrucciones(c *InstruccionesContext)
 
+	// EnterInstruccion is called when entering the instruccion production.
+	EnterInstruccion(c *InstruccionContext)
+
 	// EnterDeclaracion is called when entering the declaracion production.
 	EnterDeclaracion(c *DeclaracionContext)
 
 	// EnterTipovariable is called when entering the tipovariable production.
 	EnterTipovariable(c *TipovariableContext)
-
-	// EnterIgualacion is called when entering the igualacion production.
-	EnterIgualacion(c *IgualacionContext)
 
 	// EnterIdentificadores is called when entering the identificadores production.
 	EnterIdentificadores(c *IdentificadoresContext)
@@ -44,14 +44,14 @@ type gramaticaListener interface {
 	// ExitInstrucciones is called when exiting the instrucciones production.
 	ExitInstrucciones(c *InstruccionesContext)
 
+	// ExitInstruccion is called when exiting the instruccion production.
+	ExitInstruccion(c *InstruccionContext)
+
 	// ExitDeclaracion is called when exiting the declaracion production.
 	ExitDeclaracion(c *DeclaracionContext)
 
 	// ExitTipovariable is called when exiting the tipovariable production.
 	ExitTipovariable(c *TipovariableContext)
-
-	// ExitIgualacion is called when exiting the igualacion production.
-	ExitIgualacion(c *IgualacionContext)
 
 	// ExitIdentificadores is called when exiting the identificadores production.
 	ExitIdentificadores(c *IdentificadoresContext)

@@ -4,7 +4,6 @@ import (
 	//"log"
 	"fmt"
 	"image/color"
-
 	"proyecto1/Interfaces"
 	"proyecto1/parser"
 
@@ -35,6 +34,7 @@ func main() {
 	salidacodigo.Resize(fyne.NewSize(500, 780))
 	salidacodigo.Move(fyne.NewPos(650, 5))
 	boton := widget.NewButtonWithIcon("Ejecutar", theme.HomeIcon(), func() {
+		fmt.Println("*********************** Compilando *******************")
 		salidacodigo.SetText(entradacodigo.Text)
 		is := antlr.NewInputStream(entradacodigo.Text)
 		lexer := parser.NewgramaticaLexer(is)

@@ -33,6 +33,12 @@ func (s *BasegramaticaListener) EnterInstrucciones(ctx *InstruccionesContext) {}
 // ExitInstrucciones is called when production instrucciones is exited.
 func (s *BasegramaticaListener) ExitInstrucciones(ctx *InstruccionesContext) {}
 
+// EnterInstruccion is called when production instruccion is entered.
+func (s *BasegramaticaListener) EnterInstruccion(ctx *InstruccionContext) {}
+
+// ExitInstruccion is called when production instruccion is exited.
+func (s *BasegramaticaListener) ExitInstruccion(ctx *InstruccionContext) {}
+
 // EnterDeclaracion is called when production declaracion is entered.
 func (s *BasegramaticaListener) EnterDeclaracion(ctx *DeclaracionContext) {}
 
@@ -44,12 +50,6 @@ func (s *BasegramaticaListener) EnterTipovariable(ctx *TipovariableContext) {}
 
 // ExitTipovariable is called when production tipovariable is exited.
 func (s *BasegramaticaListener) ExitTipovariable(ctx *TipovariableContext) {}
-
-// EnterIgualacion is called when production igualacion is entered.
-func (s *BasegramaticaListener) EnterIgualacion(ctx *IgualacionContext) {}
-
-// ExitIgualacion is called when production igualacion is exited.
-func (s *BasegramaticaListener) ExitIgualacion(ctx *IgualacionContext) {}
 
 // EnterIdentificadores is called when production identificadores is entered.
 func (s *BasegramaticaListener) EnterIdentificadores(ctx *IdentificadoresContext) {}

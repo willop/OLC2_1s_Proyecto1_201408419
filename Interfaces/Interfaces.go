@@ -1,23 +1,8 @@
 package Interfaces
 
-import "fmt"
-
-//es un enum para saber el tipo de la expresion
-type tipoexpresion int
-
-//
-const (
-	STRING tipoexpresion = iota //variable que funciona como un switch
-	INTEGER
-	CHAR
-	DOUBLE
-	BOOLEAN
-	CONTINUE
-	BRAKE
-	NULL
-	ARRAY
-	STRUCT
-	RETURN
+import (
+	"fmt"
+	"reflect"
 )
 
 //creo un objeto para almacenar la informacion de una variable
@@ -25,13 +10,27 @@ type Simbolo struct {
 	Id    interface{}
 	Valor interface{}
 	Mut   interface{}
-	Tipo  tipoexpresion
+	Tipo  Tipoexpresion
 }
 
-func ConstructorSimbolo(_id interface{}, _valor interface{}, _mut interface{}, _tipo tipoexpresion) *Simbolo {
+func ConstructorSimbolo(_id interface{}, _valor interface{}, _mut interface{}, _tipo Tipoexpresion) *Simbolo {
+	if _tipo == SINTIPO {
+		tipovar := reflect.TypeOf(_valor)
+		fmt.Println("valor del sin tipo: ", tipovar)
+	}
+
 	fmt.Println("Dentro del constructro de un simbolo")
 	fmt.Println("Valores recividos: ", _valor, _mut, _tipo, _id)
 	return &Simbolo{Id: _id, Valor: _valor, Mut: _mut, Tipo: _tipo}
+
+}
+
+type Expresion interface {
+	Ejecutar(env interface{}) Simbolo
+}
+
+type Intruccion interface {
+	Ejecutar(env interface{}) interface{}
 }
 
 //get y set id
@@ -59,9 +58,9 @@ func (_Simbolo *Simbolo) SetMut(_mut interface{}) {
 }
 
 //get y set tipo
-func (_Simbolo *Simbolo) GetTipo() tipoexpresion {
+func (_Simbolo *Simbolo) GetTipo() Tipoexpresion {
 	return _Simbolo.Tipo
 }
-func (_Simbolo *Simbolo) SetTipo(_tipo tipoexpresion) {
+func (_Simbolo *Simbolo) SetTipo(_tipo Tipoexpresion) {
 	_Simbolo.Id = _tipo
 }
