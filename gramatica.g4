@@ -105,33 +105,35 @@ TK_caracter:'\''~["]*'\'';
 
 
 
-start //returns[*arrayList.List listainstrucciones]
-:instrucciones EOF                                                                    
+start //returns [*arrayList.List listainstrucciones]
+:instrucciones  EOF                                                                    //{$listainstrucciones = $instrucciones.lista}                                                        
 ;
 
-instrucciones 
-        :e+=instruccion*                                                                /*{listaInstrucciones := localctx.(*InstruccionesContext).GetE() 
-                                                                                                for _, e: range listaInstrucciones{
-                                                                                                        $lista.add(e.GetInstruccion())
+instrucciones //returns [*arrayList.List lista]
+/*@init{
+        $lista = arrayList.New()
+}*/
+        :e+=instruccion*                                                                /*{listaInst := localctx.(*InstruccionesContext).GetE() 
+                                                                                                for _, e:= range listaInst {
+                                                                                                        $lista.Add(e.GetInstr())
                                                                                                 }
                                                                                         }*/
-
 ;
 
-instruccion 
+instruccion returns[Interfaces.Instruccion inst]
             : expresion                                                                {fmt.Println("mensaje en instrucciones: ",$expresion.valorexpresion)}
             |impresion
             |declaracion                                                                {fmt.Println("mensaje en declaracion: ",$declaracion.decla)}
-            |identificadores
+            //|identificadores
             //|condicionales
 ;
 
 declaracion returns[interface{} decla]
-        //mutables
+        //mutables                                                                                                                      nuevadeclaracion   
         : TKR_let TKR_mut idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma              {$decla = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.valorexpresion,true,false,false) }
         |TKR_let TKR_mut idd=TK_id TK_igual expresion  TK_pcoma                                         {$decla = $expresion.valorexpresion}    
         //no mutables
-        |TKR_let idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma                       {$decla = $expresion.valorexpresion}
+        |TKR_let idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma                       {$decla = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.valorexpresion,false,false,false) }
         |TKR_let idd=TK_id TK_igual expresion TK_pcoma                                                  {$decla = $expresion.valorexpresion}
 ;
 
@@ -144,11 +146,11 @@ tipovariable returns[Interfaces.Tipoexpresion tipovar]
             |TKR_usize                                          {$tipovar = Interfaces.USIZE}
 ;
 
-
+/* 
 identificadores: TK_id TK_igual expresion  TK_pcoma                                                                          
 
 ;
-
+*/
 
 valores returns[Interfaces.Expresion lit]
         :TK_entero             {
@@ -198,15 +200,17 @@ expresion returns [Interfaces.Expresion valorexpresion]
                                                                                         fmt.Println($valorexpresion)}
 ; 
 
-impresion: TKR_println TK_par_apertura expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")}
+
+
+impresion returns [Interfaces.Instruccion impr]
+        :TKR_println TK_par_apertura expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")
+                                                                                                        $impr = Instruccion.NuevoPrint($expresion.valorexpresion)}
         |TKR_println TK_par_apertura expresion impresioncomas TK_pcoma
 ;
 
 impresioncomas: impresioncomas TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
                 |TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
 ;
-
-
 
 //expresiones returns[string value] : TKR_println TK_par_apertura TK_entero TK_par_cierre               {$value = $TK_entero.text;}
 //;

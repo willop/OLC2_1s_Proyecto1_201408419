@@ -51,12 +51,6 @@ func (s *BasegramaticaListener) EnterTipovariable(ctx *TipovariableContext) {}
 // ExitTipovariable is called when production tipovariable is exited.
 func (s *BasegramaticaListener) ExitTipovariable(ctx *TipovariableContext) {}
 
-// EnterIdentificadores is called when production identificadores is entered.
-func (s *BasegramaticaListener) EnterIdentificadores(ctx *IdentificadoresContext) {}
-
-// ExitIdentificadores is called when production identificadores is exited.
-func (s *BasegramaticaListener) ExitIdentificadores(ctx *IdentificadoresContext) {}
-
 // EnterValores is called when production valores is entered.
 func (s *BasegramaticaListener) EnterValores(ctx *ValoresContext) {}
 

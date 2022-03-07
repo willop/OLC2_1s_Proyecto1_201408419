@@ -29,7 +29,7 @@ type Expresion interface {
 	Ejecutar(env interface{}) Simbolo
 }
 
-type Intruccion interface {
+type Instruccion interface {
 	Ejecutar(env interface{}) interface{}
 }
 
