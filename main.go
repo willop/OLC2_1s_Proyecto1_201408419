@@ -4,7 +4,9 @@ import (
 	//"log"
 	"fmt"
 	"image/color"
+	"proyecto1/Estructura"
 	"proyecto1/Interfaces"
+	"proyecto1/Utilitario"
 	"proyecto1/parser"
 
 	"fyne.io/fyne/v2"
@@ -19,6 +21,44 @@ import (
 //incializanod
 type gramaticaListener struct {
 	*parser.BasegramaticaListener
+}
+
+type TreeShapeListener struct {
+	*parser.BasegramaticaListener
+}
+
+func NewTreeShapeListener() *TreeShapeListener {
+	return new(TreeShapeListener)
+}
+
+func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
+	result := ctx.GetListainstrucciones() //esto me retorna nul por que no existe ninguna instruccion
+	var recolector Utilitario.Recolector = Utilitario.NuevoRecolector()
+	var globalEnv Estructura.Entorno = Estructura.NuevoEntorno(nil, "global", 0)
+	fmt.Println("Nuevo entorno", globalEnv)
+	fmt.Println("Get result", result)
+	//falta implementacion de listas de listas
+	for _, s := range result.ToArray() {
+		s.(Interfaces.Instruccion).Ejecutar(globalEnv, &recolector)
+	}
+	fmt.Println("/n/n******************************RECOLECTOR****************************/n")
+	//fmt.Println(recolector.Consolavirtual)
+	if recolector.Consolavirtual.Len() > 0 {
+		for _, s := range recolector.Consolavirtual.ToArray() {
+			fmt.Println(s)
+		}
+	}
+	fmt.Println("/n/n*************************** FIN RECOLECTOR **************************/n/n/n")
+
+	fmt.Println("/n/n****************************** ERRORES ******************************/n")
+	//fmt.Println(recolector.Consolavirtual)
+	if recolector.ListaErrores.Len() > 0 {
+		for _, s := range recolector.ListaErrores.ToArray() {
+			fmt.Println(s)
+		}
+	}
+	fmt.Println("/n/n*************************** FIN ERRORES **************************/n")
+
 }
 
 func main() {
@@ -41,16 +81,13 @@ func main() {
 		stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
 		//incluyendo el parser
 		p := parser.NewgramaticaParser(stream)
-		antlr.ParseTreeWalkerDefault.Walk(gramaticaListener{}, p.Start())
-		/*for {
-			t := lexer.NextToken()
-			if t.GetTokenType() == antlr.TokenEOF {
-				break
-			}
-			fmt.Printf("%s (%q)\n",
-				lexer.SymbolicNames[t.GetTokenType()], t.GetText())
-
-		}*/
+		//aca inicial el nuevo programa
+		//crear un enorno al iniciar
+		//recorrer la lista de instrucciones con el metodo de ejecutar
+		p.BuildParseTrees = true
+		tree := p.Start()
+		antlr.ParseTreeWalkerDefault.Walk(NewTreeShapeListener(), tree)
+		//antlr.ParseTreeWalkerDefault.Walk(gramaticaListener{}, p.Start())
 	})
 	boton.Move(fyne.NewPos(530, 390))
 	boton.Resize(fyne.NewSize(100, 30))

@@ -3,6 +3,7 @@ package Instruccion
 import (
 	"fmt"
 	"proyecto1/Interfaces"
+	"proyecto1/Utilitario"
 
 	arrayList "github.com/colegno/arraylist"
 )
@@ -19,10 +20,12 @@ func NuevoPrint(_exp Interfaces.Expresion) Print {
 	return Print{_exp}
 }
 
-func (p Print) Ejecutar(env interface{}) interface{} {
-	resultado := p.Expresion.Ejecutar(env) //ejecuto la expresion la cual me retorna el simbolo con id,valor,mut,tipo
+func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {
+
+	resultado := p.Expresion.Ejecutar(env, recolector) //ejecuto la expresion la cual me retorna el simbolo con id,valor,mut,tipo
 	fmt.Println("Luego de ejecutar ", resultado)
 	fmt.Println("Consolav: ", resultado.Valor)
+	recolector.Consolavirtual.Add(resultado.Valor)
 	return resultado.Valor
 }
 

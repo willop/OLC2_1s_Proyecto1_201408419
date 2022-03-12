@@ -17,16 +17,40 @@ type Entorno struct {
 //Se crea y se retorna un nuevo entorno
 func NuevoEntorno(_prev interface{}, _nombre string, _numero int) Entorno {
 	fmt.Printf("Nuevo Entorno creado")
-	return Entorno{_prev, _nombre, _numero, make(map[string]Interfaces.Simbolo), make(map[string]Interfaces.Simbolo)}
+	env := Entorno{prev: _prev, nombre: _nombre, numero: _numero, variable: make(map[string]Interfaces.Simbolo), estructura: make(map[string]Interfaces.Simbolo)}
+	return env
 }
 
 //Metodo para almacenar una variable
-func (env Entorno) GuardarSimbolo(_id string, _valor Interfaces.Simbolo, _mut bool, _tipo Interfaces.Tipoexpresion) {
+func (env Entorno) GuardarSimbolo(_id string, _valor interface{}, _mut bool, _tipo Interfaces.Tipoexpresion) {
 	//verificar que existe la variable en este entorno
 	if variable, encontrada := env.variable[_id]; encontrada {
 		fmt.Println("La variable ", variable.Id, " ya existe en este entorno")
 		return
 	}
 	//si no pues agrego una nueva variable al entorno
+	fmt.Println("Se agrego al entorno")
 	env.variable[_id] = Interfaces.Simbolo{Id: _id, Valor: _valor, Mut: _mut, Tipo: _tipo}
+	fmt.Println("Sale de guardar simbolo", env.variable[_id])
+}
+
+func (env Entorno) GetNumEntorno() int {
+	return env.numero
+}
+
+func (env Entorno) GetVariable(id string) Interfaces.Simbolo {
+	var temporal Entorno
+	temporal = env
+	for {
+		if variable, ok := temporal.variable[id]; ok {
+			return variable
+		}
+		if temporal.prev == nil {
+			break
+		} else {
+			temporal = temporal.prev.(Entorno)
+		}
+	}
+	fmt.Println("La variable no existe")
+	return Interfaces.Simbolo{"", "error", false, Interfaces.SINTIPO}
 }

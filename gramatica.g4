@@ -6,7 +6,8 @@ grammar gramatica;
     import "proyecto1/Interfaces"
     import "proyecto1/Expresion"
     import "proyecto1/Instruccion"
-    //import arrayList "github.com/colegno/arraylist"
+    import "proyecto1/Expresiones"
+    import arrayList "github.com/colegno/arraylist"
     //import "proyecto1/Expresion"
 }
 
@@ -15,6 +16,141 @@ grammar gramatica;
         var temporal = Interfaces.SINTIPO
 }
 
+
+start returns [*arrayList.List listainstrucciones]
+        :TKR_fn TKR_main TK_par_apertura TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre   {$listainstrucciones = $instrucciones.lista}
+
+;
+
+
+instrucciones returns [*arrayList.List lista]
+@init{
+        $lista = arrayList.New()
+}
+        :e+=instruccion*        {listaInst := localctx.(*InstruccionesContext).GetE() 
+                                    for _, e:= range listaInst {
+                                        $lista.Add(e.GetInst())
+                                    }
+                                }
+;
+
+
+instruccion returns[Interfaces.Instruccion inst]
+            : expresion                                                                {fmt.Println("mensaje en instrucciones: ",$expresion.exp)}
+            |impresion                                                                  {$inst = $impresion.inst}
+            |declaracion                                                                {$inst = $declaracion.inst}
+            //|identificadores
+            //|condicionales
+;
+
+declaracion returns[Interfaces.Instruccion inst]
+        //mutables                                                                                                                      nuevadeclaracion   
+        : TKR_let TKR_mut idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma              {$inst = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.exp,false,false,true) }
+        |TKR_let TKR_mut idd=TK_id TK_igual expresion  TK_pcoma                                         {$inst = Instruccion.NuevaDeclaracion($idd.text,Interfaces.SINTIPO,$expresion.exp,false,false,true) }
+        //no mutables
+        |TKR_let idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma                       {$inst = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.exp,false,false,false) }
+        |TKR_let idd=TK_id TK_igual expresion TK_pcoma                                                  {$inst = Instruccion.NuevaDeclaracion($idd.text,Interfaces.SINTIPO,$expresion.exp,false,false,false) }
+;
+
+tipovariable returns[Interfaces.Tipoexpresion tipovar]
+            : TKR_numericos_enteros                             {$tipovar = Interfaces.INTEGER}
+            |TKR_numericos_flotantes                            {$tipovar = Interfaces.FLOAT}
+            |TKR_String                                         {$tipovar = Interfaces.STRING}
+            |TKR_bool                                           {$tipovar = Interfaces.BOOLEAN}
+            |TKR_char                                           {$tipovar = Interfaces.CHAR}
+            |TKR_usize                                          {$tipovar = Interfaces.USIZE}
+;
+
+/* 
+identificadores: TK_id TK_igual expresion  TK_pcoma                                                                          
+
+;
+*/
+
+valores returns[Interfaces.Expresion exp]
+        :TK_entero             {
+                numero, err := strconv.Atoi($TK_entero.text)
+                if err != nil {
+                        fmt.Println(err)
+                }
+                $exp = Expresion.NuevoPrimitivo(numero, Interfaces.INTEGER)}//se convierte a entero el texto, el mensaje en error de traduccion, y se agrega el primitivo
+        |TK_decimal            {decimal, err := strconv.ParseFloat($TK_decimal.text,8)
+                if err != nil {
+                        fmt.Println(err)
+                }
+                $exp = Expresion.NuevoPrimitivo(decimal, Interfaces.FLOAT)}//se convierte a entero el texto, el mensaje en error de traduccion, y se agrega el primitivo
+        |TK_cadena             {
+                str:= $TK_cadena.text[1:len($TK_cadena.text)-1]
+                $exp = Expresion.NuevoPrimitivo(str,Interfaces.STRING)}
+        |TK_caracter           
+                {str:= $TK_caracter.text[1:len($TK_caracter.text)-1]
+                $exp = Expresion.NuevoPrimitivo(str,Interfaces.CHAR)}
+        |TKR_Str           
+                {str:= $TKR_Str.text[1:len($TKR_Str.text)-1]
+                $exp = Expresion.NuevoPrimitivo(str,Interfaces.STR)}
+        |TKR_true              {$exp = Expresion.NuevoPrimitivo(true, Interfaces.BOOLEAN)}
+        |TKR_false             {$exp = Expresion.NuevoPrimitivo(false,Interfaces.BOOLEAN)}
+        |TK_id                 {$exp = Expresiones.NewLlamarvariable($TK_id.text)}
+;
+
+expresion returns [Interfaces.Expresion exp]
+        : TK_menos e1=expresion                                                                 {numero := -1
+                                                                                                        numm := Expresion.NuevoPrimitivo(numero, Interfaces.INTEGER)
+                                                                                                                $exp = Expresiones.NuevaAritmetica($e1.exp, numm ,Interfaces.MULTIPLICACION)
+                                                                                                }
+        |e1=expresion op=(TK_por|TK_diagonal|TK_porcentaje) e2=expresion                        {
+                                                                                                        if $op.text == "*" {
+                                                                                                                $exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.MULTIPLICACION)
+                                                                                                        }else if $op.text == "%" {
+                                                                                                                $exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.MODULO)
+                                                                                                        }else{
+                                                                                                                $exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.DIVISION)
+                                                                                                        }
+                                                                                                }
+        |e1=expresion op=(TK_menos|TK_suma) e2=expresion                                        {
+                                                                                                        if $op.text == "+" {
+                                                                                                                $exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.SUMA)
+                                                                                                        }else{
+                                                                                                                $exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.RESTA)
+                                                                                                        }
+                                                                                                }
+        |TKR_pow TK_par_apertura e1=expresion TK_coma e2=expresion TK_par_cierre                      {$exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.POW)}
+        |TKR_powf TK_par_apertura e1=expresion TK_coma e2=expresion TK_par_cierre                     {$exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.POWF)}
+        |e1=expresion TK_menor e2=expresion                                                                   {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MENOR_QUE)}
+        |e1=expresion TK_mayor e2=expresion                                                                   {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MAYOR_QUE)}
+        |e1=expresion TK_mayor_igual e2=expresion                                                             {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MAYOR_IGUAL)}
+        |e1=expresion TK_menor_igual e2=expresion                                                             {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MENOR_IGUAL)}
+        |e1=expresion TK_igualacion e2=expresion                                                              {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.IGUALDAD)}
+        |e1=expresion TK_diferente e2=expresion                                                               {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.DESIGUAL)}
+        |e1=expresion TK_or e2=expresion                                                                {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.OR)}
+        |e1=expresion TK_and e2=expresion                                                               {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.AND)}
+        |TK_sig_admiracion e1=expresion                                                                    {$exp = Expresiones.NuevaLogica($e1.exp,$e1.exp,Interfaces.NOT)}
+        |TK_par_apertura expresion TK_par_cierre
+        |valores TKR_as TKR_numericos_enteros 
+        |valores TKR_as TKR_numericos_flotantes 
+        |vall=valores                                                                   {$exp = $vall.exp
+                                                                                        fmt.Println($exp)}
+; 
+
+
+impresion returns [Interfaces.Instruccion inst]
+        :TKR_println TK_par_apertura expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")
+                                                                                                        $inst = Instruccion.NuevoPrint($expresion.exp)}
+        |TKR_println TK_par_apertura expresion impresioncomas TK_pcoma
+;
+
+impresioncomas: impresioncomas TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
+                |TK_coma expresion TK_par_cierre TK_pcoma                               {fmt.Println("Impresion especial")}
+;
+
+//expresiones returns[string value] : TKR_println TK_par_apertura TK_entero TK_par_cierre               {$value = $TK_entero.text;}
+//;
+
+
+
+//*********************************************************************************
+//****************************Gramatica lexica*************************************
+//*********************************************************************************
 //Tokens
 //retorno up presedencia
 TK_flecha: '->';
@@ -67,7 +203,8 @@ TKR_vec: 'vec';  //creo que les falta
 TKR_powf: 'powf';
 TKR_bool: 'bool';
 TKR_char: 'char';
-TKR_String: '&str'|'String';
+TKR_Str: '&str';
+TKR_String: 'String';
 TKR_usize: 'usize';
 TKR_let: 'let';
 TKR_mut: 'mut';
@@ -90,6 +227,7 @@ TKR_contains: 'contains';
 TKR_insert: 'insert';
 TKR_capacity: 'capacity';
 TKR_with_capacity: 'witch_capacity';
+TKR_main: 'main';
 
 
 //reglas gramaticales
@@ -101,116 +239,3 @@ Letra : 'a'..'z'|'A'..'Z'|'_' ;
 TK_cadena:  '"'~["]*'"';
 TK_caracter:'\''~["]*'\'';
 //Rules
-
-
-
-
-start //returns [*arrayList.List listainstrucciones]
-:instrucciones  EOF                                                                    //{$listainstrucciones = $instrucciones.lista}                                                        
-;
-
-instrucciones //returns [*arrayList.List lista]
-/*@init{
-        $lista = arrayList.New()
-}*/
-        :e+=instruccion*                                                                /*{listaInst := localctx.(*InstruccionesContext).GetE() 
-                                                                                                for _, e:= range listaInst {
-                                                                                                        $lista.Add(e.GetInstr())
-                                                                                                }
-                                                                                        }*/
-;
-
-instruccion returns[Interfaces.Instruccion inst]
-            : expresion                                                                {fmt.Println("mensaje en instrucciones: ",$expresion.valorexpresion)}
-            |impresion
-            |declaracion                                                                {fmt.Println("mensaje en declaracion: ",$declaracion.decla)}
-            //|identificadores
-            //|condicionales
-;
-
-declaracion returns[interface{} decla]
-        //mutables                                                                                                                      nuevadeclaracion   
-        : TKR_let TKR_mut idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma              {$decla = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.valorexpresion,true,false,false) }
-        |TKR_let TKR_mut idd=TK_id TK_igual expresion  TK_pcoma                                         {$decla = $expresion.valorexpresion}    
-        //no mutables
-        |TKR_let idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma                       {$decla = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.valorexpresion,false,false,false) }
-        |TKR_let idd=TK_id TK_igual expresion TK_pcoma                                                  {$decla = $expresion.valorexpresion}
-;
-
-tipovariable returns[Interfaces.Tipoexpresion tipovar]
-            : TKR_numericos_enteros                             {$tipovar = Interfaces.INTEGER}
-            |TKR_numericos_flotantes                            {$tipovar = Interfaces.FLOAT}
-            |TKR_String                                         {$tipovar = Interfaces.STRING}
-            |TKR_bool                                           {$tipovar = Interfaces.BOOLEAN}
-            |TKR_char                                           {$tipovar = Interfaces.CHAR}
-            |TKR_usize                                          {$tipovar = Interfaces.USIZE}
-;
-
-/* 
-identificadores: TK_id TK_igual expresion  TK_pcoma                                                                          
-
-;
-*/
-
-valores returns[Interfaces.Expresion lit]
-        :TK_entero             {
-                numero, err := strconv.Atoi($TK_entero.text)
-                if err != nil {
-                        fmt.Println(err)
-                }
-                $lit = Expresion.NuevoPrimitivo(numero, Interfaces.INTEGER)}//se convierte a entero el texto, el mensaje en error de traduccion, y se agrega el primitivo
-        |TK_decimal            {decimal, err := strconv.ParseFloat($TK_decimal.text,8)
-                if err != nil {
-                        fmt.Println(err)
-                }
-                $lit = Expresion.NuevoPrimitivo(decimal, Interfaces.FLOAT)}//se convierte a entero el texto, el mensaje en error de traduccion, y se agrega el primitivo
-        |TK_cadena             {
-                str:= $TK_cadena.text[1:len($TK_cadena.text)-1]
-                $lit = Expresion.NuevoPrimitivo(str,Interfaces.STRING)}
-        |TK_caracter           
-                {str:= $TK_caracter.text[1:len($TK_caracter.text)-1]
-                $lit = Expresion.NuevoPrimitivo(str,Interfaces.CHAR)}
-        |TKR_true              {$lit = Expresion.NuevoPrimitivo(true, Interfaces.BOOLEAN)}
-        |TKR_false             {$lit = Expresion.NuevoPrimitivo(false,Interfaces.BOOLEAN)}
-        |TK_id
-;
-
-expresion returns [Interfaces.Expresion valorexpresion]
-        : TK_menos expresion  
-        |e1=expresion op=TK_por e2=expresion                                                                                  
-        |e1=expresion op=TK_menos e2=expresion                                     
-        |e1=expresion op=TK_diagonal e2=expresion                                  
-        |e1=expresion op=TK_suma e2=expresion                                      
-        |TKR_pow TK_par_apertura expresion TK_coma expresion TK_par_cierre
-        |TKR_powf TK_par_apertura expresion TK_coma expresion TK_par_cierre
-        |expresion TK_porcentaje expresion
-        |expresion TK_menor expresion
-        |expresion TK_mayor expresion
-        |expresion TK_mayor_igual expresion
-        |expresion TK_menor_igual expresion
-        |expresion TK_igualacion expresion
-        |expresion TK_diferente expresion
-        |expresion TK_or expresion
-        |expresion TK_and expresion
-        |expresion TK_sig_admiracion expresion
-        |TK_par_apertura expresion TK_par_cierre
-        |valores TKR_as TKR_numericos_enteros 
-        |valores TKR_as TKR_numericos_flotantes 
-        |vall=valores                                                                   {$valorexpresion = $vall.lit
-                                                                                        fmt.Println($valorexpresion)}
-; 
-
-
-
-impresion returns [Interfaces.Instruccion impr]
-        :TKR_println TK_par_apertura expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")
-                                                                                                        $impr = Instruccion.NuevoPrint($expresion.valorexpresion)}
-        |TKR_println TK_par_apertura expresion impresioncomas TK_pcoma
-;
-
-impresioncomas: impresioncomas TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
-                |TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
-;
-
-//expresiones returns[string value] : TKR_println TK_par_apertura TK_entero TK_par_cierre               {$value = $TK_entero.text;}
-//;

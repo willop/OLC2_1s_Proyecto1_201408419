@@ -1,6 +1,9 @@
 package Expresion
 
-import "proyecto1/Interfaces"
+import (
+	"proyecto1/Interfaces"
+	"proyecto1/Utilitario"
+)
 
 type Primitivo struct {
 	Valor interface{}
@@ -9,7 +12,7 @@ type Primitivo struct {
 	//columna
 }
 
-func (p Primitivo) Ejecutar(env interface{}) Interfaces.Simbolo {
+func (p Primitivo) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Interfaces.Simbolo {
 
 	return Interfaces.Simbolo{
 		Id:    "",
@@ -23,6 +26,6 @@ func NuevoPrimitivo(val interface{}, tipo Interfaces.Tipoexpresion) Primitivo {
 	return exp
 }
 
-func GetHolamundo() string {
+func (p Primitivo) GetHolamundo() string {
 	return "Hola desde Hola mundo"
 }

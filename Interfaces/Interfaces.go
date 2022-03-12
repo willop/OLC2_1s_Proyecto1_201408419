@@ -2,6 +2,7 @@ package Interfaces
 
 import (
 	"fmt"
+	"proyecto1/Utilitario"
 	"reflect"
 )
 
@@ -26,11 +27,11 @@ func ConstructorSimbolo(_id interface{}, _valor interface{}, _mut interface{}, _
 }
 
 type Expresion interface {
-	Ejecutar(env interface{}) Simbolo
+	Ejecutar(env interface{}, recolector *Utilitario.Recolector) Simbolo
 }
 
 type Instruccion interface {
-	Ejecutar(env interface{}) interface{}
+	Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{}
 }
 
 //get y set id
