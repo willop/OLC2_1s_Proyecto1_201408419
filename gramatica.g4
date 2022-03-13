@@ -8,6 +8,7 @@ grammar gramatica;
     import "proyecto1/Instruccion"
     import "proyecto1/Expresiones"
     import arrayList "github.com/colegno/arraylist"
+    //import "proyecto1/Operaciones"
     //import "proyecto1/Expresion"
 }
 
@@ -39,8 +40,8 @@ instruccion returns[Interfaces.Instruccion inst]
             : expresion                                                                {fmt.Println("mensaje en instrucciones: ",$expresion.exp)}
             |impresion                                                                  {$inst = $impresion.inst}
             |declaracion                                                                {$inst = $declaracion.inst}
-            //|identificadores
-            //|condicionales
+            |identificadores                                                            {$inst = $identificadores.inst}
+            |condicionales                                                              {$inst = $condicionales.inst}
 ;
 
 declaracion returns[Interfaces.Instruccion inst]
@@ -61,11 +62,12 @@ tipovariable returns[Interfaces.Tipoexpresion tipovar]
             |TKR_usize                                          {$tipovar = Interfaces.USIZE}
 ;
 
-/* 
-identificadores: TK_id TK_igual expresion  TK_pcoma                                                                          
+ 
+identificadores returns[Interfaces.Instruccion inst]
+                : e1=TK_id TK_igual e2=expresion  TK_pcoma             {$inst = Instruccion.NewAsignacion($e1.text,$e2.exp)}                                                             
 
 ;
-*/
+
 
 valores returns[Interfaces.Expresion exp]
         :TK_entero             {
@@ -134,8 +136,8 @@ expresion returns [Interfaces.Expresion exp]
 
 
 impresion returns [Interfaces.Instruccion inst]
-        :TKR_println TK_par_apertura expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")
-                                                                                                        $inst = Instruccion.NuevoPrint($expresion.exp)}
+        :TKR_println TK_par_apertura e1=expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")
+                                                                                                        $inst = Instruccion.NuevoPrint($e1.exp)}
         |TKR_println TK_par_apertura expresion impresioncomas TK_pcoma
 ;
 
@@ -143,9 +145,37 @@ impresioncomas: impresioncomas TK_coma expresion TK_par_cierre TK_pcoma         
                 |TK_coma expresion TK_par_cierre TK_pcoma                               {fmt.Println("Impresion especial")}
 ;
 
-//expresiones returns[string value] : TKR_println TK_par_apertura TK_entero TK_par_cierre               {$value = $TK_entero.text;}
-//;
 
+condicionales returns[Interfaces.Instruccion inst]
+                : funcionif                                                     {$inst = $funcionif.inst}
+;
+        
+        
+funcionif returns [Interfaces.Instruccion inst]
+        :TKR_if e1=expresion ee=bloque                                             {$inst = Instruccion.NewIf($e1.exp,$ee.lista,nil,nil )}
+        |TKR_if e1=expresion e5=bloque TKR_else b2=bloque                             {$inst = Instruccion.NewIf($e1.exp,$e5.lista,nil,$b2.lista)}          
+        |TKR_if e1=expresion b1=bloque listaelseif TKR_else b2=bloque                 {$inst = Instruccion.NewIf($e1.exp,$b1.lista,$listaelseif.lista,$b2.lista)}
+;
+
+funcionelseif returns [Interfaces.Instruccion inst]
+        : TKR_elseif e1=expresion bloque                                      {$inst = Instruccion.NewIf($e1.exp,$bloque.lista,nil,nil)}
+;
+
+listaelseif returns [*arrayList.List lista]
+@init{ $lista = arrayList.New()}
+        :list += funcionelseif{
+                                                        listInt := localctx.(*ListaelseifContext).GetList()
+                                                        for _,e := range listInt{
+                                                                $lista.Add(e.GetInst())
+                                                        }
+        }
+;
+
+
+bloque returns [*arrayList.List lista]
+        :TK_corchete_apertura instrucciones TK_corchete_cierre   {$lista = $instrucciones.lista}
+        |TK_corchete_apertura TK_corchete_cierre                 {$lista = arrayList.New()}
+;
 
 
 //*********************************************************************************
@@ -228,6 +258,9 @@ TKR_insert: 'insert';
 TKR_capacity: 'capacity';
 TKR_with_capacity: 'witch_capacity';
 TKR_main: 'main';
+TKR_if: 'if';
+TKR_elseif: 'else if';
+TKR_else: 'else';
 
 
 //reglas gramaticales

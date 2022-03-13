@@ -31,6 +31,8 @@ func NewTreeShapeListener() *TreeShapeListener {
 	return new(TreeShapeListener)
 }
 
+var consolavirtual string
+
 func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	result := ctx.GetListainstrucciones() //esto me retorna nul por que no existe ninguna instruccion
 	var recolector Utilitario.Recolector = Utilitario.NuevoRecolector()
@@ -46,6 +48,7 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	if recolector.Consolavirtual.Len() > 0 {
 		for _, s := range recolector.Consolavirtual.ToArray() {
 			fmt.Println(s)
+			consolavirtual += s.(string)
 		}
 	}
 	fmt.Println("/n/n*************************** FIN RECOLECTOR **************************/n/n/n")
@@ -55,10 +58,10 @@ func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	if recolector.ListaErrores.Len() > 0 {
 		for _, s := range recolector.ListaErrores.ToArray() {
 			fmt.Println(s)
+			consolavirtual += s.(string)
 		}
 	}
 	fmt.Println("/n/n*************************** FIN ERRORES **************************/n")
-
 }
 
 func main() {
@@ -75,7 +78,7 @@ func main() {
 	salidacodigo.Move(fyne.NewPos(650, 5))
 	boton := widget.NewButtonWithIcon("Ejecutar", theme.HomeIcon(), func() {
 		fmt.Println("*********************** Compilando *******************")
-		salidacodigo.SetText(entradacodigo.Text)
+		//salidacodigo.SetText(entradacodigo.Text)
 		is := antlr.NewInputStream(entradacodigo.Text)
 		lexer := parser.NewgramaticaLexer(is)
 		stream := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
@@ -88,11 +91,12 @@ func main() {
 		tree := p.Start()
 		antlr.ParseTreeWalkerDefault.Walk(NewTreeShapeListener(), tree)
 		//antlr.ParseTreeWalkerDefault.Walk(gramaticaListener{}, p.Start())
+		salidacodigo.SetText(consolavirtual)
 	})
 	boton.Move(fyne.NewPos(530, 390))
 	boton.Resize(fyne.NewSize(100, 30))
 	boton2 := widget.NewButtonWithIcon("Reportes", theme.ComputerIcon(), func() {
-		salidacodigo.SetText(entradacodigo.Text)
+		//salidacodigo.SetText(entradacodigo.Text)
 	})
 	boton2.Move(fyne.NewPos(530, 425))
 	boton2.Resize(fyne.NewSize(100, 30))

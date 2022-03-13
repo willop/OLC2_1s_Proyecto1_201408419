@@ -23,6 +23,9 @@ type gramaticaListener interface {
 	// EnterTipovariable is called when entering the tipovariable production.
 	EnterTipovariable(c *TipovariableContext)
 
+	// EnterIdentificadores is called when entering the identificadores production.
+	EnterIdentificadores(c *IdentificadoresContext)
+
 	// EnterValores is called when entering the valores production.
 	EnterValores(c *ValoresContext)
 
@@ -34,6 +37,21 @@ type gramaticaListener interface {
 
 	// EnterImpresioncomas is called when entering the impresioncomas production.
 	EnterImpresioncomas(c *ImpresioncomasContext)
+
+	// EnterCondicionales is called when entering the condicionales production.
+	EnterCondicionales(c *CondicionalesContext)
+
+	// EnterFuncionif is called when entering the funcionif production.
+	EnterFuncionif(c *FuncionifContext)
+
+	// EnterFuncionelseif is called when entering the funcionelseif production.
+	EnterFuncionelseif(c *FuncionelseifContext)
+
+	// EnterListaelseif is called when entering the listaelseif production.
+	EnterListaelseif(c *ListaelseifContext)
+
+	// EnterBloque is called when entering the bloque production.
+	EnterBloque(c *BloqueContext)
 
 	// ExitStart is called when exiting the start production.
 	ExitStart(c *StartContext)
@@ -50,6 +68,9 @@ type gramaticaListener interface {
 	// ExitTipovariable is called when exiting the tipovariable production.
 	ExitTipovariable(c *TipovariableContext)
 
+	// ExitIdentificadores is called when exiting the identificadores production.
+	ExitIdentificadores(c *IdentificadoresContext)
+
 	// ExitValores is called when exiting the valores production.
 	ExitValores(c *ValoresContext)
 
@@ -61,4 +82,19 @@ type gramaticaListener interface {
 
 	// ExitImpresioncomas is called when exiting the impresioncomas production.
 	ExitImpresioncomas(c *ImpresioncomasContext)
+
+	// ExitCondicionales is called when exiting the condicionales production.
+	ExitCondicionales(c *CondicionalesContext)
+
+	// ExitFuncionif is called when exiting the funcionif production.
+	ExitFuncionif(c *FuncionifContext)
+
+	// ExitFuncionelseif is called when exiting the funcionelseif production.
+	ExitFuncionelseif(c *FuncionelseifContext)
+
+	// ExitListaelseif is called when exiting the listaelseif production.
+	ExitListaelseif(c *ListaelseifContext)
+
+	// ExitBloque is called when exiting the bloque production.
+	ExitBloque(c *BloqueContext)
 }

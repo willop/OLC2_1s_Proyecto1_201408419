@@ -54,3 +54,26 @@ func (env Entorno) GetVariable(id string) Interfaces.Simbolo {
 	fmt.Println("La variable no existe")
 	return Interfaces.Simbolo{"", "error", false, Interfaces.SINTIPO}
 }
+
+func (env Entorno) ActualizarSimbolo(_id string, _valor interface{}, _mut bool, _tipo Interfaces.Tipoexpresion) interface{} {
+
+	var tmpEnv Entorno
+	tmpEnv = env
+
+	for {
+		if variable, ok := tmpEnv.variable[_id]; ok {
+			tmpEnv.variable[_id] = Interfaces.Simbolo{Id: _id, Tipo: _tipo, Valor: _valor, Mut: _mut}
+			return variable
+		}
+
+		if tmpEnv.prev == nil {
+			break
+		} else {
+			tmpEnv = tmpEnv.prev.(Entorno)
+		}
+	}
+
+	fmt.Println("La variable no existe")
+	return Interfaces.Simbolo{Id: "", Tipo: Interfaces.SINTIPO, Valor: "", Mut: false}
+
+}

@@ -51,6 +51,12 @@ func (s *BasegramaticaListener) EnterTipovariable(ctx *TipovariableContext) {}
 // ExitTipovariable is called when production tipovariable is exited.
 func (s *BasegramaticaListener) ExitTipovariable(ctx *TipovariableContext) {}
 
+// EnterIdentificadores is called when production identificadores is entered.
+func (s *BasegramaticaListener) EnterIdentificadores(ctx *IdentificadoresContext) {}
+
+// ExitIdentificadores is called when production identificadores is exited.
+func (s *BasegramaticaListener) ExitIdentificadores(ctx *IdentificadoresContext) {}
+
 // EnterValores is called when production valores is entered.
 func (s *BasegramaticaListener) EnterValores(ctx *ValoresContext) {}
 
@@ -74,3 +80,33 @@ func (s *BasegramaticaListener) EnterImpresioncomas(ctx *ImpresioncomasContext) 
 
 // ExitImpresioncomas is called when production impresioncomas is exited.
 func (s *BasegramaticaListener) ExitImpresioncomas(ctx *ImpresioncomasContext) {}
+
+// EnterCondicionales is called when production condicionales is entered.
+func (s *BasegramaticaListener) EnterCondicionales(ctx *CondicionalesContext) {}
+
+// ExitCondicionales is called when production condicionales is exited.
+func (s *BasegramaticaListener) ExitCondicionales(ctx *CondicionalesContext) {}
+
+// EnterFuncionif is called when production funcionif is entered.
+func (s *BasegramaticaListener) EnterFuncionif(ctx *FuncionifContext) {}
+
+// ExitFuncionif is called when production funcionif is exited.
+func (s *BasegramaticaListener) ExitFuncionif(ctx *FuncionifContext) {}
+
+// EnterFuncionelseif is called when production funcionelseif is entered.
+func (s *BasegramaticaListener) EnterFuncionelseif(ctx *FuncionelseifContext) {}
+
+// ExitFuncionelseif is called when production funcionelseif is exited.
+func (s *BasegramaticaListener) ExitFuncionelseif(ctx *FuncionelseifContext) {}
+
+// EnterListaelseif is called when production listaelseif is entered.
+func (s *BasegramaticaListener) EnterListaelseif(ctx *ListaelseifContext) {}
+
+// ExitListaelseif is called when production listaelseif is exited.
+func (s *BasegramaticaListener) ExitListaelseif(ctx *ListaelseifContext) {}
+
+// EnterBloque is called when production bloque is entered.
+func (s *BasegramaticaListener) EnterBloque(ctx *BloqueContext) {}
+
+// ExitBloque is called when production bloque is exited.
+func (s *BasegramaticaListener) ExitBloque(ctx *BloqueContext) {}
