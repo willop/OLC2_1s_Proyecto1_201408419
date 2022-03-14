@@ -39,6 +39,12 @@ func (s *BasegramaticaListener) EnterInstruccion(ctx *InstruccionContext) {}
 // ExitInstruccion is called when production instruccion is exited.
 func (s *BasegramaticaListener) ExitInstruccion(ctx *InstruccionContext) {}
 
+// EnterControl is called when production control is entered.
+func (s *BasegramaticaListener) EnterControl(ctx *ControlContext) {}
+
+// ExitControl is called when production control is exited.
+func (s *BasegramaticaListener) ExitControl(ctx *ControlContext) {}
+
 // EnterDeclaracion is called when production declaracion is entered.
 func (s *BasegramaticaListener) EnterDeclaracion(ctx *DeclaracionContext) {}
 
@@ -110,3 +116,15 @@ func (s *BasegramaticaListener) EnterBloque(ctx *BloqueContext) {}
 
 // ExitBloque is called when production bloque is exited.
 func (s *BasegramaticaListener) ExitBloque(ctx *BloqueContext) {}
+
+// EnterBucles is called when production bucles is entered.
+func (s *BasegramaticaListener) EnterBucles(ctx *BuclesContext) {}
+
+// ExitBucles is called when production bucles is exited.
+func (s *BasegramaticaListener) ExitBucles(ctx *BuclesContext) {}
+
+// EnterFwhile is called when production fwhile is entered.
+func (s *BasegramaticaListener) EnterFwhile(ctx *FwhileContext) {}
+
+// ExitFwhile is called when production fwhile is exited.
+func (s *BasegramaticaListener) ExitFwhile(ctx *FwhileContext) {}

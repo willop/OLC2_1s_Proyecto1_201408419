@@ -30,20 +30,20 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 		fmt.Println("El resultado no es una booleanda: ", condicion.Tipo)
 		return nil
 	}
-
-	fmt.Println("Condicion if: ", iff.Bloqueinst)
-	fmt.Println("Condicion elseif: ", iff.Bloqueifelse)
-	fmt.Println("Condicion else: ", iff.Bloqueelse)
-
+	/*
+		fmt.Println("Condicion if: ", iff.Bloqueinst)
+		fmt.Println("Condicion elseif: ", iff.Bloqueifelse)
+		fmt.Println("Condicion else: ", iff.Bloqueelse)
+	*/
 	if condicion.Valor.(bool) {
 		var NuevoEntorno Estructura.Entorno
-		var num Estructura.Entorno = env.(Estructura.Entorno)
-		NuevoEntorno = Estructura.NuevoEntorno(NuevoEntorno, "IF", num.GetNumEntorno()+1)
+		var num int = env.(Estructura.Entorno).GetNumEntorno()
+		NuevoEntorno = Estructura.NuevoEntorno(env, "IF", num+1)
 		fmt.Println("If si es true")
 		for j := 0; j < iff.Bloqueinst.Len(); j++ {
 			instr := iff.Bloqueinst.GetValue(j).(Interfaces.Instruccion)
 			fmt.Println("Dentro del for-if: ", instr)
-			instr.Ejecutar(env, recolector)
+			instr.Ejecutar(NuevoEntorno, recolector)
 		}
 	} else {
 		fmt.Println("No entra la if, entra al else o else if", iff)
@@ -57,9 +57,9 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 				}
 				if retornonuevo.Valor.(bool) {
 					fmt.Println(" Se evalua el else if y es verdadero ")
-					var NuevoEntorno1 Estructura.Entorno
+					//var NuevoEntorno1 Estructura.Entorno
 					var num Estructura.Entorno = env.(Estructura.Entorno)
-					entnuevoelseif := Estructura.NuevoEntorno(NuevoEntorno1, "ElseIF", num.GetNumEntorno()+1)
+					entnuevoelseif := Estructura.NuevoEntorno(env, "ElseIF", num.GetNumEntorno()+1)
 					for j := 0; j < iff.Bloqueifelse.Len(); j++ {
 						instr2 := iff.Bloqueifelse.GetValue(j).(Interfaces.Instruccion)
 						instr2.Ejecutar(entnuevoelseif, recolector)
@@ -71,9 +71,9 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 		}
 		if iff.Bloqueelse != nil {
 			fmt.Println(" Si entra al else ")
-			var NuevoEntorno2 Estructura.Entorno
+			//var NuevoEntorno2 Estructura.Entorno
 			var num Estructura.Entorno = env.(Estructura.Entorno)
-			entnuevoelseif := Estructura.NuevoEntorno(NuevoEntorno2, "Else final", num.GetNumEntorno()+1)
+			entnuevoelseif := Estructura.NuevoEntorno(env, "Else final", num.GetNumEntorno()+1)
 			for j := 0; j < iff.Bloqueelse.Len(); j++ {
 				instr := iff.Bloqueelse.GetValue(j).(Interfaces.Instruccion)
 				instr.Ejecutar(entnuevoelseif, recolector)

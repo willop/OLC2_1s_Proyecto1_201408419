@@ -17,6 +17,9 @@ type gramaticaListener interface {
 	// EnterInstruccion is called when entering the instruccion production.
 	EnterInstruccion(c *InstruccionContext)
 
+	// EnterControl is called when entering the control production.
+	EnterControl(c *ControlContext)
+
 	// EnterDeclaracion is called when entering the declaracion production.
 	EnterDeclaracion(c *DeclaracionContext)
 
@@ -53,6 +56,12 @@ type gramaticaListener interface {
 	// EnterBloque is called when entering the bloque production.
 	EnterBloque(c *BloqueContext)
 
+	// EnterBucles is called when entering the bucles production.
+	EnterBucles(c *BuclesContext)
+
+	// EnterFwhile is called when entering the fwhile production.
+	EnterFwhile(c *FwhileContext)
+
 	// ExitStart is called when exiting the start production.
 	ExitStart(c *StartContext)
 
@@ -61,6 +70,9 @@ type gramaticaListener interface {
 
 	// ExitInstruccion is called when exiting the instruccion production.
 	ExitInstruccion(c *InstruccionContext)
+
+	// ExitControl is called when exiting the control production.
+	ExitControl(c *ControlContext)
 
 	// ExitDeclaracion is called when exiting the declaracion production.
 	ExitDeclaracion(c *DeclaracionContext)
@@ -97,4 +109,10 @@ type gramaticaListener interface {
 
 	// ExitBloque is called when exiting the bloque production.
 	ExitBloque(c *BloqueContext)
+
+	// ExitBucles is called when exiting the bucles production.
+	ExitBucles(c *BuclesContext)
+
+	// ExitFwhile is called when exiting the fwhile production.
+	ExitFwhile(c *FwhileContext)
 }

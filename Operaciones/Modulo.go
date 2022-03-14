@@ -16,14 +16,14 @@ func Modulo(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces
 			return modulofloatfloat(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 }
 
 func modulointint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
 	if derecha.Valor.(int) != 0 {
 		return Interfaces.Simbolo{"", izquierda.Valor.(int) % derecha.Valor.(int), false, Interfaces.INTEGER}
 	} else {
-		return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+		return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 	}
 }
 
@@ -32,6 +32,6 @@ func modulofloatfloat(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) 
 		//var res float64 = float64(math.Mod(izquierda.Valor.(float64), derecha.Valor.(float64)))
 		return Interfaces.Simbolo{"", math.Mod(izquierda.Valor.(float64), derecha.Valor.(float64)), false, Interfaces.FLOAT}
 	} else {
-		return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+		return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 	}
 }

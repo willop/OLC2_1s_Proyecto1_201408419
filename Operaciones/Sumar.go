@@ -19,7 +19,7 @@ func Sumar(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.
 			return sumarstringstring(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 }
 
 func sumarintint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {

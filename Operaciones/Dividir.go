@@ -15,14 +15,14 @@ func Dividir(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interface
 			return dividirfloatfloat(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 }
 
 func dividirintint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
 	if derecha.Valor.(int) >= 0 {
 		return Interfaces.Simbolo{"", izquierda.Valor.(int) / derecha.Valor.(int), false, Interfaces.INTEGER}
 	} else {
-		return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+		return Interfaces.Simbolo{"", "", false, Interfaces.ERROREXPRESION}
 	}
 }
 
@@ -30,6 +30,6 @@ func dividirfloatfloat(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo)
 	if derecha.Valor.(int) >= 0 {
 		return Interfaces.Simbolo{"", izquierda.Valor.(float64) / derecha.Valor.(float64), false, Interfaces.FLOAT}
 	} else {
-		return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+		return Interfaces.Simbolo{"", "", false, Interfaces.ERROREXPRESION}
 	}
 }

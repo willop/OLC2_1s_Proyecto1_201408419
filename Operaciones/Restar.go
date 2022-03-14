@@ -15,7 +15,7 @@ func Restar(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces
 			return restarfloatfloat(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 }
 
 func restarintint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {

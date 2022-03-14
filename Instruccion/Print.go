@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"proyecto1/Interfaces"
 	"proyecto1/Utilitario"
+	"reflect"
+	"strconv"
 
 	arrayList "github.com/colegno/arraylist"
 )
@@ -25,7 +27,13 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 	resultado := p.Expresion.Ejecutar(env, recolector) //ejecuto la expresion la cual me retorna el simbolo con id,valor,mut,tipo
 	fmt.Println("Luego de ejecutar ", resultado)
 	fmt.Println("Consolav: ", resultado.Valor)
-	recolector.Consolavirtual.Add(resultado.Valor)
+	var st int = 50
+	if reflect.TypeOf(resultado.Valor) == reflect.TypeOf(st) {
+		recolector.Consolavirtual.Add(strconv.Itoa(resultado.Valor.(int)))
+	} else {
+		recolector.Consolavirtual.Add(resultado.Valor)
+	}
+
 	return resultado.Valor
 }
 

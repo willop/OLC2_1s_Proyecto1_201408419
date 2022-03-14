@@ -12,7 +12,7 @@ func Powf(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.S
 			return powffloatfloat(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 }
 
 func powffloatfloat(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {

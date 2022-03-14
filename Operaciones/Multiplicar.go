@@ -15,7 +15,7 @@ func Multiplicar(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Inter
 			return multifloatfloat(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 }
 
 func multiintint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {

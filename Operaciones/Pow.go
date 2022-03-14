@@ -12,7 +12,7 @@ func Pow(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Si
 			return powintint(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
 }
 
 func powintint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {

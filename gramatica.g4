@@ -42,6 +42,12 @@ instruccion returns[Interfaces.Instruccion inst]
             |declaracion                                                                {$inst = $declaracion.inst}
             |identificadores                                                            {$inst = $identificadores.inst}
             |condicionales                                                              {$inst = $condicionales.inst}
+            |bucles                                                                     {$inst = $bucles.inst}
+            |control                                                                    {$inst = $control.inst}
+;
+
+control returns [Interfaces.Instruccion inst]
+        :TKR_break  TK_pcoma                                                                {$inst = Instruccion.NewBreak()}
 ;
 
 declaracion returns[Interfaces.Instruccion inst]
@@ -148,13 +154,19 @@ impresioncomas: impresioncomas TK_coma expresion TK_par_cierre TK_pcoma         
 
 condicionales returns[Interfaces.Instruccion inst]
                 : funcionif                                                     {$inst = $funcionif.inst}
+                //|match
 ;
-        
+/*
+match:
+
+;
+  */      
         
 funcionif returns [Interfaces.Instruccion inst]
         :TKR_if e1=expresion ee=bloque                                             {$inst = Instruccion.NewIf($e1.exp,$ee.lista,nil,nil )}
         |TKR_if e1=expresion e5=bloque TKR_else b2=bloque                             {$inst = Instruccion.NewIf($e1.exp,$e5.lista,nil,$b2.lista)}          
         |TKR_if e1=expresion b1=bloque listaelseif TKR_else b2=bloque                 {$inst = Instruccion.NewIf($e1.exp,$b1.lista,$listaelseif.lista,$b2.lista)}
+        |TKR_if e1=expresion b1=bloque listaelseif                                    {$inst = Instruccion.NewIf($e1.exp,$b1.lista,$listaelseif.lista,nil)}
 ;
 
 funcionelseif returns [Interfaces.Instruccion inst]
@@ -163,7 +175,7 @@ funcionelseif returns [Interfaces.Instruccion inst]
 
 listaelseif returns [*arrayList.List lista]
 @init{ $lista = arrayList.New()}
-        :list += funcionelseif{
+        :list += funcionelseif*{
                                                         listInt := localctx.(*ListaelseifContext).GetList()
                                                         for _,e := range listInt{
                                                                 $lista.Add(e.GetInst())
@@ -176,6 +188,24 @@ bloque returns [*arrayList.List lista]
         :TK_corchete_apertura instrucciones TK_corchete_cierre   {$lista = $instrucciones.lista}
         |TK_corchete_apertura TK_corchete_cierre                 {$lista = arrayList.New()}
 ;
+
+
+bucles returns [Interfaces.Instruccion inst]
+        :fwhile                                                 {$inst = $fwhile.inst}
+;
+
+fwhile returns [Interfaces.Instruccion inst]
+        :TKR_while e1=expresion bl=bloque                       {$inst = Instruccion.NewWhile($e1.exp, $bl.lista)}
+;
+
+/* 
+ffor:
+
+;
+*/
+
+
+
 
 
 //*********************************************************************************
@@ -261,6 +291,8 @@ TKR_main: 'main';
 TKR_if: 'if';
 TKR_elseif: 'else if';
 TKR_else: 'else';
+TKR_while: 'while';
+TKR_break: 'break';
 
 
 //reglas gramaticales

@@ -11,7 +11,7 @@ const (
 	DOUBLE                        //3
 	BOOLEAN                       //4
 	CONTINUE                      //5
-	BRAKE                         //6
+	BREAK                         //6
 	NULL                          //7
 	ARRAY                         //8
 	STRUCT                        //9
@@ -20,6 +20,8 @@ const (
 	FLOAT                         //12
 	SINTIPO                       //13
 	STR
+	ERROREXPRESION
+	ERRORTIPOEXPRESION
 )
 
 type Tipooperacion int
