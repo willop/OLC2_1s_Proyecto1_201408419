@@ -81,11 +81,17 @@ func (s *BasegramaticaListener) EnterImpresion(ctx *ImpresionContext) {}
 // ExitImpresion is called when production impresion is exited.
 func (s *BasegramaticaListener) ExitImpresion(ctx *ImpresionContext) {}
 
-// EnterImpresioncomas is called when production impresioncomas is entered.
-func (s *BasegramaticaListener) EnterImpresioncomas(ctx *ImpresioncomasContext) {}
+// EnterImpresionexpresion is called when production impresionexpresion is entered.
+func (s *BasegramaticaListener) EnterImpresionexpresion(ctx *ImpresionexpresionContext) {}
 
-// ExitImpresioncomas is called when production impresioncomas is exited.
-func (s *BasegramaticaListener) ExitImpresioncomas(ctx *ImpresioncomasContext) {}
+// ExitImpresionexpresion is called when production impresionexpresion is exited.
+func (s *BasegramaticaListener) ExitImpresionexpresion(ctx *ImpresionexpresionContext) {}
+
+// EnterExpcoma is called when production expcoma is entered.
+func (s *BasegramaticaListener) EnterExpcoma(ctx *ExpcomaContext) {}
+
+// ExitExpcoma is called when production expcoma is exited.
+func (s *BasegramaticaListener) ExitExpcoma(ctx *ExpcomaContext) {}
 
 // EnterCondicionales is called when production condicionales is entered.
 func (s *BasegramaticaListener) EnterCondicionales(ctx *CondicionalesContext) {}
@@ -128,3 +134,9 @@ func (s *BasegramaticaListener) EnterFwhile(ctx *FwhileContext) {}
 
 // ExitFwhile is called when production fwhile is exited.
 func (s *BasegramaticaListener) ExitFwhile(ctx *FwhileContext) {}
+
+// EnterFloop is called when production floop is entered.
+func (s *BasegramaticaListener) EnterFloop(ctx *FloopContext) {}
+
+// ExitFloop is called when production floop is exited.
+func (s *BasegramaticaListener) ExitFloop(ctx *FloopContext) {}

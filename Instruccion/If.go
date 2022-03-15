@@ -5,6 +5,7 @@ import (
 	"proyecto1/Estructura"
 	"proyecto1/Interfaces"
 	"proyecto1/Utilitario"
+	"reflect"
 
 	arrayList "github.com/colegno/arraylist"
 )
@@ -43,7 +44,16 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 		for j := 0; j < iff.Bloqueinst.Len(); j++ {
 			instr := iff.Bloqueinst.GetValue(j).(Interfaces.Instruccion)
 			fmt.Println("Dentro del for-if: ", instr)
-			instr.Ejecutar(NuevoEntorno, recolector)
+			b := NewBreak()
+			if reflect.TypeOf(instr) == reflect.TypeOf(b) {
+				fmt.Println("Entra en break----------------------")
+				fmt.Println("Entorno: ", NuevoEntorno)
+				fmt.Println("Entorno padre: ", env)
+				condicion.Valor = false
+				return NewBreak()
+			} else {
+				instr.Ejecutar(NuevoEntorno, recolector)
+			}
 		}
 	} else {
 		fmt.Println("No entra la if, entra al else o else if", iff)

@@ -35,6 +35,8 @@ var consolavirtual string
 
 func (this *TreeShapeListener) ExitStart(ctx *parser.StartContext) {
 	result := ctx.GetListainstrucciones() //esto me retorna nul por que no existe ninguna instruccion
+	consolavirtual = ""
+
 	var recolector Utilitario.Recolector = Utilitario.NuevoRecolector()
 	var globalEnv Estructura.Entorno = Estructura.NuevoEntorno(nil, "global", 0)
 	fmt.Println("Nuevo entorno", globalEnv)
@@ -78,6 +80,7 @@ func main() {
 	salidacodigo.Move(fyne.NewPos(650, 5))
 	boton := widget.NewButtonWithIcon("Ejecutar", theme.HomeIcon(), func() {
 		fmt.Println("*********************** Compilando *******************")
+		salidacodigo.SetText("")
 		//salidacodigo.SetText(entradacodigo.Text)
 		is := antlr.NewInputStream(entradacodigo.Text)
 		lexer := parser.NewgramaticaLexer(is)

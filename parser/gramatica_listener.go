@@ -38,8 +38,11 @@ type gramaticaListener interface {
 	// EnterImpresion is called when entering the impresion production.
 	EnterImpresion(c *ImpresionContext)
 
-	// EnterImpresioncomas is called when entering the impresioncomas production.
-	EnterImpresioncomas(c *ImpresioncomasContext)
+	// EnterImpresionexpresion is called when entering the impresionexpresion production.
+	EnterImpresionexpresion(c *ImpresionexpresionContext)
+
+	// EnterExpcoma is called when entering the expcoma production.
+	EnterExpcoma(c *ExpcomaContext)
 
 	// EnterCondicionales is called when entering the condicionales production.
 	EnterCondicionales(c *CondicionalesContext)
@@ -61,6 +64,9 @@ type gramaticaListener interface {
 
 	// EnterFwhile is called when entering the fwhile production.
 	EnterFwhile(c *FwhileContext)
+
+	// EnterFloop is called when entering the floop production.
+	EnterFloop(c *FloopContext)
 
 	// ExitStart is called when exiting the start production.
 	ExitStart(c *StartContext)
@@ -92,8 +98,11 @@ type gramaticaListener interface {
 	// ExitImpresion is called when exiting the impresion production.
 	ExitImpresion(c *ImpresionContext)
 
-	// ExitImpresioncomas is called when exiting the impresioncomas production.
-	ExitImpresioncomas(c *ImpresioncomasContext)
+	// ExitImpresionexpresion is called when exiting the impresionexpresion production.
+	ExitImpresionexpresion(c *ImpresionexpresionContext)
+
+	// ExitExpcoma is called when exiting the expcoma production.
+	ExitExpcoma(c *ExpcomaContext)
 
 	// ExitCondicionales is called when exiting the condicionales production.
 	ExitCondicionales(c *CondicionalesContext)
@@ -115,4 +124,7 @@ type gramaticaListener interface {
 
 	// ExitFwhile is called when exiting the fwhile production.
 	ExitFwhile(c *FwhileContext)
+
+	// ExitFloop is called when exiting the floop production.
+	ExitFloop(c *FloopContext)
 }

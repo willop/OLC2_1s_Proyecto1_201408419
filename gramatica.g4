@@ -133,7 +133,7 @@ expresion returns [Interfaces.Expresion exp]
         |e1=expresion TK_or e2=expresion                                                                {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.OR)}
         |e1=expresion TK_and e2=expresion                                                               {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.AND)}
         |TK_sig_admiracion e1=expresion                                                                    {$exp = Expresiones.NuevaLogica($e1.exp,$e1.exp,Interfaces.NOT)}
-        |TK_par_apertura expresion TK_par_cierre
+        |TK_par_apertura va=expresion TK_par_cierre                                                        {$exp =  $va.exp}
         |valores TKR_as TKR_numericos_enteros 
         |valores TKR_as TKR_numericos_flotantes 
         |vall=valores                                                                   {$exp = $vall.exp
@@ -142,18 +142,27 @@ expresion returns [Interfaces.Expresion exp]
 
 
 impresion returns [Interfaces.Instruccion inst]
-        :TKR_println TK_par_apertura e1=expresion TK_par_cierre TK_pcoma                                 {fmt.Println("Impresion")
-                                                                                                        $inst = Instruccion.NuevoPrint($e1.exp)}
-        |TKR_println TK_par_apertura expresion impresioncomas TK_pcoma
+        :TKR_println TK_par_apertura e1=expresion TK_par_cierre TK_pcoma                                {$inst = Instruccion.NuevoPrint($e1.exp,nil)}
+        |TKR_println TK_par_apertura e2=expresion  li=impresionexpresion TK_pcoma                          {$inst = Instruccion.NuevoPrint($e2.exp,$li.lista)}
 ;
 
-impresioncomas: impresioncomas TK_coma expresion TK_par_cierre TK_pcoma                 {fmt.Println("Impresion especial")}
-                |TK_coma expresion TK_par_cierre TK_pcoma                               {fmt.Println("Impresion especial")}
+impresionexpresion returns [*arrayList.List lista]
+@init {$lista = arrayList.New()}
+                        :list+=expcoma*                                         {
+                                                                                        listInt:= localctx.(*ImpresionexpresionContext).GetList()
+                                                                                        for _,e := range listInt{
+                                                                                                $lista.Add(e.GetExp())
+                                                                                        }
+                                                                                }
 ;
 
+expcoma returns[Interfaces.Expresion exp]
+        : TK_coma e=expresion                                                           {$exp = $e.exp}
 
+
+;
 condicionales returns[Interfaces.Instruccion inst]
-                : funcionif                                                     {$inst = $funcionif.inst}
+                : funcionif                                                           {$inst = $funcionif.inst}
                 //|match
 ;
 /*
@@ -163,7 +172,7 @@ match:
   */      
         
 funcionif returns [Interfaces.Instruccion inst]
-        :TKR_if e1=expresion ee=bloque                                             {$inst = Instruccion.NewIf($e1.exp,$ee.lista,nil,nil )}
+        :TKR_if e1=expresion ee=bloque                                                {$inst = Instruccion.NewIf($e1.exp,$ee.lista,nil,nil )}
         |TKR_if e1=expresion e5=bloque TKR_else b2=bloque                             {$inst = Instruccion.NewIf($e1.exp,$e5.lista,nil,$b2.lista)}          
         |TKR_if e1=expresion b1=bloque listaelseif TKR_else b2=bloque                 {$inst = Instruccion.NewIf($e1.exp,$b1.lista,$listaelseif.lista,$b2.lista)}
         |TKR_if e1=expresion b1=bloque listaelseif                                    {$inst = Instruccion.NewIf($e1.exp,$b1.lista,$listaelseif.lista,nil)}
@@ -192,12 +201,17 @@ bloque returns [*arrayList.List lista]
 
 bucles returns [Interfaces.Instruccion inst]
         :fwhile                                                 {$inst = $fwhile.inst}
+        |floop                                                  {$inst = $floop.inst}
 ;
 
 fwhile returns [Interfaces.Instruccion inst]
         :TKR_while e1=expresion bl=bloque                       {$inst = Instruccion.NewWhile($e1.exp, $bl.lista)}
 ;
 
+
+floop returns [Interfaces.Instruccion inst]
+        :TKR_loop bb=bloque                                    {$inst = Instruccion.NewLoop($bb.lista)}
+;
 /* 
 ffor:
 
@@ -293,6 +307,7 @@ TKR_elseif: 'else if';
 TKR_else: 'else';
 TKR_while: 'while';
 TKR_break: 'break';
+TKR_loop: 'loop';
 
 
 //reglas gramaticales
