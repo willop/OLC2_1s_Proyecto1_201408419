@@ -772,8 +772,10 @@ public class gramaticaParser extends Parser {
 	public static class ExpresionContext extends ParserRuleContext {
 		public Interfaces.Expresion exp;
 		public ExpresionContext e1;
+		public ExpresionContext vll;
 		public ExpresionContext e2;
 		public ExpresionContext va;
+		public ValoresContext val;
 		public ValoresContext vall;
 		public Token op;
 		public TerminalNode TK_menos() { return getToken(gramaticaParser.TK_menos, 0); }
@@ -789,11 +791,11 @@ public class gramaticaParser extends Parser {
 		public TerminalNode TK_par_cierre() { return getToken(gramaticaParser.TK_par_cierre, 0); }
 		public TerminalNode TKR_powf() { return getToken(gramaticaParser.TKR_powf, 0); }
 		public TerminalNode TK_sig_admiracion() { return getToken(gramaticaParser.TK_sig_admiracion, 0); }
+		public TerminalNode TKR_as() { return getToken(gramaticaParser.TKR_as, 0); }
+		public TerminalNode TKR_numericos_enteros() { return getToken(gramaticaParser.TKR_numericos_enteros, 0); }
 		public ValoresContext valores() {
 			return getRuleContext(ValoresContext.class,0);
 		}
-		public TerminalNode TKR_as() { return getToken(gramaticaParser.TKR_as, 0); }
-		public TerminalNode TKR_numericos_enteros() { return getToken(gramaticaParser.TKR_numericos_enteros, 0); }
 		public TerminalNode TKR_numericos_flotantes() { return getToken(gramaticaParser.TKR_numericos_flotantes, 0); }
 		public TerminalNode TK_por() { return getToken(gramaticaParser.TK_por, 0); }
 		public TerminalNode TK_diagonal() { return getToken(gramaticaParser.TK_diagonal, 0); }
@@ -807,6 +809,11 @@ public class gramaticaParser extends Parser {
 		public TerminalNode TK_diferente() { return getToken(gramaticaParser.TK_diferente, 0); }
 		public TerminalNode TK_or() { return getToken(gramaticaParser.TK_or, 0); }
 		public TerminalNode TK_and() { return getToken(gramaticaParser.TK_and, 0); }
+		public TerminalNode TK_punto() { return getToken(gramaticaParser.TK_punto, 0); }
+		public TerminalNode TKR_abs() { return getToken(gramaticaParser.TKR_abs, 0); }
+		public TerminalNode TKR_sqrt() { return getToken(gramaticaParser.TKR_sqrt, 0); }
+		public TerminalNode TKR_to_string() { return getToken(gramaticaParser.TKR_to_string, 0); }
+		public TerminalNode TKR_clone() { return getToken(gramaticaParser.TKR_clone, 0); }
 		public ExpresionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -829,7 +836,7 @@ public class gramaticaParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(199);
+			setState(201);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
@@ -837,7 +844,7 @@ public class gramaticaParser extends Parser {
 				setState(159);
 				match(TK_menos);
 				setState(160);
-				((ExpresionContext)_localctx).e1 = expresion(18);
+				((ExpresionContext)_localctx).e1 = expresion(22);
 				numero := -1
 				                                                                                                        numm := Expresion.NuevoPrimitivo(numero, Interfaces.INTEGER)
 				                                                                                                                _localctx.exp = Expresiones.NuevaAritmetica(((ExpresionContext)_localctx).e1.exp, numm ,Interfaces.MULTIPLICACION)
@@ -883,7 +890,7 @@ public class gramaticaParser extends Parser {
 				setState(179);
 				match(TK_sig_admiracion);
 				setState(180);
-				((ExpresionContext)_localctx).e1 = expresion(5);
+				((ExpresionContext)_localctx).e1 = expresion(9);
 				_localctx.exp = Expresiones.NuevaLogica(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e1.exp,Interfaces.NOT)
 				}
 				break;
@@ -895,32 +902,34 @@ public class gramaticaParser extends Parser {
 				((ExpresionContext)_localctx).va = expresion(0);
 				setState(185);
 				match(TK_par_cierre);
-				_localctx.exp =  ((ExpresionContext)_localctx).va.exp
+				_localctx.exp = ((ExpresionContext)_localctx).va.exp
 				}
 				break;
 			case 6:
 				{
 				setState(188);
-				valores();
+				((ExpresionContext)_localctx).val = valores();
 				setState(189);
 				match(TKR_as);
 				setState(190);
 				match(TKR_numericos_enteros);
+				_localctx.exp = Expresiones.NewAsi64(((ExpresionContext)_localctx).val.exp)
 				}
 				break;
 			case 7:
 				{
-				setState(192);
-				valores();
 				setState(193);
-				match(TKR_as);
+				((ExpresionContext)_localctx).val = valores();
 				setState(194);
+				match(TKR_as);
+				setState(195);
 				match(TKR_numericos_flotantes);
+				_localctx.exp = Expresiones.NewAsf64(((ExpresionContext)_localctx).val.exp)
 				}
 				break;
 			case 8:
 				{
-				setState(196);
+				setState(198);
 				((ExpresionContext)_localctx).vall = valores();
 				_localctx.exp = ((ExpresionContext)_localctx).vall.exp
 				                                                                                        fmt.Println(_localctx.exp)
@@ -928,7 +937,7 @@ public class gramaticaParser extends Parser {
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(253);
+			setState(270);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -936,7 +945,7 @@ public class gramaticaParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(251);
+					setState(268);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 					case 1:
@@ -945,9 +954,9 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(201);
-						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
-						setState(202);
+						setState(203);
+						if (!(precpred(_ctx, 21))) throw new FailedPredicateException(this, "precpred(_ctx, 21)");
+						setState(204);
 						((ExpresionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << TK_por) | (1L << TK_diagonal) | (1L << TK_porcentaje))) != 0)) ) {
@@ -958,8 +967,8 @@ public class gramaticaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(203);
-						((ExpresionContext)_localctx).e2 = expresion(18);
+						setState(205);
+						((ExpresionContext)_localctx).e2 = expresion(22);
 
 						                                                                                                                  if (((ExpresionContext)_localctx).op!=null?((ExpresionContext)_localctx).op.getText():null) == "*" {
 						                                                                                                                          _localctx.exp = Expresiones.NuevaAritmetica(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.MULTIPLICACION)
@@ -977,9 +986,9 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(206);
-						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
-						setState(207);
+						setState(208);
+						if (!(precpred(_ctx, 20))) throw new FailedPredicateException(this, "precpred(_ctx, 20)");
+						setState(209);
 						((ExpresionContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==TK_suma || _la==TK_menos) ) {
@@ -990,8 +999,8 @@ public class gramaticaParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(208);
-						((ExpresionContext)_localctx).e2 = expresion(17);
+						setState(210);
+						((ExpresionContext)_localctx).e2 = expresion(21);
 
 						                                                                                                                  if (((ExpresionContext)_localctx).op!=null?((ExpresionContext)_localctx).op.getText():null) == "+" {
 						                                                                                                                          _localctx.exp = Expresiones.NuevaAritmetica(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.SUMA)
@@ -1007,12 +1016,12 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(211);
-						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
-						setState(212);
-						match(TK_menor);
 						setState(213);
-						((ExpresionContext)_localctx).e2 = expresion(14);
+						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
+						setState(214);
+						match(TK_menor);
+						setState(215);
+						((ExpresionContext)_localctx).e2 = expresion(18);
 						_localctx.exp = Expresiones.NuevaRelacional(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.MENOR_QUE)
 						}
 						break;
@@ -1022,12 +1031,12 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(216);
-						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
-						setState(217);
-						match(TK_mayor);
 						setState(218);
-						((ExpresionContext)_localctx).e2 = expresion(13);
+						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
+						setState(219);
+						match(TK_mayor);
+						setState(220);
+						((ExpresionContext)_localctx).e2 = expresion(17);
 						_localctx.exp = Expresiones.NuevaRelacional(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.MAYOR_QUE)
 						}
 						break;
@@ -1037,12 +1046,12 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(221);
-						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(222);
-						match(TK_mayor_igual);
 						setState(223);
-						((ExpresionContext)_localctx).e2 = expresion(12);
+						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
+						setState(224);
+						match(TK_mayor_igual);
+						setState(225);
+						((ExpresionContext)_localctx).e2 = expresion(16);
 						_localctx.exp = Expresiones.NuevaRelacional(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.MAYOR_IGUAL)
 						}
 						break;
@@ -1052,12 +1061,12 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(226);
-						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(227);
-						match(TK_menor_igual);
 						setState(228);
-						((ExpresionContext)_localctx).e2 = expresion(11);
+						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
+						setState(229);
+						match(TK_menor_igual);
+						setState(230);
+						((ExpresionContext)_localctx).e2 = expresion(15);
 						_localctx.exp = Expresiones.NuevaRelacional(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.MENOR_IGUAL)
 						}
 						break;
@@ -1067,12 +1076,12 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(231);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(232);
-						match(TK_igualacion);
 						setState(233);
-						((ExpresionContext)_localctx).e2 = expresion(10);
+						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
+						setState(234);
+						match(TK_igualacion);
+						setState(235);
+						((ExpresionContext)_localctx).e2 = expresion(14);
 						_localctx.exp = Expresiones.NuevaRelacional(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.IGUALDAD)
 						}
 						break;
@@ -1082,12 +1091,12 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(236);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(237);
-						match(TK_diferente);
 						setState(238);
-						((ExpresionContext)_localctx).e2 = expresion(9);
+						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
+						setState(239);
+						match(TK_diferente);
+						setState(240);
+						((ExpresionContext)_localctx).e2 = expresion(13);
 						_localctx.exp = Expresiones.NuevaRelacional(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.DESIGUAL)
 						}
 						break;
@@ -1097,12 +1106,12 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(241);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(242);
-						match(TK_or);
 						setState(243);
-						((ExpresionContext)_localctx).e2 = expresion(8);
+						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
+						setState(244);
+						match(TK_or);
+						setState(245);
+						((ExpresionContext)_localctx).e2 = expresion(12);
 						_localctx.exp = Expresiones.NuevaLogica(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.OR)
 						}
 						break;
@@ -1112,19 +1121,80 @@ public class gramaticaParser extends Parser {
 						_localctx.e1 = _prevctx;
 						_localctx.e1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
-						setState(246);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
-						setState(247);
-						match(TK_and);
 						setState(248);
-						((ExpresionContext)_localctx).e2 = expresion(7);
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						setState(249);
+						match(TK_and);
+						setState(250);
+						((ExpresionContext)_localctx).e2 = expresion(11);
 						_localctx.exp = Expresiones.NuevaLogica(((ExpresionContext)_localctx).e1.exp,((ExpresionContext)_localctx).e2.exp,Interfaces.AND)
+						}
+						break;
+					case 11:
+						{
+						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx.vll = _prevctx;
+						_localctx.vll = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						setState(253);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(254);
+						match(TK_punto);
+						setState(255);
+						match(TKR_abs);
+						setState(256);
+						match(TK_par_apertura);
+						setState(257);
+						match(TK_par_cierre);
+						_localctx.exp = Expresiones.Newabs(((ExpresionContext)_localctx).vll.exp)
+						}
+						break;
+					case 12:
+						{
+						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx.vll = _prevctx;
+						_localctx.vll = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						setState(259);
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(260);
+						match(TK_punto);
+						setState(261);
+						match(TKR_sqrt);
+						}
+						break;
+					case 13:
+						{
+						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx.vll = _prevctx;
+						_localctx.vll = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						setState(262);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(263);
+						match(TK_punto);
+						setState(264);
+						match(TKR_to_string);
+						}
+						break;
+					case 14:
+						{
+						_localctx = new ExpresionContext(_parentctx, _parentState);
+						_localctx.vll = _prevctx;
+						_localctx.vll = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expresion);
+						setState(265);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(266);
+						match(TK_punto);
+						setState(267);
+						match(TKR_clone);
 						}
 						break;
 					}
 					} 
 				}
-				setState(255);
+				setState(272);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
@@ -1166,21 +1236,21 @@ public class gramaticaParser extends Parser {
 		ImpresionContext _localctx = new ImpresionContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_impresion);
 		try {
-			setState(270);
+			setState(287);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(256);
+				setState(273);
 				match(TKR_println);
-				setState(257);
+				setState(274);
 				match(TK_par_apertura);
-				setState(258);
+				setState(275);
 				((ImpresionContext)_localctx).e1 = expresion(0);
-				setState(259);
+				setState(276);
 				match(TK_par_cierre);
-				setState(260);
+				setState(277);
 				match(TK_pcoma);
 				_localctx.inst = Instruccion.NuevoPrint(((ImpresionContext)_localctx).e1.exp,nil)
 				}
@@ -1188,15 +1258,15 @@ public class gramaticaParser extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(263);
+				setState(280);
 				match(TKR_println);
-				setState(264);
+				setState(281);
 				match(TK_par_apertura);
-				setState(265);
+				setState(282);
 				((ImpresionContext)_localctx).e2 = expresion(0);
-				setState(266);
+				setState(283);
 				((ImpresionContext)_localctx).li = impresionexpresion();
-				setState(267);
+				setState(284);
 				match(TK_pcoma);
 				_localctx.inst = Instruccion.NuevoPrint(((ImpresionContext)_localctx).e2.exp,((ImpresionContext)_localctx).li.lista)
 				}
@@ -1238,18 +1308,18 @@ public class gramaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(275);
+			setState(292);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==TK_coma) {
 				{
 				{
-				setState(272);
+				setState(289);
 				((ImpresionexpresionContext)_localctx).expcoma = expcoma();
 				((ImpresionexpresionContext)_localctx).list.add(((ImpresionexpresionContext)_localctx).expcoma);
 				}
 				}
-				setState(277);
+				setState(294);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1291,9 +1361,9 @@ public class gramaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(280);
+			setState(297);
 			match(TK_coma);
-			setState(281);
+			setState(298);
 			((ExpcomaContext)_localctx).e = expresion(0);
 			_localctx.exp = ((ExpcomaContext)_localctx).e.exp
 			}
@@ -1327,7 +1397,7 @@ public class gramaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(284);
+			setState(301);
 			((CondicionalesContext)_localctx).funcionif = funcionif();
 			_localctx.inst = ((CondicionalesContext)_localctx).funcionif.inst
 			}
@@ -1375,17 +1445,17 @@ public class gramaticaParser extends Parser {
 		FuncionifContext _localctx = new FuncionifContext(_ctx, getState());
 		enterRule(_localctx, 26, RULE_funcionif);
 		try {
-			setState(313);
+			setState(330);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(287);
+				setState(304);
 				match(TKR_if);
-				setState(288);
+				setState(305);
 				((FuncionifContext)_localctx).e1 = expresion(0);
-				setState(289);
+				setState(306);
 				((FuncionifContext)_localctx).ee = bloque();
 				_localctx.inst = Instruccion.NewIf(((FuncionifContext)_localctx).e1.exp,((FuncionifContext)_localctx).ee.lista,nil,nil )
 				}
@@ -1393,15 +1463,15 @@ public class gramaticaParser extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(292);
+				setState(309);
 				match(TKR_if);
-				setState(293);
+				setState(310);
 				((FuncionifContext)_localctx).e1 = expresion(0);
-				setState(294);
+				setState(311);
 				((FuncionifContext)_localctx).e5 = bloque();
-				setState(295);
+				setState(312);
 				match(TKR_else);
-				setState(296);
+				setState(313);
 				((FuncionifContext)_localctx).b2 = bloque();
 				_localctx.inst = Instruccion.NewIf(((FuncionifContext)_localctx).e1.exp,((FuncionifContext)_localctx).e5.lista,nil,((FuncionifContext)_localctx).b2.lista)
 				}
@@ -1409,17 +1479,17 @@ public class gramaticaParser extends Parser {
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(299);
+				setState(316);
 				match(TKR_if);
-				setState(300);
+				setState(317);
 				((FuncionifContext)_localctx).e1 = expresion(0);
-				setState(301);
+				setState(318);
 				((FuncionifContext)_localctx).b1 = bloque();
-				setState(302);
+				setState(319);
 				((FuncionifContext)_localctx).listaelseif = listaelseif();
-				setState(303);
+				setState(320);
 				match(TKR_else);
-				setState(304);
+				setState(321);
 				((FuncionifContext)_localctx).b2 = bloque();
 				_localctx.inst = Instruccion.NewIf(((FuncionifContext)_localctx).e1.exp,((FuncionifContext)_localctx).b1.lista,((FuncionifContext)_localctx).listaelseif.lista,((FuncionifContext)_localctx).b2.lista)
 				}
@@ -1427,13 +1497,13 @@ public class gramaticaParser extends Parser {
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(307);
+				setState(324);
 				match(TKR_if);
-				setState(308);
+				setState(325);
 				((FuncionifContext)_localctx).e1 = expresion(0);
-				setState(309);
+				setState(326);
 				((FuncionifContext)_localctx).b1 = bloque();
-				setState(310);
+				setState(327);
 				((FuncionifContext)_localctx).listaelseif = listaelseif();
 				_localctx.inst = Instruccion.NewIf(((FuncionifContext)_localctx).e1.exp,((FuncionifContext)_localctx).b1.lista,((FuncionifContext)_localctx).listaelseif.lista,nil)
 				}
@@ -1474,11 +1544,11 @@ public class gramaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(315);
+			setState(332);
 			match(TKR_elseif);
-			setState(316);
+			setState(333);
 			((FuncionelseifContext)_localctx).e1 = expresion(0);
-			setState(317);
+			setState(334);
 			((FuncionelseifContext)_localctx).bloque = bloque();
 			_localctx.inst = Instruccion.NewIf(((FuncionelseifContext)_localctx).e1.exp,((FuncionelseifContext)_localctx).bloque.lista,nil,nil)
 			}
@@ -1518,18 +1588,18 @@ public class gramaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(323);
+			setState(340);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==TKR_elseif) {
 				{
 				{
-				setState(320);
+				setState(337);
 				((ListaelseifContext)_localctx).funcionelseif = funcionelseif();
 				((ListaelseifContext)_localctx).list.add(((ListaelseifContext)_localctx).funcionelseif);
 				}
 				}
-				setState(325);
+				setState(342);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1570,17 +1640,17 @@ public class gramaticaParser extends Parser {
 		BloqueContext _localctx = new BloqueContext(_ctx, getState());
 		enterRule(_localctx, 32, RULE_bloque);
 		try {
-			setState(336);
+			setState(353);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(328);
+				setState(345);
 				match(TK_corchete_apertura);
-				setState(329);
+				setState(346);
 				((BloqueContext)_localctx).instrucciones = instrucciones();
-				setState(330);
+				setState(347);
 				match(TK_corchete_cierre);
 				_localctx.lista = ((BloqueContext)_localctx).instrucciones.lista
 				}
@@ -1588,9 +1658,9 @@ public class gramaticaParser extends Parser {
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(333);
+				setState(350);
 				match(TK_corchete_apertura);
-				setState(334);
+				setState(351);
 				match(TK_corchete_cierre);
 				_localctx.lista = arrayList.New()
 				}
@@ -1628,13 +1698,13 @@ public class gramaticaParser extends Parser {
 		BuclesContext _localctx = new BuclesContext(_ctx, getState());
 		enterRule(_localctx, 34, RULE_bucles);
 		try {
-			setState(344);
+			setState(361);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TKR_while:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(338);
+				setState(355);
 				((BuclesContext)_localctx).fwhile = fwhile();
 				_localctx.inst = ((BuclesContext)_localctx).fwhile.inst
 				}
@@ -1642,7 +1712,7 @@ public class gramaticaParser extends Parser {
 			case TKR_loop:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(341);
+				setState(358);
 				((BuclesContext)_localctx).floop = floop();
 				_localctx.inst = ((BuclesContext)_localctx).floop.inst
 				}
@@ -1685,11 +1755,11 @@ public class gramaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(346);
+			setState(363);
 			match(TKR_while);
-			setState(347);
+			setState(364);
 			((FwhileContext)_localctx).e1 = expresion(0);
-			setState(348);
+			setState(365);
 			((FwhileContext)_localctx).bl = bloque();
 			_localctx.inst = Instruccion.NewWhile(((FwhileContext)_localctx).e1.exp, ((FwhileContext)_localctx).bl.lista)
 			}
@@ -1724,9 +1794,9 @@ public class gramaticaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(351);
+			setState(368);
 			match(TKR_loop);
-			setState(352);
+			setState(369);
 			((FloopContext)_localctx).bb = bloque();
 			_localctx.inst = Instruccion.NewLoop(((FloopContext)_localctx).bb.lista)
 			}
@@ -1752,31 +1822,39 @@ public class gramaticaParser extends Parser {
 	private boolean expresion_sempred(ExpresionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 17);
+			return precpred(_ctx, 21);
 		case 1:
-			return precpred(_ctx, 16);
+			return precpred(_ctx, 20);
 		case 2:
-			return precpred(_ctx, 13);
+			return precpred(_ctx, 17);
 		case 3:
-			return precpred(_ctx, 12);
+			return precpred(_ctx, 16);
 		case 4:
-			return precpred(_ctx, 11);
+			return precpred(_ctx, 15);
 		case 5:
-			return precpred(_ctx, 10);
+			return precpred(_ctx, 14);
 		case 6:
-			return precpred(_ctx, 9);
+			return precpred(_ctx, 13);
 		case 7:
-			return precpred(_ctx, 8);
+			return precpred(_ctx, 12);
 		case 8:
-			return precpred(_ctx, 7);
+			return precpred(_ctx, 11);
 		case 9:
-			return precpred(_ctx, 6);
+			return precpred(_ctx, 10);
+		case 10:
+			return precpred(_ctx, 5);
+		case 11:
+			return precpred(_ctx, 4);
+		case 12:
+			return precpred(_ctx, 3);
+		case 13:
+			return precpred(_ctx, 2);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3N\u0166\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3N\u0177\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\3"+
@@ -1788,24 +1866,25 @@ public class gramaticaParser extends Parser {
 		"\7\3\b\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t"+
 		"\3\t\3\t\3\t\3\t\3\t\5\t\u009f\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n"+
 		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3"+
-		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n\u00ca\n"+
-		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n"+
+		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n"+
+		"\u00cc\n\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n"+
 		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3"+
-		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u00fe"+
-		"\n\n\f\n\16\n\u0101\13\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
-		"\3\13\3\13\3\13\3\13\3\13\5\13\u0111\n\13\3\f\7\f\u0114\n\f\f\f\16\f\u0117"+
+		"\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n"+
+		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u010f"+
+		"\n\n\f\n\16\n\u0112\13\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\5\13\u0122\n\13\3\f\7\f\u0125\n\f\f\f\16\f\u0128"+
 		"\13\f\3\f\3\f\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17"+
 		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
-		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u013c\n\17\3\20\3\20\3\20\3\20"+
-		"\3\20\3\21\7\21\u0144\n\21\f\21\16\21\u0147\13\21\3\21\3\21\3\22\3\22"+
-		"\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u0153\n\22\3\23\3\23\3\23\3\23\3\23"+
-		"\3\23\5\23\u015b\n\23\3\24\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\25"+
+		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u014d\n\17\3\20\3\20\3\20\3\20"+
+		"\3\20\3\21\7\21\u0155\n\21\f\21\16\21\u0158\13\21\3\21\3\21\3\22\3\22"+
+		"\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u0164\n\22\3\23\3\23\3\23\3\23\3\23"+
+		"\3\23\5\23\u016c\n\23\3\24\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\25"+
 		"\2\3\22\26\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(\2\4\3\2\31\33"+
-		"\3\2\27\30\2\u0180\2*\3\2\2\2\4\66\3\2\2\2\6P\3\2\2\2\bR\3\2\2\2\nx\3"+
-		"\2\2\2\f\u0086\3\2\2\2\16\u0088\3\2\2\2\20\u009e\3\2\2\2\22\u00c9\3\2"+
-		"\2\2\24\u0110\3\2\2\2\26\u0115\3\2\2\2\30\u011a\3\2\2\2\32\u011e\3\2\2"+
-		"\2\34\u013b\3\2\2\2\36\u013d\3\2\2\2 \u0145\3\2\2\2\"\u0152\3\2\2\2$\u015a"+
-		"\3\2\2\2&\u015c\3\2\2\2(\u0161\3\2\2\2*+\7\64\2\2+,\7B\2\2,-\7\24\2\2"+
+		"\3\2\27\30\2\u0195\2*\3\2\2\2\4\66\3\2\2\2\6P\3\2\2\2\bR\3\2\2\2\nx\3"+
+		"\2\2\2\f\u0086\3\2\2\2\16\u0088\3\2\2\2\20\u009e\3\2\2\2\22\u00cb\3\2"+
+		"\2\2\24\u0121\3\2\2\2\26\u0126\3\2\2\2\30\u012b\3\2\2\2\32\u012f\3\2\2"+
+		"\2\34\u014c\3\2\2\2\36\u014e\3\2\2\2 \u0156\3\2\2\2\"\u0163\3\2\2\2$\u016b"+
+		"\3\2\2\2&\u016d\3\2\2\2(\u0172\3\2\2\2*+\7\64\2\2+,\7B\2\2,-\7\24\2\2"+
 		"-.\7\25\2\2./\7\n\2\2/\60\5\4\3\2\60\61\7\13\2\2\61\62\b\2\1\2\62\3\3"+
 		"\2\2\2\63\65\5\6\4\2\64\63\3\2\2\2\658\3\2\2\2\66\64\3\2\2\2\66\67\3\2"+
 		"\2\2\679\3\2\2\28\66\3\2\2\29:\b\3\1\2:\5\3\2\2\2;<\5\22\n\2<=\b\4\1\2"+
@@ -1833,70 +1912,76 @@ public class gramaticaParser extends Parser {
 		"\u008e\3\2\2\2\u009e\u0090\3\2\2\2\u009e\u0092\3\2\2\2\u009e\u0094\3\2"+
 		"\2\2\u009e\u0096\3\2\2\2\u009e\u0098\3\2\2\2\u009e\u009a\3\2\2\2\u009e"+
 		"\u009c\3\2\2\2\u009f\21\3\2\2\2\u00a0\u00a1\b\n\1\2\u00a1\u00a2\7\30\2"+
-		"\2\u00a2\u00a3\5\22\n\24\u00a3\u00a4\b\n\1\2\u00a4\u00ca\3\2\2\2\u00a5"+
+		"\2\u00a2\u00a3\5\22\n\30\u00a3\u00a4\b\n\1\2\u00a4\u00cc\3\2\2\2\u00a5"+
 		"\u00a6\7%\2\2\u00a6\u00a7\7\24\2\2\u00a7\u00a8\5\22\n\2\u00a8\u00a9\7"+
 		"\17\2\2\u00a9\u00aa\5\22\n\2\u00aa\u00ab\7\25\2\2\u00ab\u00ac\b\n\1\2"+
-		"\u00ac\u00ca\3\2\2\2\u00ad\u00ae\7\'\2\2\u00ae\u00af\7\24\2\2\u00af\u00b0"+
+		"\u00ac\u00cc\3\2\2\2\u00ad\u00ae\7\'\2\2\u00ae\u00af\7\24\2\2\u00af\u00b0"+
 		"\5\22\n\2\u00b0\u00b1\7\17\2\2\u00b1\u00b2\5\22\n\2\u00b2\u00b3\7\25\2"+
-		"\2\u00b3\u00b4\b\n\1\2\u00b4\u00ca\3\2\2\2\u00b5\u00b6\7\36\2\2\u00b6"+
-		"\u00b7\5\22\n\7\u00b7\u00b8\b\n\1\2\u00b8\u00ca\3\2\2\2\u00b9\u00ba\7"+
+		"\2\u00b3\u00b4\b\n\1\2\u00b4\u00cc\3\2\2\2\u00b5\u00b6\7\36\2\2\u00b6"+
+		"\u00b7\5\22\n\13\u00b7\u00b8\b\n\1\2\u00b8\u00cc\3\2\2\2\u00b9\u00ba\7"+
 		"\24\2\2\u00ba\u00bb\5\22\n\2\u00bb\u00bc\7\25\2\2\u00bc\u00bd\b\n\1\2"+
-		"\u00bd\u00ca\3\2\2\2\u00be\u00bf\5\20\t\2\u00bf\u00c0\7\60\2\2\u00c0\u00c1"+
-		"\7#\2\2\u00c1\u00ca\3\2\2\2\u00c2\u00c3\5\20\t\2\u00c3\u00c4\7\60\2\2"+
-		"\u00c4\u00c5\7$\2\2\u00c5\u00ca\3\2\2\2\u00c6\u00c7\5\20\t\2\u00c7\u00c8"+
-		"\b\n\1\2\u00c8\u00ca\3\2\2\2\u00c9\u00a0\3\2\2\2\u00c9\u00a5\3\2\2\2\u00c9"+
-		"\u00ad\3\2\2\2\u00c9\u00b5\3\2\2\2\u00c9\u00b9\3\2\2\2\u00c9\u00be\3\2"+
-		"\2\2\u00c9\u00c2\3\2\2\2\u00c9\u00c6\3\2\2\2\u00ca\u00ff\3\2\2\2\u00cb"+
-		"\u00cc\f\23\2\2\u00cc\u00cd\t\2\2\2\u00cd\u00ce\5\22\n\24\u00ce\u00cf"+
-		"\b\n\1\2\u00cf\u00fe\3\2\2\2\u00d0\u00d1\f\22\2\2\u00d1\u00d2\t\3\2\2"+
-		"\u00d2\u00d3\5\22\n\23\u00d3\u00d4\b\n\1\2\u00d4\u00fe\3\2\2\2\u00d5\u00d6"+
-		"\f\17\2\2\u00d6\u00d7\7\21\2\2\u00d7\u00d8\5\22\n\20\u00d8\u00d9\b\n\1"+
-		"\2\u00d9\u00fe\3\2\2\2\u00da\u00db\f\16\2\2\u00db\u00dc\7\22\2\2\u00dc"+
-		"\u00dd\5\22\n\17\u00dd\u00de\b\n\1\2\u00de\u00fe\3\2\2\2\u00df\u00e0\f"+
-		"\r\2\2\u00e0\u00e1\7\b\2\2\u00e1\u00e2\5\22\n\16\u00e2\u00e3\b\n\1\2\u00e3"+
-		"\u00fe\3\2\2\2\u00e4\u00e5\f\f\2\2\u00e5\u00e6\7\t\2\2\u00e6\u00e7\5\22"+
-		"\n\r\u00e7\u00e8\b\n\1\2\u00e8\u00fe\3\2\2\2\u00e9\u00ea\f\13\2\2\u00ea"+
-		"\u00eb\7\6\2\2\u00eb\u00ec\5\22\n\f\u00ec\u00ed\b\n\1\2\u00ed\u00fe\3"+
-		"\2\2\2\u00ee\u00ef\f\n\2\2\u00ef\u00f0\7\7\2\2\u00f0\u00f1\5\22\n\13\u00f1"+
-		"\u00f2\b\n\1\2\u00f2\u00fe\3\2\2\2\u00f3\u00f4\f\t\2\2\u00f4\u00f5\7\4"+
-		"\2\2\u00f5\u00f6\5\22\n\n\u00f6\u00f7\b\n\1\2\u00f7\u00fe\3\2\2\2\u00f8"+
-		"\u00f9\f\b\2\2\u00f9\u00fa\7\5\2\2\u00fa\u00fb\5\22\n\t\u00fb\u00fc\b"+
-		"\n\1\2\u00fc\u00fe\3\2\2\2\u00fd\u00cb\3\2\2\2\u00fd\u00d0\3\2\2\2\u00fd"+
-		"\u00d5\3\2\2\2\u00fd\u00da\3\2\2\2\u00fd\u00df\3\2\2\2\u00fd\u00e4\3\2"+
-		"\2\2\u00fd\u00e9\3\2\2\2\u00fd\u00ee\3\2\2\2\u00fd\u00f3\3\2\2\2\u00fd"+
-		"\u00f8\3\2\2\2\u00fe\u0101\3\2\2\2\u00ff\u00fd\3\2\2\2\u00ff\u0100\3\2"+
-		"\2\2\u0100\23\3\2\2\2\u0101\u00ff\3\2\2\2\u0102\u0103\7\61\2\2\u0103\u0104"+
-		"\7\24\2\2\u0104\u0105\5\22\n\2\u0105\u0106\7\25\2\2\u0106\u0107\7\20\2"+
-		"\2\u0107\u0108\b\13\1\2\u0108\u0111\3\2\2\2\u0109\u010a\7\61\2\2\u010a"+
-		"\u010b\7\24\2\2\u010b\u010c\5\22\n\2\u010c\u010d\5\26\f\2\u010d\u010e"+
-		"\7\20\2\2\u010e\u010f\b\13\1\2\u010f\u0111\3\2\2\2\u0110\u0102\3\2\2\2"+
-		"\u0110\u0109\3\2\2\2\u0111\25\3\2\2\2\u0112\u0114\5\30\r\2\u0113\u0112"+
-		"\3\2\2\2\u0114\u0117\3\2\2\2\u0115\u0113\3\2\2\2\u0115\u0116\3\2\2\2\u0116"+
-		"\u0118\3\2\2\2\u0117\u0115\3\2\2\2\u0118\u0119\b\f\1\2\u0119\27\3\2\2"+
-		"\2\u011a\u011b\7\17\2\2\u011b\u011c\5\22\n\2\u011c\u011d\b\r\1\2\u011d"+
-		"\31\3\2\2\2\u011e\u011f\5\34\17\2\u011f\u0120\b\16\1\2\u0120\33\3\2\2"+
-		"\2\u0121\u0122\7C\2\2\u0122\u0123\5\22\n\2\u0123\u0124\5\"\22\2\u0124"+
-		"\u0125\b\17\1\2\u0125\u013c\3\2\2\2\u0126\u0127\7C\2\2\u0127\u0128\5\22"+
-		"\n\2\u0128\u0129\5\"\22\2\u0129\u012a\7E\2\2\u012a\u012b\5\"\22\2\u012b"+
-		"\u012c\b\17\1\2\u012c\u013c\3\2\2\2\u012d\u012e\7C\2\2\u012e\u012f\5\22"+
-		"\n\2\u012f\u0130\5\"\22\2\u0130\u0131\5 \21\2\u0131\u0132\7E\2\2\u0132"+
-		"\u0133\5\"\22\2\u0133\u0134\b\17\1\2\u0134\u013c\3\2\2\2\u0135\u0136\7"+
-		"C\2\2\u0136\u0137\5\22\n\2\u0137\u0138\5\"\22\2\u0138\u0139\5 \21\2\u0139"+
-		"\u013a\b\17\1\2\u013a\u013c\3\2\2\2\u013b\u0121\3\2\2\2\u013b\u0126\3"+
-		"\2\2\2\u013b\u012d\3\2\2\2\u013b\u0135\3\2\2\2\u013c\35\3\2\2\2\u013d"+
-		"\u013e\7D\2\2\u013e\u013f\5\22\n\2\u013f\u0140\5\"\22\2\u0140\u0141\b"+
-		"\20\1\2\u0141\37\3\2\2\2\u0142\u0144\5\36\20\2\u0143\u0142\3\2\2\2\u0144"+
-		"\u0147\3\2\2\2\u0145\u0143\3\2\2\2\u0145\u0146\3\2\2\2\u0146\u0148\3\2"+
-		"\2\2\u0147\u0145\3\2\2\2\u0148\u0149\b\21\1\2\u0149!\3\2\2\2\u014a\u014b"+
-		"\7\n\2\2\u014b\u014c\5\4\3\2\u014c\u014d\7\13\2\2\u014d\u014e\b\22\1\2"+
-		"\u014e\u0153\3\2\2\2\u014f\u0150\7\n\2\2\u0150\u0151\7\13\2\2\u0151\u0153"+
-		"\b\22\1\2\u0152\u014a\3\2\2\2\u0152\u014f\3\2\2\2\u0153#\3\2\2\2\u0154"+
-		"\u0155\5&\24\2\u0155\u0156\b\23\1\2\u0156\u015b\3\2\2\2\u0157\u0158\5"+
-		"(\25\2\u0158\u0159\b\23\1\2\u0159\u015b\3\2\2\2\u015a\u0154\3\2\2\2\u015a"+
-		"\u0157\3\2\2\2\u015b%\3\2\2\2\u015c\u015d\7F\2\2\u015d\u015e\5\22\n\2"+
-		"\u015e\u015f\5\"\22\2\u015f\u0160\b\24\1\2\u0160\'\3\2\2\2\u0161\u0162"+
-		"\7H\2\2\u0162\u0163\5\"\22\2\u0163\u0164\b\25\1\2\u0164)\3\2\2\2\20\66"+
-		"Px\u0086\u009e\u00c9\u00fd\u00ff\u0110\u0115\u013b\u0145\u0152\u015a";
+		"\u00bd\u00cc\3\2\2\2\u00be\u00bf\5\20\t\2\u00bf\u00c0\7\60\2\2\u00c0\u00c1"+
+		"\7#\2\2\u00c1\u00c2\b\n\1\2\u00c2\u00cc\3\2\2\2\u00c3\u00c4\5\20\t\2\u00c4"+
+		"\u00c5\7\60\2\2\u00c5\u00c6\7$\2\2\u00c6\u00c7\b\n\1\2\u00c7\u00cc\3\2"+
+		"\2\2\u00c8\u00c9\5\20\t\2\u00c9\u00ca\b\n\1\2\u00ca\u00cc\3\2\2\2\u00cb"+
+		"\u00a0\3\2\2\2\u00cb\u00a5\3\2\2\2\u00cb\u00ad\3\2\2\2\u00cb\u00b5\3\2"+
+		"\2\2\u00cb\u00b9\3\2\2\2\u00cb\u00be\3\2\2\2\u00cb\u00c3\3\2\2\2\u00cb"+
+		"\u00c8\3\2\2\2\u00cc\u0110\3\2\2\2\u00cd\u00ce\f\27\2\2\u00ce\u00cf\t"+
+		"\2\2\2\u00cf\u00d0\5\22\n\30\u00d0\u00d1\b\n\1\2\u00d1\u010f\3\2\2\2\u00d2"+
+		"\u00d3\f\26\2\2\u00d3\u00d4\t\3\2\2\u00d4\u00d5\5\22\n\27\u00d5\u00d6"+
+		"\b\n\1\2\u00d6\u010f\3\2\2\2\u00d7\u00d8\f\23\2\2\u00d8\u00d9\7\21\2\2"+
+		"\u00d9\u00da\5\22\n\24\u00da\u00db\b\n\1\2\u00db\u010f\3\2\2\2\u00dc\u00dd"+
+		"\f\22\2\2\u00dd\u00de\7\22\2\2\u00de\u00df\5\22\n\23\u00df\u00e0\b\n\1"+
+		"\2\u00e0\u010f\3\2\2\2\u00e1\u00e2\f\21\2\2\u00e2\u00e3\7\b\2\2\u00e3"+
+		"\u00e4\5\22\n\22\u00e4\u00e5\b\n\1\2\u00e5\u010f\3\2\2\2\u00e6\u00e7\f"+
+		"\20\2\2\u00e7\u00e8\7\t\2\2\u00e8\u00e9\5\22\n\21\u00e9\u00ea\b\n\1\2"+
+		"\u00ea\u010f\3\2\2\2\u00eb\u00ec\f\17\2\2\u00ec\u00ed\7\6\2\2\u00ed\u00ee"+
+		"\5\22\n\20\u00ee\u00ef\b\n\1\2\u00ef\u010f\3\2\2\2\u00f0\u00f1\f\16\2"+
+		"\2\u00f1\u00f2\7\7\2\2\u00f2\u00f3\5\22\n\17\u00f3\u00f4\b\n\1\2\u00f4"+
+		"\u010f\3\2\2\2\u00f5\u00f6\f\r\2\2\u00f6\u00f7\7\4\2\2\u00f7\u00f8\5\22"+
+		"\n\16\u00f8\u00f9\b\n\1\2\u00f9\u010f\3\2\2\2\u00fa\u00fb\f\f\2\2\u00fb"+
+		"\u00fc\7\5\2\2\u00fc\u00fd\5\22\n\r\u00fd\u00fe\b\n\1\2\u00fe\u010f\3"+
+		"\2\2\2\u00ff\u0100\f\7\2\2\u0100\u0101\7\23\2\2\u0101\u0102\7\66\2\2\u0102"+
+		"\u0103\7\24\2\2\u0103\u0104\7\25\2\2\u0104\u010f\b\n\1\2\u0105\u0106\f"+
+		"\6\2\2\u0106\u0107\7\23\2\2\u0107\u010f\7\67\2\2\u0108\u0109\f\5\2\2\u0109"+
+		"\u010a\7\23\2\2\u010a\u010f\78\2\2\u010b\u010c\f\4\2\2\u010c\u010d\7\23"+
+		"\2\2\u010d\u010f\79\2\2\u010e\u00cd\3\2\2\2\u010e\u00d2\3\2\2\2\u010e"+
+		"\u00d7\3\2\2\2\u010e\u00dc\3\2\2\2\u010e\u00e1\3\2\2\2\u010e\u00e6\3\2"+
+		"\2\2\u010e\u00eb\3\2\2\2\u010e\u00f0\3\2\2\2\u010e\u00f5\3\2\2\2\u010e"+
+		"\u00fa\3\2\2\2\u010e\u00ff\3\2\2\2\u010e\u0105\3\2\2\2\u010e\u0108\3\2"+
+		"\2\2\u010e\u010b\3\2\2\2\u010f\u0112\3\2\2\2\u0110\u010e\3\2\2\2\u0110"+
+		"\u0111\3\2\2\2\u0111\23\3\2\2\2\u0112\u0110\3\2\2\2\u0113\u0114\7\61\2"+
+		"\2\u0114\u0115\7\24\2\2\u0115\u0116\5\22\n\2\u0116\u0117\7\25\2\2\u0117"+
+		"\u0118\7\20\2\2\u0118\u0119\b\13\1\2\u0119\u0122\3\2\2\2\u011a\u011b\7"+
+		"\61\2\2\u011b\u011c\7\24\2\2\u011c\u011d\5\22\n\2\u011d\u011e\5\26\f\2"+
+		"\u011e\u011f\7\20\2\2\u011f\u0120\b\13\1\2\u0120\u0122\3\2\2\2\u0121\u0113"+
+		"\3\2\2\2\u0121\u011a\3\2\2\2\u0122\25\3\2\2\2\u0123\u0125\5\30\r\2\u0124"+
+		"\u0123\3\2\2\2\u0125\u0128\3\2\2\2\u0126\u0124\3\2\2\2\u0126\u0127\3\2"+
+		"\2\2\u0127\u0129\3\2\2\2\u0128\u0126\3\2\2\2\u0129\u012a\b\f\1\2\u012a"+
+		"\27\3\2\2\2\u012b\u012c\7\17\2\2\u012c\u012d\5\22\n\2\u012d\u012e\b\r"+
+		"\1\2\u012e\31\3\2\2\2\u012f\u0130\5\34\17\2\u0130\u0131\b\16\1\2\u0131"+
+		"\33\3\2\2\2\u0132\u0133\7C\2\2\u0133\u0134\5\22\n\2\u0134\u0135\5\"\22"+
+		"\2\u0135\u0136\b\17\1\2\u0136\u014d\3\2\2\2\u0137\u0138\7C\2\2\u0138\u0139"+
+		"\5\22\n\2\u0139\u013a\5\"\22\2\u013a\u013b\7E\2\2\u013b\u013c\5\"\22\2"+
+		"\u013c\u013d\b\17\1\2\u013d\u014d\3\2\2\2\u013e\u013f\7C\2\2\u013f\u0140"+
+		"\5\22\n\2\u0140\u0141\5\"\22\2\u0141\u0142\5 \21\2\u0142\u0143\7E\2\2"+
+		"\u0143\u0144\5\"\22\2\u0144\u0145\b\17\1\2\u0145\u014d\3\2\2\2\u0146\u0147"+
+		"\7C\2\2\u0147\u0148\5\22\n\2\u0148\u0149\5\"\22\2\u0149\u014a\5 \21\2"+
+		"\u014a\u014b\b\17\1\2\u014b\u014d\3\2\2\2\u014c\u0132\3\2\2\2\u014c\u0137"+
+		"\3\2\2\2\u014c\u013e\3\2\2\2\u014c\u0146\3\2\2\2\u014d\35\3\2\2\2\u014e"+
+		"\u014f\7D\2\2\u014f\u0150\5\22\n\2\u0150\u0151\5\"\22\2\u0151\u0152\b"+
+		"\20\1\2\u0152\37\3\2\2\2\u0153\u0155\5\36\20\2\u0154\u0153\3\2\2\2\u0155"+
+		"\u0158\3\2\2\2\u0156\u0154\3\2\2\2\u0156\u0157\3\2\2\2\u0157\u0159\3\2"+
+		"\2\2\u0158\u0156\3\2\2\2\u0159\u015a\b\21\1\2\u015a!\3\2\2\2\u015b\u015c"+
+		"\7\n\2\2\u015c\u015d\5\4\3\2\u015d\u015e\7\13\2\2\u015e\u015f\b\22\1\2"+
+		"\u015f\u0164\3\2\2\2\u0160\u0161\7\n\2\2\u0161\u0162\7\13\2\2\u0162\u0164"+
+		"\b\22\1\2\u0163\u015b\3\2\2\2\u0163\u0160\3\2\2\2\u0164#\3\2\2\2\u0165"+
+		"\u0166\5&\24\2\u0166\u0167\b\23\1\2\u0167\u016c\3\2\2\2\u0168\u0169\5"+
+		"(\25\2\u0169\u016a\b\23\1\2\u016a\u016c\3\2\2\2\u016b\u0165\3\2\2\2\u016b"+
+		"\u0168\3\2\2\2\u016c%\3\2\2\2\u016d\u016e\7F\2\2\u016e\u016f\5\22\n\2"+
+		"\u016f\u0170\5\"\22\2\u0170\u0171\b\24\1\2\u0171\'\3\2\2\2\u0172\u0173"+
+		"\7H\2\2\u0173\u0174\5\"\22\2\u0174\u0175\b\25\1\2\u0175)\3\2\2\2\20\66"+
+		"Px\u0086\u009e\u00cb\u010e\u0110\u0121\u0126\u014c\u0156\u0163\u016b";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

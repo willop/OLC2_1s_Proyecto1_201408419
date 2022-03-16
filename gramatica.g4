@@ -37,7 +37,7 @@ instrucciones returns [*arrayList.List lista]
 
 
 instruccion returns[Interfaces.Instruccion inst]
-            : expresion                                                                {fmt.Println("mensaje en instrucciones: ",$expresion.exp)}
+            : expresion                                                                 {fmt.Println("mensaje en instrucciones: ",$expresion.exp)}
             |impresion                                                                  {$inst = $impresion.inst}
             |declaracion                                                                {$inst = $declaracion.inst}
             |identificadores                                                            {$inst = $identificadores.inst}
@@ -124,18 +124,22 @@ expresion returns [Interfaces.Expresion exp]
                                                                                                 }
         |TKR_pow TK_par_apertura e1=expresion TK_coma e2=expresion TK_par_cierre                      {$exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.POW)}
         |TKR_powf TK_par_apertura e1=expresion TK_coma e2=expresion TK_par_cierre                     {$exp = Expresiones.NuevaAritmetica($e1.exp,$e2.exp,Interfaces.POWF)}
-        |e1=expresion TK_menor e2=expresion                                                                   {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MENOR_QUE)}
-        |e1=expresion TK_mayor e2=expresion                                                                   {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MAYOR_QUE)}
-        |e1=expresion TK_mayor_igual e2=expresion                                                             {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MAYOR_IGUAL)}
-        |e1=expresion TK_menor_igual e2=expresion                                                             {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MENOR_IGUAL)}
-        |e1=expresion TK_igualacion e2=expresion                                                              {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.IGUALDAD)}
-        |e1=expresion TK_diferente e2=expresion                                                               {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.DESIGUAL)}
-        |e1=expresion TK_or e2=expresion                                                                {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.OR)}
-        |e1=expresion TK_and e2=expresion                                                               {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.AND)}
-        |TK_sig_admiracion e1=expresion                                                                    {$exp = Expresiones.NuevaLogica($e1.exp,$e1.exp,Interfaces.NOT)}
-        |TK_par_apertura va=expresion TK_par_cierre                                                        {$exp =  $va.exp}
-        |valores TKR_as TKR_numericos_enteros 
-        |valores TKR_as TKR_numericos_flotantes 
+        |e1=expresion TK_menor e2=expresion                                                           {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MENOR_QUE)}
+        |e1=expresion TK_mayor e2=expresion                                                           {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MAYOR_QUE)}
+        |e1=expresion TK_mayor_igual e2=expresion                                                     {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MAYOR_IGUAL)}
+        |e1=expresion TK_menor_igual e2=expresion                                                     {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.MENOR_IGUAL)}
+        |e1=expresion TK_igualacion e2=expresion                                                      {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.IGUALDAD)}
+        |e1=expresion TK_diferente e2=expresion                                                       {$exp = Expresiones.NuevaRelacional($e1.exp,$e2.exp,Interfaces.DESIGUAL)}
+        |e1=expresion TK_or e2=expresion                                                              {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.OR)}
+        |e1=expresion TK_and e2=expresion                                                             {$exp = Expresiones.NuevaLogica($e1.exp,$e2.exp,Interfaces.AND)}
+        |TK_sig_admiracion e1=expresion                                                               {$exp = Expresiones.NuevaLogica($e1.exp,$e1.exp,Interfaces.NOT)}
+        |TK_par_apertura va=expresion TK_par_cierre                                                   {$exp = $va.exp}
+        |val=valores TKR_as TKR_numericos_enteros                                                     {$exp = Expresiones.NewAsi64($val.exp)}  
+        |val=valores TKR_as TKR_numericos_flotantes                                                   {$exp = Expresiones.NewAsf64($val.exp)}
+        |vll=expresion TK_punto TKR_abs TK_par_apertura TK_par_cierre                                 {$exp = Expresiones.Newabs($vll.exp)}
+        |vll=expresion TK_punto TKR_sqrt
+        |vll=expresion TK_punto TKR_to_string
+        |vll=expresion TK_punto TKR_clone
         |vall=valores                                                                   {$exp = $vall.exp
                                                                                         fmt.Println($exp)}
 ; 

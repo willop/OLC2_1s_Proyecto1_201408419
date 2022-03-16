@@ -32,7 +32,12 @@ func (_arit Aritmetica) Ejecutar(env interface{}, recolector *Utilitario.Recolec
 	if derechaa.Valor == -1 {
 		fmt.Println("*************---------- Entra con el unario--------------**************")
 		derechaa.Tipo = izquierdaa.Tipo
-		derechaa.Valor = float64(derechaa.Valor.(int))
+		if izquierdaa.Tipo == Interfaces.INTEGER {
+			derechaa.Valor = derechaa.Valor.(int)
+		} else {
+			derechaa.Valor = -1.0
+		}
+
 		fmt.Println(derechaa)
 	}
 

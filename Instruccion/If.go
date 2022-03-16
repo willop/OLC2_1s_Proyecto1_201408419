@@ -26,7 +26,7 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 	fmt.Println("Ingresa a ejecutar del if")
 	var condicion = iff.Expresion.Ejecutar(env, recolector)
 	fmt.Println("Condicion: ", condicion)
-
+	b := NewBreak()
 	if condicion.Tipo != Interfaces.BOOLEAN {
 		fmt.Println("El resultado no es una booleanda: ", condicion.Tipo)
 		return nil
@@ -44,15 +44,15 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 		for j := 0; j < iff.Bloqueinst.Len(); j++ {
 			instr := iff.Bloqueinst.GetValue(j).(Interfaces.Instruccion)
 			fmt.Println("Dentro del for-if: ", instr)
-			b := NewBreak()
 			if reflect.TypeOf(instr) == reflect.TypeOf(b) {
 				fmt.Println("Entra en break----------------------")
-				fmt.Println("Entorno: ", NuevoEntorno)
-				fmt.Println("Entorno padre: ", env)
 				condicion.Valor = false
 				return NewBreak()
 			} else {
-				instr.Ejecutar(NuevoEntorno, recolector)
+				temp := instr.Ejecutar(NuevoEntorno, recolector)
+				if reflect.TypeOf(temp) == reflect.TypeOf(b) {
+					return NewBreak()
+				}
 			}
 		}
 	} else {
@@ -72,7 +72,16 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 					entnuevoelseif := Estructura.NuevoEntorno(env, "ElseIF", num.GetNumEntorno()+1)
 					for j := 0; j < iff.Bloqueifelse.Len(); j++ {
 						instr2 := iff.Bloqueifelse.GetValue(j).(Interfaces.Instruccion)
-						instr2.Ejecutar(entnuevoelseif, recolector)
+						if reflect.TypeOf(instr2) == reflect.TypeOf(b) {
+							fmt.Println("Entra en break----------------------")
+							condicion.Valor = false
+							return NewBreak()
+						} else {
+							temp := instr2.Ejecutar(entnuevoelseif, recolector)
+							if reflect.TypeOf(temp) == reflect.TypeOf(b) {
+								return NewBreak()
+							}
+						}
 					}
 					return nil
 				}
@@ -86,7 +95,16 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 			entnuevoelseif := Estructura.NuevoEntorno(env, "Else final", num.GetNumEntorno()+1)
 			for j := 0; j < iff.Bloqueelse.Len(); j++ {
 				instr := iff.Bloqueelse.GetValue(j).(Interfaces.Instruccion)
-				instr.Ejecutar(entnuevoelseif, recolector)
+				if reflect.TypeOf(instr) == reflect.TypeOf(b) {
+					fmt.Println("Entra en break----------------------")
+					condicion.Valor = false
+					return NewBreak()
+				} else {
+					temp := instr.Ejecutar(entnuevoelseif, recolector)
+					if reflect.TypeOf(temp) == reflect.TypeOf(b) {
+						return NewBreak()
+					}
+				}
 			}
 		}
 	}

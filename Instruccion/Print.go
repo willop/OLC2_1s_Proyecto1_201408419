@@ -30,8 +30,12 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 		fmt.Println("Luego de ejecutar ", resultado)
 		fmt.Println("Consolav: ", resultado.Valor)
 		st := 45
+		stt := 455.55
 		if reflect.TypeOf(resultado.Valor) == reflect.TypeOf(st) {
 			st := strconv.Itoa(resultado.Valor.(int)) + "\n"
+			recolector.Consolavirtual.Add(st)
+		} else if reflect.TypeOf(resultado.Valor) == reflect.TypeOf(stt) {
+			st := strconv.FormatFloat(resultado.Valor.(float64), 'f', 2, 64) + "\n"
 			recolector.Consolavirtual.Add(st)
 		} else {
 			recolector.Consolavirtual.Add(resultado.Valor.(string) + "\n")
@@ -44,8 +48,11 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 			val := instr.Ejecutar(env, recolector)
 			fmt.Println("Val: ", val.Valor)
 			stt := 50
+			stt2 := 50.80
 			if reflect.TypeOf(val.Valor) == reflect.TypeOf(stt) {
 				st = strings.Replace(st.(string), "{}", strconv.Itoa(val.Valor.(int)), 1)
+			} else if reflect.TypeOf(val.Valor) == reflect.TypeOf(stt2) {
+				st = strings.Replace(st.(string), "{}", strconv.FormatFloat(val.Valor.(float64), 'f', 2, 64), 1)
 			} else {
 				st = strings.Replace(st.(string), "{}", val.Valor.(string), 1)
 			}

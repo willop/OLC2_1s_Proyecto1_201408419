@@ -46,14 +46,12 @@ func (w Whilee) Ejecutar(env interface{}, recolector *Utilitario.Recolector) int
 				fmt.Println("Dentro del while: ", instr)
 				b := NewBreak()
 				if reflect.TypeOf(instr) == reflect.TypeOf(b) {
-					fmt.Println("Entra en break----------------------")
 					banddd = false
 					return nil
 				} else {
 					retorno := instr.Ejecutar(env, recolector)
 					fmt.Println("Despues de ejecutar")
 					if reflect.TypeOf(retorno) == reflect.TypeOf(b) {
-						fmt.Println("-----------Si entra")
 						banddd = false
 						return nil
 					}
