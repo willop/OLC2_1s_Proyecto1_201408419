@@ -11,6 +11,12 @@ type gramaticaListener interface {
 	// EnterStart is called when entering the start production.
 	EnterStart(c *StartContext)
 
+	// EnterFunciones is called when entering the funciones production.
+	EnterFunciones(c *FuncionesContext)
+
+	// EnterMain is called when entering the main production.
+	EnterMain(c *MainContext)
+
 	// EnterInstrucciones is called when entering the instrucciones production.
 	EnterInstrucciones(c *InstruccionesContext)
 
@@ -70,6 +76,12 @@ type gramaticaListener interface {
 
 	// ExitStart is called when exiting the start production.
 	ExitStart(c *StartContext)
+
+	// ExitFunciones is called when exiting the funciones production.
+	ExitFunciones(c *FuncionesContext)
+
+	// ExitMain is called when exiting the main production.
+	ExitMain(c *MainContext)
 
 	// ExitInstrucciones is called when exiting the instrucciones production.
 	ExitInstrucciones(c *InstruccionesContext)

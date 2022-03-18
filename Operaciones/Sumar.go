@@ -14,8 +14,8 @@ func Sumar(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.
 		if derecha.Tipo == Interfaces.FLOAT {
 			return sumarfloatfloat(izquierda, derecha)
 		}
-	} else if izquierda.Tipo == Interfaces.STR {
-		if derecha.Tipo == Interfaces.STR {
+	} else if izquierda.Tipo == Interfaces.STRING {
+		if derecha.Tipo == Interfaces.STRING {
 			return sumarstringstring(izquierda, derecha)
 		}
 	}

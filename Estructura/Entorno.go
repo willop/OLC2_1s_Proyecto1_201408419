@@ -11,13 +11,13 @@ type Entorno struct {
 	numero     int
 	variable   map[string]Interfaces.Simbolo
 	estructura map[string]Interfaces.Simbolo
-	//funciones map[string]Interfaces.Simbolo
+	funciones  map[string]Interfaces.Funcion
 }
 
 //Se crea y se retorna un nuevo entorno
 func NuevoEntorno(_prev interface{}, _nombre string, _numero int) Entorno {
 	fmt.Printf("Nuevo Entorno creado")
-	env := Entorno{prev: _prev, nombre: _nombre, numero: _numero, variable: make(map[string]Interfaces.Simbolo), estructura: make(map[string]Interfaces.Simbolo)}
+	env := Entorno{prev: _prev, nombre: _nombre, numero: _numero, variable: make(map[string]Interfaces.Simbolo), estructura: make(map[string]Interfaces.Simbolo), funciones: make(map[string]Interfaces.Funcion)}
 	return env
 }
 
@@ -75,5 +75,34 @@ func (env Entorno) ActualizarSimbolo(_id string, _valor interface{}, _mut bool, 
 
 	fmt.Println("La variable no existe")
 	return Interfaces.Simbolo{Id: "", Tipo: Interfaces.SINTIPO, Valor: "", Mut: false}
+
+}
+
+func (env Entorno) GuardarFuncion(_fun Interfaces.Funcion) interface{} {
+	//cada funcion va a tener su propio entorno
+	if variable, encontrada := env.funciones[_fun.Id]; encontrada {
+		fmt.Println("La funcion ", variable.Id, " ya existe en este entorno")
+		return nil
+	}
+	env.funciones[_fun.Id] = _fun
+	fmt.Println("******************************** En el entorno: ", env, " se agrego la funcion: ", _fun)
+	return nil
+}
+
+func (env Entorno) ObtenerFuncion(_fun Interfaces.Funcion) Interfaces.Funcion {
+	var temporal Entorno
+	temporal = env
+	for {
+		if variable, ok := temporal.funciones[_fun.Id]; ok {
+			return variable
+		}
+		if temporal.prev == nil {
+			break
+		} else {
+			temporal = temporal.prev.(Entorno)
+		}
+	}
+	fmt.Println("La variable no existe")
+	return Interfaces.Funcion{"", Interfaces.ERROREXPRESION, nil, nil}
 
 }

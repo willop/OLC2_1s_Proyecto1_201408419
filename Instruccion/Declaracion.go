@@ -25,42 +25,49 @@ func NuevaDeclaracion(_id string, _tipo Interfaces.Tipoexpresion, _value Interfa
 
 func (_dec Declaracion) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {
 
-	simb := _dec.Expresion.Ejecutar(env, recolector)
-
-	if _dec.Tipo == Interfaces.SINTIPO {
-		//evaluar que es la entrada
-		fmt.Println("/n/n/n******* entra a sin tipo con tiponuevade: ", simb.Valor, "**********/n/n/n")
-		switch simb.Valor.(type) {
-		case string:
-			_dec.Tipo = Interfaces.STRING
-			fmt.Println("Entro al case String")
-		case int:
-			_dec.Tipo = Interfaces.INTEGER
-			fmt.Println("Entro al case int")
-		case bool:
-			_dec.Tipo = Interfaces.BOOLEAN
-			fmt.Println("Entro al case bool")
-		case float64:
-			_dec.Tipo = Interfaces.FLOAT
-			fmt.Println("Entro al case float64")
-		}
-		env.(Estructura.Entorno).GuardarSimbolo(_dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
-		return simb.Valor
+	if _dec.IsArray {
+		fmt.Println("Es un array con los siguientes valores")
+		fmt.Println(_dec)
+		fmt.Println("Termina")
+		return nil
 	} else {
-		fmt.Println("****** Imprimiendo declaracion", _dec)
-		if simb.Tipo == _dec.Tipo {
-			//si es del mismo tipo se guarda en el entorno
-			fmt.Println("Se guarda en el entorno: ", _dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
+		simb := _dec.Expresion.Ejecutar(env, recolector)
+
+		if _dec.Tipo == Interfaces.SINTIPO {
+			//evaluar que es la entrada
+			fmt.Println("/n/n/n******* entra a sin tipo con tiponuevade: ", simb.Valor, "**********/n/n/n")
+			switch simb.Valor.(type) {
+			case string:
+				_dec.Tipo = Interfaces.STR
+				fmt.Println("Entro al case String")
+			case int:
+				_dec.Tipo = Interfaces.INTEGER
+				fmt.Println("Entro al case int")
+			case bool:
+				_dec.Tipo = Interfaces.BOOLEAN
+				fmt.Println("Entro al case bool")
+			case float64:
+				_dec.Tipo = Interfaces.FLOAT
+				fmt.Println("Entro al case float64")
+			}
 			env.(Estructura.Entorno).GuardarSimbolo(_dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
 			return simb.Valor
-		} else if _dec.Tipo == Interfaces.ERROREXPRESION {
-			fmt.Println("Entro al else de error en ejecucion")
-			recolector.ListaErrores.Add(Excepciones.ErrorGeneral("Error en la expresion de la variable", env))
-			return simb.Valor
 		} else {
-			fmt.Println("Entro al else de no compatible")
-			recolector.ListaErrores.Add(Excepciones.ErrorTipoIncorrecto("El tipo no coincide", env))
-			return simb.Valor
+			fmt.Println("****** Imprimiendo declaracion", _dec)
+			if simb.Tipo == _dec.Tipo {
+				//si es del mismo tipo se guarda en el entorno
+				fmt.Println("Se guarda en el entorno: ", _dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
+				env.(Estructura.Entorno).GuardarSimbolo(_dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
+				return simb.Valor
+			} else if _dec.Tipo == Interfaces.ERROREXPRESION {
+				fmt.Println("Entro al else de error en ejecucion")
+				recolector.ListaErrores.Add(Excepciones.ErrorGeneral("Error en la expresion de la variable", env))
+				return simb.Valor
+			} else {
+				fmt.Println("Entro al else de no compatible")
+				recolector.ListaErrores.Add(Excepciones.ErrorTipoIncorrecto("El tipo no coincide", env))
+				return simb.Valor
+			}
 		}
 	}
 }

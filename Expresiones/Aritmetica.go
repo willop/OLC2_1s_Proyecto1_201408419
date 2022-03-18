@@ -37,7 +37,6 @@ func (_arit Aritmetica) Ejecutar(env interface{}, recolector *Utilitario.Recolec
 		} else {
 			derechaa.Valor = -1.0
 		}
-
 		fmt.Println(derechaa)
 	}
 

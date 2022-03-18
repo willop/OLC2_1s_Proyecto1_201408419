@@ -14,15 +14,23 @@ grammar gramatica;
 
 // insertar atributos en la clase generada
 @parser::members{
-        var temporal = Interfaces.SINTIPO
+        //Temporalgramatica := "Esta en temporal";
+
 }
 
 
 start returns [*arrayList.List listainstrucciones]
-        :TKR_fn TKR_main TK_par_apertura TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre   {$listainstrucciones = $instrucciones.lista}
-
+        :funciones*  main  funciones*                                                                          {$listainstrucciones = $main.listainstrucciones}
 ;
 
+
+funciones returns [Interfaces.Instruccion inst]
+        :TKR_fn idd=TK_id TK_par_apertura TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre   {Interfaces.NewFuncion("",Interfaces.STRING,$instrucciones.lista,nil)}
+;
+
+main returns [*arrayList.List listainstrucciones]
+        :TKR_fn TKR_main TK_par_apertura TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre   {$listainstrucciones = $instrucciones.lista} 
+;
 
 instrucciones returns [*arrayList.List lista]
 @init{
@@ -54,6 +62,9 @@ declaracion returns[Interfaces.Instruccion inst]
         //mutables                                                                                                                      nuevadeclaracion   
         : TKR_let TKR_mut idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma              {$inst = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.exp,false,false,true) }
         |TKR_let TKR_mut idd=TK_id TK_igual expresion  TK_pcoma                                         {$inst = Instruccion.NuevaDeclaracion($idd.text,Interfaces.SINTIPO,$expresion.exp,false,false,true) }
+        //arreglos
+        |TKR_let TKR_mut idd=TK_id TK_dosPuntos TK_llave_apertura tipovariable TK_pcoma cant=valores TK_llave_cierre TK_igual expresion TK_pcoma         {$inst = Instruccion.NuevaDeclaracionArray($idd.text,$tipovariable.tipovar,$cant.exp,$expresion.exp,true)}
+        |TKR_let idd=TK_id TK_dosPuntos TK_llave_apertura tipovariable TK_pcoma cant=valores TK_llave_cierre TK_igual expresion TK_pcoma                 {$inst = Instruccion.NuevaDeclaracionArray($idd.text,$tipovariable.tipovar,$cant.exp,$expresion.exp,false)}
         //no mutables
         |TKR_let idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma                       {$inst = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.exp,false,false,false) }
         |TKR_let idd=TK_id TK_igual expresion TK_pcoma                                                  {$inst = Instruccion.NuevaDeclaracion($idd.text,Interfaces.SINTIPO,$expresion.exp,false,false,false) }
@@ -93,7 +104,7 @@ valores returns[Interfaces.Expresion exp]
         |TK_caracter           
                 {str:= $TK_caracter.text[1:len($TK_caracter.text)-1]
                 $exp = Expresion.NuevoPrimitivo(str,Interfaces.CHAR)}
-        |TKR_Str           
+        |TK_amp TKR_Str           
                 {str:= $TKR_Str.text[1:len($TKR_Str.text)-1]
                 $exp = Expresion.NuevoPrimitivo(str,Interfaces.STR)}
         |TKR_true              {$exp = Expresion.NuevoPrimitivo(true, Interfaces.BOOLEAN)}
@@ -137,9 +148,11 @@ expresion returns [Interfaces.Expresion exp]
         |val=valores TKR_as TKR_numericos_enteros                                                     {$exp = Expresiones.NewAsi64($val.exp)}  
         |val=valores TKR_as TKR_numericos_flotantes                                                   {$exp = Expresiones.NewAsf64($val.exp)}
         |vll=expresion TK_punto TKR_abs TK_par_apertura TK_par_cierre                                 {$exp = Expresiones.Newabs($vll.exp)}
-        |vll=expresion TK_punto TKR_sqrt
-        |vll=expresion TK_punto TKR_to_string
-        |vll=expresion TK_punto TKR_clone
+        |e1=expresion TK_punto TKR_sqrt TK_par_apertura TK_par_cierre                                 {$exp = Expresiones.NuevaAritmetica($e1.exp,$e1.exp,Interfaces.MULTIPLICACION)}                                     
+        |vll=expresion TK_punto TKR_to_string TK_par_apertura TK_par_cierre                           {$exp = Expresiones.NewFto_string($vll.exp)}
+        |vll=expresion TK_punto TKR_clone TK_par_apertura TK_par_cierre
+        |TK_llave_apertura e1=expresion TK_pcoma e2=expresion TK_llave_cierre                   {$exp = Expresion.NewArray($e1.exp,$e2.exp,nil,Interfaces.MULTIPLE)}
+        |TK_llave_apertura e1=expresion l1=impresionexpresion TK_llave_cierre                   {$exp = Expresion.NewArray($e1.exp,nil,$l1.lista,Interfaces.NORMAL)}
         |vall=valores                                                                   {$exp = $vall.exp
                                                                                         fmt.Println($exp)}
 ; 
@@ -147,7 +160,7 @@ expresion returns [Interfaces.Expresion exp]
 
 impresion returns [Interfaces.Instruccion inst]
         :TKR_println TK_par_apertura e1=expresion TK_par_cierre TK_pcoma                                {$inst = Instruccion.NuevoPrint($e1.exp,nil)}
-        |TKR_println TK_par_apertura e2=expresion  li=impresionexpresion TK_pcoma                          {$inst = Instruccion.NuevoPrint($e2.exp,$li.lista)}
+        |TKR_println TK_par_apertura e2=expresion  li=impresionexpresion TK_par_cierre TK_pcoma                          {$inst = Instruccion.NuevoPrint($e2.exp,$li.lista)}
 ;
 
 impresionexpresion returns [*arrayList.List lista]
@@ -162,8 +175,6 @@ impresionexpresion returns [*arrayList.List lista]
 
 expcoma returns[Interfaces.Expresion exp]
         : TK_coma e=expresion                                                           {$exp = $e.exp}
-
-
 ;
 condicionales returns[Interfaces.Instruccion inst]
                 : funcionif                                                           {$inst = $funcionif.inst}
@@ -281,7 +292,7 @@ TKR_vec: 'vec';  //creo que les falta
 TKR_powf: 'powf';
 TKR_bool: 'bool';
 TKR_char: 'char';
-TKR_Str: '&str';
+TKR_Str: 'str';
 TKR_String: 'String';
 TKR_usize: 'usize';
 TKR_let: 'let';
@@ -295,8 +306,8 @@ TKR_fn: 'fn';
 TKR_return: 'return';
 TKR_abs: 'abs';
 TKR_sqrt: 'sqrt';
-TKR_to_string:'to_string()';
-TKR_clone: 'clone()';
+TKR_to_string:'to_string';
+TKR_clone: 'clone';
 TKR_new: 'new';
 TKR_len: 'len';
 TKR_push: 'push';

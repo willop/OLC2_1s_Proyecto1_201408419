@@ -24,6 +24,13 @@ const (
 	ERRORTIPOEXPRESION
 )
 
+type Tipoarray int
+
+const (
+	NORMAL Tipoarray = iota //variable que funciona
+	MULTIPLE
+)
+
 type Tipooperacion int
 
 const (

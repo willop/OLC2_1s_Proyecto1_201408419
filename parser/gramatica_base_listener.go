@@ -27,6 +27,18 @@ func (s *BasegramaticaListener) EnterStart(ctx *StartContext) {}
 // ExitStart is called when production start is exited.
 func (s *BasegramaticaListener) ExitStart(ctx *StartContext) {}
 
+// EnterFunciones is called when production funciones is entered.
+func (s *BasegramaticaListener) EnterFunciones(ctx *FuncionesContext) {}
+
+// ExitFunciones is called when production funciones is exited.
+func (s *BasegramaticaListener) ExitFunciones(ctx *FuncionesContext) {}
+
+// EnterMain is called when production main is entered.
+func (s *BasegramaticaListener) EnterMain(ctx *MainContext) {}
+
+// ExitMain is called when production main is exited.
+func (s *BasegramaticaListener) ExitMain(ctx *MainContext) {}
+
 // EnterInstrucciones is called when production instrucciones is entered.
 func (s *BasegramaticaListener) EnterInstrucciones(ctx *InstruccionesContext) {}
 
