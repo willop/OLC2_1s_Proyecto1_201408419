@@ -1,35 +1,36 @@
 package Relacionales
 
 import (
-	"proyecto1/Interfaces"
+	"proyecto1/Enum"
+	"proyecto1/Simbolo"
 )
 
-func Igualdad(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
+func Igualdad(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
 	//izquierda con int y sus derivaciones
-	if izquierda.Tipo == Interfaces.INTEGER {
-		if derecha.Tipo == Interfaces.INTEGER {
+	if izquierda.Tipo == Enum.INTEGER {
+		if derecha.Tipo == Enum.INTEGER {
 			return igualdadintint(izquierda, derecha)
 		}
-	} else if izquierda.Tipo == Interfaces.FLOAT {
-		if derecha.Tipo == Interfaces.FLOAT {
+	} else if izquierda.Tipo == Enum.FLOAT {
+		if derecha.Tipo == Enum.FLOAT {
 			return igualdadfloatfloat(izquierda, derecha)
 		}
-	} else if izquierda.Tipo == Interfaces.STR {
-		if derecha.Tipo == Interfaces.STR {
+	} else if izquierda.Tipo == Enum.STR {
+		if derecha.Tipo == Enum.STR {
 			return igualdadstringstring(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Simbolo.Simbolo{"", "", false, Enum.SINTIPO}
 }
 
-func igualdadintint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	return Interfaces.Simbolo{"", izquierda.Valor.(int) == derecha.Valor.(int), false, Interfaces.BOOLEAN}
+func igualdadintint(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	return Simbolo.Simbolo{"", izquierda.Valor.(int) == derecha.Valor.(int), false, Enum.BOOLEAN}
 }
 
-func igualdadfloatfloat(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	return Interfaces.Simbolo{"", izquierda.Valor.(float64) == derecha.Valor.(float64), false, Interfaces.BOOLEAN}
+func igualdadfloatfloat(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	return Simbolo.Simbolo{"", izquierda.Valor.(float64) == derecha.Valor.(float64), false, Enum.BOOLEAN}
 }
 
-func igualdadstringstring(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	return Interfaces.Simbolo{"", izquierda.Valor.(string) == derecha.Valor.(string), false, Interfaces.BOOLEAN}
+func igualdadstringstring(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	return Simbolo.Simbolo{"", izquierda.Valor.(string) == derecha.Valor.(string), false, Enum.BOOLEAN}
 }

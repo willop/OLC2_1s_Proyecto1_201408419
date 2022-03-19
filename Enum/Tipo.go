@@ -1,4 +1,4 @@
-package Interfaces
+package Enum
 
 //es un enum para saber el tipo de la expresion
 type Tipoexpresion int

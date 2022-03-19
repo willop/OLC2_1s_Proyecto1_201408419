@@ -51,6 +51,12 @@ func (s *BasegramaticaListener) EnterInstruccion(ctx *InstruccionContext) {}
 // ExitInstruccion is called when production instruccion is exited.
 func (s *BasegramaticaListener) ExitInstruccion(ctx *InstruccionContext) {}
 
+// EnterAsignacion is called when production asignacion is entered.
+func (s *BasegramaticaListener) EnterAsignacion(ctx *AsignacionContext) {}
+
+// ExitAsignacion is called when production asignacion is exited.
+func (s *BasegramaticaListener) ExitAsignacion(ctx *AsignacionContext) {}
+
 // EnterControl is called when production control is entered.
 func (s *BasegramaticaListener) EnterControl(ctx *ControlContext) {}
 

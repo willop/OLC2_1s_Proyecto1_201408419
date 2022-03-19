@@ -3,6 +3,7 @@ package Instruccion
 import (
 	"fmt"
 
+	"proyecto1/Enum"
 	"proyecto1/Estructura"
 	"proyecto1/Excepciones"
 	"proyecto1/Interfaces"
@@ -28,7 +29,7 @@ func (w Whilee) Ejecutar(env interface{}, recolector *Utilitario.Recolector) int
 	var condicion = w.Expresion.Ejecutar(env, recolector)
 	fmt.Println("Condicion:", condicion)
 
-	if condicion.Tipo != Interfaces.BOOLEAN {
+	if condicion.Tipo != Enum.BOOLEAN {
 		recolector.ListaErrores.Add(Excepciones.ErrorGeneral("La expresion del while no es booleana", env))
 		return nil
 	}

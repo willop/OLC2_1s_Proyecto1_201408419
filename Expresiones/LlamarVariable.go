@@ -2,7 +2,7 @@ package Expresiones
 
 import (
 	"proyecto1/Estructura"
-	"proyecto1/Interfaces"
+	"proyecto1/Simbolo"
 	"proyecto1/Utilitario"
 )
 
@@ -15,7 +15,7 @@ func NewLlamarvariable(id string) Llamadavariable {
 	return exp
 }
 
-func (p Llamadavariable) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Interfaces.Simbolo {
+func (p Llamadavariable) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Simbolo.Simbolo {
 
 	result := env.(Estructura.Entorno).GetVariable(p.Id)
 	return result

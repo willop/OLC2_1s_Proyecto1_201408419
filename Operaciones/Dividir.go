@@ -1,35 +1,36 @@
 package Operaciones
 
 import (
-	"proyecto1/Interfaces"
+	"proyecto1/Enum"
+	"proyecto1/Simbolo"
 )
 
-func Dividir(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
+func Dividir(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
 	//izquierda con int y sus derivaciones
-	if izquierda.Tipo == Interfaces.INTEGER {
-		if derecha.Tipo == Interfaces.INTEGER {
+	if izquierda.Tipo == Enum.INTEGER {
+		if derecha.Tipo == Enum.INTEGER {
 			return dividirintint(izquierda, derecha)
 		}
-	} else if izquierda.Tipo == Interfaces.FLOAT {
-		if derecha.Tipo == Interfaces.FLOAT {
+	} else if izquierda.Tipo == Enum.FLOAT {
+		if derecha.Tipo == Enum.FLOAT {
 			return dividirfloatfloat(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
+	return Simbolo.Simbolo{"", "", false, Enum.ERRORTIPOEXPRESION}
 }
 
-func dividirintint(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
+func dividirintint(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
 	if derecha.Valor.(int) >= 0 {
-		return Interfaces.Simbolo{"", izquierda.Valor.(int) / derecha.Valor.(int), false, Interfaces.INTEGER}
+		return Simbolo.Simbolo{"", izquierda.Valor.(int) / derecha.Valor.(int), false, Enum.INTEGER}
 	} else {
-		return Interfaces.Simbolo{"", "", false, Interfaces.ERROREXPRESION}
+		return Simbolo.Simbolo{"", "", false, Enum.ERROREXPRESION}
 	}
 }
 
-func dividirfloatfloat(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
+func dividirfloatfloat(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
 	if derecha.Valor.(int) >= 0 {
-		return Interfaces.Simbolo{"", izquierda.Valor.(float64) / derecha.Valor.(float64), false, Interfaces.FLOAT}
+		return Simbolo.Simbolo{"", izquierda.Valor.(float64) / derecha.Valor.(float64), false, Enum.FLOAT}
 	} else {
-		return Interfaces.Simbolo{"", "", false, Interfaces.ERROREXPRESION}
+		return Simbolo.Simbolo{"", "", false, Enum.ERROREXPRESION}
 	}
 }

@@ -2,20 +2,21 @@ package Logicas
 
 import (
 	"fmt"
-	"proyecto1/Interfaces"
+	"proyecto1/Enum"
+	"proyecto1/Simbolo"
 )
 
-func And(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	if izquierda.Tipo == Interfaces.BOOLEAN {
-		if derecha.Tipo == Interfaces.BOOLEAN {
+func And(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	if izquierda.Tipo == Enum.BOOLEAN {
+		if derecha.Tipo == Enum.BOOLEAN {
 			fmt.Println("Entra al fonodo del if de and")
 			fmt.Println(andboolbool(izquierda, derecha))
 			return andboolbool(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Simbolo.Simbolo{"", "", false, Enum.SINTIPO}
 }
 
-func andboolbool(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	return Interfaces.Simbolo{"", izquierda.Valor.(bool) && derecha.Valor.(bool), false, Interfaces.BOOLEAN}
+func andboolbool(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	return Simbolo.Simbolo{"", izquierda.Valor.(bool) && derecha.Valor.(bool), false, Enum.BOOLEAN}
 }

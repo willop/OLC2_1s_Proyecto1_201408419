@@ -1,27 +1,28 @@
 package Expresion
 
 import (
-	"proyecto1/Interfaces"
+	"proyecto1/Enum"
+	"proyecto1/Simbolo"
 	"proyecto1/Utilitario"
 )
 
 type Primitivo struct {
 	Valor interface{}
-	Tipo  Interfaces.Tipoexpresion
+	Tipo  Enum.Tipoexpresion
 	//linea
 	//columna
 }
 
-func (p Primitivo) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Interfaces.Simbolo {
+func (p Primitivo) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Simbolo.Simbolo {
 
-	return Interfaces.Simbolo{
+	return Simbolo.Simbolo{
 		Id:    "",
 		Tipo:  p.Tipo,
 		Valor: p.Valor,
 	}
 }
 
-func NuevoPrimitivo(val interface{}, tipo Interfaces.Tipoexpresion) Primitivo {
+func NuevoPrimitivo(val interface{}, tipo Enum.Tipoexpresion) Primitivo {
 	exp := Primitivo{val, tipo}
 	return exp
 }

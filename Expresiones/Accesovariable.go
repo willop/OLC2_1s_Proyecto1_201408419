@@ -1,9 +1,10 @@
-package Expresion
+package Expresiones
 
 import (
 	"fmt"
+	"proyecto1/Enum"
 	"proyecto1/Estructura"
-	"proyecto1/Interfaces"
+	"proyecto1/Simbolo"
 	"proyecto1/Utilitario"
 )
 
@@ -18,9 +19,9 @@ func NewAccesovariable(id string) Accesovariable {
 func (a Accesovariable) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {
 	ax := env.(Estructura.Entorno).GetVariable(a.id)
 
-	if ax.Tipo == Interfaces.SINTIPO {
+	if ax.Tipo == Enum.SINTIPO {
 		fmt.Println("No existe la variable")
-		return Interfaces.Simbolo{"", "error", false, Interfaces.SINTIPO}
+		return Simbolo.Simbolo{"", "error", false, Enum.SINTIPO}
 	}
 	return ax
 }

@@ -3,6 +3,7 @@ package Instruccion
 import (
 	"fmt"
 
+	"proyecto1/Enum"
 	"proyecto1/Estructura"
 	"proyecto1/Excepciones"
 	"proyecto1/Interfaces"
@@ -11,7 +12,7 @@ import (
 
 type Declaracion struct {
 	Id        string
-	Tipo      Interfaces.Tipoexpresion
+	Tipo      Enum.Tipoexpresion
 	Expresion Interfaces.Expresion
 	IsArray   bool
 	IsStruct  bool
@@ -19,7 +20,7 @@ type Declaracion struct {
 }
 
 // para declarar una nueva variable se recolecta toda la informacion para crear una nueva variable
-func NuevaDeclaracion(_id string, _tipo Interfaces.Tipoexpresion, _value Interfaces.Expresion, _ismutable bool, _isArray bool, _isStruct bool) Declaracion {
+func NuevaDeclaracion(_id string, _tipo Enum.Tipoexpresion, _value Interfaces.Expresion, _ismutable bool, _isArray bool, _isStruct bool) Declaracion {
 	return Declaracion{_id, _tipo, _value, _ismutable, _isArray, _isStruct}
 }
 
@@ -33,21 +34,21 @@ func (_dec Declaracion) Ejecutar(env interface{}, recolector *Utilitario.Recolec
 	} else {
 		simb := _dec.Expresion.Ejecutar(env, recolector)
 
-		if _dec.Tipo == Interfaces.SINTIPO {
+		if _dec.Tipo == Enum.SINTIPO {
 			//evaluar que es la entrada
 			fmt.Println("/n/n/n******* entra a sin tipo con tiponuevade: ", simb.Valor, "**********/n/n/n")
 			switch simb.Valor.(type) {
 			case string:
-				_dec.Tipo = Interfaces.STR
+				_dec.Tipo = Enum.STR
 				fmt.Println("Entro al case String")
 			case int:
-				_dec.Tipo = Interfaces.INTEGER
+				_dec.Tipo = Enum.INTEGER
 				fmt.Println("Entro al case int")
 			case bool:
-				_dec.Tipo = Interfaces.BOOLEAN
+				_dec.Tipo = Enum.BOOLEAN
 				fmt.Println("Entro al case bool")
 			case float64:
-				_dec.Tipo = Interfaces.FLOAT
+				_dec.Tipo = Enum.FLOAT
 				fmt.Println("Entro al case float64")
 			}
 			env.(Estructura.Entorno).GuardarSimbolo(_dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
@@ -59,7 +60,7 @@ func (_dec Declaracion) Ejecutar(env interface{}, recolector *Utilitario.Recolec
 				fmt.Println("Se guarda en el entorno: ", _dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
 				env.(Estructura.Entorno).GuardarSimbolo(_dec.Id, simb.Valor, _dec.IsMutable, _dec.Tipo)
 				return simb.Valor
-			} else if _dec.Tipo == Interfaces.ERROREXPRESION {
+			} else if _dec.Tipo == Enum.ERROREXPRESION {
 				fmt.Println("Entro al else de error en ejecucion")
 				recolector.ListaErrores.Add(Excepciones.ErrorGeneral("Error en la expresion de la variable", env))
 				return simb.Valor

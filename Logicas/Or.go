@@ -1,18 +1,19 @@
 package Logicas
 
 import (
-	"proyecto1/Interfaces"
+	"proyecto1/Enum"
+	"proyecto1/Simbolo"
 )
 
-func Or(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	if izquierda.Tipo == Interfaces.BOOLEAN {
-		if derecha.Tipo == Interfaces.BOOLEAN {
+func Or(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	if izquierda.Tipo == Enum.BOOLEAN {
+		if derecha.Tipo == Enum.BOOLEAN {
 			return orboolbool(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.SINTIPO}
+	return Simbolo.Simbolo{"", "", false, Enum.SINTIPO}
 }
 
-func orboolbool(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	return Interfaces.Simbolo{"", izquierda.Valor.(bool) || derecha.Valor.(bool), false, Interfaces.BOOLEAN}
+func orboolbool(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	return Simbolo.Simbolo{"", izquierda.Valor.(bool) || derecha.Valor.(bool), false, Enum.BOOLEAN}
 }

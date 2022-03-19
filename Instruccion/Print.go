@@ -2,7 +2,9 @@ package Instruccion
 
 import (
 	"fmt"
+	"proyecto1/Enum"
 	"proyecto1/Interfaces"
+	"proyecto1/Simbolo"
 	"proyecto1/Utilitario"
 	"reflect"
 	"strings"
@@ -24,6 +26,7 @@ func NuevoPrint(_exp Interfaces.Expresion, _bloqueinst *arrayList.List) Print {
 func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {
 
 	resultado := p.Expresion.Ejecutar(env, recolector) //ejecuto la expresion la cual me retorna el simbolo con id,valor,mut,tipo
+	//si viene solo para imprimir texto sin parametros
 	if p.Bloqueinst == nil {
 		fmt.Println("Luego de ejecutar ", resultado)
 		fmt.Println("Consolav: ", resultado.Valor)
@@ -31,25 +34,29 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 		recolector.Consolavirtual.Add(tmpDato + "\n")
 		return resultado.Valor
 	} else {
+		//si vienen parametros
 		st := resultado.Valor
 		for j := 0; j < p.Bloqueinst.Len(); j++ {
 			instr := p.Bloqueinst.GetValue(j).(Interfaces.Expresion)
 			val := instr.Ejecutar(env, recolector)
-			if val.Tipo == Interfaces.ARRAY {
-				//var recolecvector string
+			//verifico si ese parametro es un arreglo
+			if val.Tipo == Enum.ARRAY {
 				simb := val.Valor
-				a := simb.(Interfaces.Simbolo).Valor
+				a := simb.(Simbolo.Simbolo).Valor
 				fmt.Println("Tipo de a: ", reflect.TypeOf(a))
 				var recol string = ""
+				//recorro todo el arreglo y lo almaceno en una temrporal recol donde se almacena el valor de cada posicion del arreglo
 				for _, s := range a.(*arrayList.List).ToArray() {
-					fmt.Println("s: ", s.(Interfaces.Simbolo).Valor)
-					tmpDato := fmt.Sprintf("%v", s.(Interfaces.Simbolo).Valor)
+					fmt.Println("s: ", s.(Simbolo.Simbolo).Valor)
+					tmpDato := fmt.Sprintf("%v", s.(Simbolo.Simbolo).Valor)
 					recol += tmpDato
 				}
+				//recol += "]"
 				st = strings.Replace(st.(string), "{:?}", recol, 1)
 				recolector.Consolavirtual.Add(st.(string) + "\n")
 				return nil
 			} else {
+				//si no lo es lo asigno tal cual fuera una variable
 				fmt.Println("Val: ", val.Valor)
 				tmpDato := fmt.Sprintf("%v", val.Valor)
 				st = strings.Replace(st.(string), "{}", tmpDato, 1)

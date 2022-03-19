@@ -1,16 +1,16 @@
 package Instruccion
 
 import (
-	"proyecto1/Interfaces"
+	"proyecto1/Enum"
 	"proyecto1/Utilitario"
 )
 
 type Break struct {
-	Tiporetorno Interfaces.Tipoexpresion
+	Tiporetorno Enum.Tipoexpresion
 }
 
 func NewBreak() Break {
-	return Break{Tiporetorno: Interfaces.BREAK}
+	return Break{Tiporetorno: Enum.BREAK}
 }
 
 func (b Break) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {

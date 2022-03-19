@@ -2,6 +2,7 @@ package Instruccion
 
 import (
 	"fmt"
+	"proyecto1/Enum"
 	"proyecto1/Estructura"
 	"proyecto1/Interfaces"
 	"proyecto1/Utilitario"
@@ -11,14 +12,14 @@ import (
 
 type DeclaracionArray struct {
 	Id        string
-	Tipo      Interfaces.Tipoexpresion
+	Tipo      Enum.Tipoexpresion
 	Cant      Interfaces.Expresion
 	Expresion Interfaces.Expresion
 	Mutable   bool
 }
 
 // para declarar una nueva variable se recolecta toda la informacion para crear una nueva variable
-func NuevaDeclaracionArray(_id string, _tipo Interfaces.Tipoexpresion, _cant Interfaces.Expresion, _expresion Interfaces.Expresion, _mut bool) DeclaracionArray {
+func NuevaDeclaracionArray(_id string, _tipo Enum.Tipoexpresion, _cant Interfaces.Expresion, _expresion Interfaces.Expresion, _mut bool) DeclaracionArray {
 	return DeclaracionArray{_id, _tipo, _cant, _expresion, _mut}
 }
 
@@ -26,7 +27,7 @@ func (d DeclaracionArray) Ejecutar(env interface{}, recolector *Utilitario.Recol
 	fmt.Println("En declaracion de variable array\nImprimiendo las variables:")
 
 	valor := d.Expresion.Ejecutar(env, recolector)
-	env.(Estructura.Entorno).GuardarSimbolo(d.Id, valor, d.Mutable, Interfaces.ARRAY)
+	env.(Estructura.Entorno).GuardarSimbolo(d.Id, valor, d.Mutable, Enum.ARRAY)
 
 	/*fmt.Println(d)
 	arreglo := d.Expresion.Ejecutar(env, recolector)

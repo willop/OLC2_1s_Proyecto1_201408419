@@ -2,19 +2,20 @@ package Operaciones
 
 import (
 	"math"
-	"proyecto1/Interfaces"
+	"proyecto1/Enum"
+	"proyecto1/Simbolo"
 )
 
-func Powf(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
+func Powf(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
 	//izquierda con int y sus derivaciones
-	if izquierda.Tipo == Interfaces.FLOAT {
-		if derecha.Tipo == Interfaces.FLOAT {
+	if izquierda.Tipo == Enum.FLOAT {
+		if derecha.Tipo == Enum.FLOAT {
 			return powffloatfloat(izquierda, derecha)
 		}
 	}
-	return Interfaces.Simbolo{"", "", false, Interfaces.ERRORTIPOEXPRESION}
+	return Simbolo.Simbolo{"", "", false, Enum.ERRORTIPOEXPRESION}
 }
 
-func powffloatfloat(izquierda Interfaces.Simbolo, derecha Interfaces.Simbolo) Interfaces.Simbolo {
-	return Interfaces.Simbolo{"", math.Pow(izquierda.Valor.(float64), derecha.Valor.(float64)), false, Interfaces.FLOAT}
+func powffloatfloat(izquierda Simbolo.Simbolo, derecha Simbolo.Simbolo) Simbolo.Simbolo {
+	return Simbolo.Simbolo{"", math.Pow(izquierda.Valor.(float64), derecha.Valor.(float64)), false, Enum.FLOAT}
 }

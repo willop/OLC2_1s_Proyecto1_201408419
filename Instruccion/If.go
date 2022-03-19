@@ -2,6 +2,7 @@ package Instruccion
 
 import (
 	"fmt"
+	"proyecto1/Enum"
 	"proyecto1/Estructura"
 	"proyecto1/Interfaces"
 	"proyecto1/Utilitario"
@@ -27,7 +28,7 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 	var condicion = iff.Expresion.Ejecutar(env, recolector)
 	fmt.Println("Condicion: ", condicion)
 	b := NewBreak()
-	if condicion.Tipo != Interfaces.BOOLEAN {
+	if condicion.Tipo != Enum.BOOLEAN {
 		fmt.Println("El resultado no es una booleanda: ", condicion.Tipo)
 		return nil
 	}
@@ -62,7 +63,7 @@ func (iff If) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inter
 			for _, elseif_instruccion := range iff.Bloqueifelse.ToArray() {
 				nuevoif2 := elseif_instruccion.(If)
 				retornonuevo := nuevoif2.Expresion.Ejecutar(env, recolector)
-				if retornonuevo.Tipo != Interfaces.BOOLEAN {
+				if retornonuevo.Tipo != Enum.BOOLEAN {
 					return nil
 				}
 				if retornonuevo.Valor.(bool) {

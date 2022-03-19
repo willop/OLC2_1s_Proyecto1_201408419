@@ -70,8 +70,8 @@ func main() {
 
 	a := app.New()
 	w := a.NewWindow("Proyecto 1 - OLC2")
-	temp := Interfaces.ConstructorSimbolo("AA", "", "", 2)
-	fmt.Println("la importacion ", temp.GetID())
+	//temp := Simbolo.ConstructorSimbolo("AA", "", "", 2)
+	//fmt.Println("la importacion ", temp.Id())
 	entradacodigo := widget.NewMultiLineEntry()
 	entradacodigo.Resize(fyne.NewSize(500, 780))
 	entradacodigo.Move(fyne.NewPos(5, 5))

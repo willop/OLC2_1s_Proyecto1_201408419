@@ -3,52 +3,54 @@ package Expresiones
 import (
 	"fmt"
 
+	"proyecto1/Enum"
 	"proyecto1/Interfaces"
 	"proyecto1/Logicas"
+	"proyecto1/Simbolo"
 	"proyecto1/Utilitario"
 )
 
 type Logica struct {
 	Izquierda  Interfaces.Expresion
 	Derecha    Interfaces.Expresion
-	TipoLogico Interfaces.Tipologico
+	TipoLogico Enum.Tipologico
 }
 
-func NuevaLogica(_izquierda Interfaces.Expresion, _derecha Interfaces.Expresion, _tipo Interfaces.Tipologico) Logica {
+func NuevaLogica(_izquierda Interfaces.Expresion, _derecha Interfaces.Expresion, _tipo Enum.Tipologico) Logica {
 	return Logica{Izquierda: _izquierda, Derecha: _derecha, TipoLogico: _tipo}
 }
 
-func (l Logica) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Interfaces.Simbolo {
-	var izquierdaa Interfaces.Simbolo = l.Izquierda.Ejecutar(env, recolector)
-	var derechaa Interfaces.Simbolo = l.Derecha.Ejecutar(env, recolector)
+func (l Logica) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Simbolo.Simbolo {
+	var izquierdaa Simbolo.Simbolo = l.Izquierda.Ejecutar(env, recolector)
+	var derechaa Simbolo.Simbolo = l.Derecha.Ejecutar(env, recolector)
 
 	switch l.TipoLogico {
-	case Interfaces.AND:
+	case Enum.AND:
 		result := Logicas.And(izquierdaa, derechaa)
 		fmt.Println("resultado: logico ", result)
-		if result.Tipo == Interfaces.SINTIPO {
-			return Interfaces.Simbolo{Id: "Error_op", Tipo: Interfaces.SINTIPO, Valor: result.Valor, Mut: false}
+		if result.Tipo == Enum.SINTIPO {
+			return Simbolo.Simbolo{Id: "Error_op", Tipo: Enum.SINTIPO, Valor: result.Valor, Mut: false}
 		}
 		return result
-	case Interfaces.OR:
+	case Enum.OR:
 		result := Logicas.Or(izquierdaa, derechaa)
 		fmt.Println("resultado: logico ", result)
-		if result.Tipo == Interfaces.SINTIPO {
-			return Interfaces.Simbolo{Id: "Error_op", Tipo: Interfaces.SINTIPO, Valor: result.Valor, Mut: false}
+		if result.Tipo == Enum.SINTIPO {
+			return Simbolo.Simbolo{Id: "Error_op", Tipo: Enum.SINTIPO, Valor: result.Valor, Mut: false}
 		}
 		return result
 
-	case Interfaces.NOT:
+	case Enum.NOT:
 		result := Logicas.Not(derechaa)
 		fmt.Println("resultado: logico ", result)
-		if result.Tipo == Interfaces.SINTIPO {
-			return Interfaces.Simbolo{Id: "Error_op", Tipo: Interfaces.SINTIPO, Valor: result.Valor, Mut: false}
+		if result.Tipo == Enum.SINTIPO {
+			return Simbolo.Simbolo{Id: "Error_op", Tipo: Enum.SINTIPO, Valor: result.Valor, Mut: false}
 		}
 		return result
 
 		//case Interfaces.NOT:
 	}
 	var resultado interface{}
-	return Interfaces.Simbolo{Id: "Error_op", Tipo: Interfaces.SINTIPO, Valor: resultado, Mut: false}
+	return Simbolo.Simbolo{Id: "Error_op", Tipo: Enum.SINTIPO, Valor: resultado, Mut: false}
 
 }

@@ -23,6 +23,9 @@ type gramaticaListener interface {
 	// EnterInstruccion is called when entering the instruccion production.
 	EnterInstruccion(c *InstruccionContext)
 
+	// EnterAsignacion is called when entering the asignacion production.
+	EnterAsignacion(c *AsignacionContext)
+
 	// EnterControl is called when entering the control production.
 	EnterControl(c *ControlContext)
 
@@ -88,6 +91,9 @@ type gramaticaListener interface {
 
 	// ExitInstruccion is called when exiting the instruccion production.
 	ExitInstruccion(c *InstruccionContext)
+
+	// ExitAsignacion is called when exiting the asignacion production.
+	ExitAsignacion(c *AsignacionContext)
 
 	// ExitControl is called when exiting the control production.
 	ExitControl(c *ControlContext)
