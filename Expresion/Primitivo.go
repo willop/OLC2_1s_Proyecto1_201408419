@@ -14,7 +14,6 @@ type Primitivo struct {
 }
 
 func (p Primitivo) Ejecutar(env interface{}, recolector *Utilitario.Recolector) Simbolo.Simbolo {
-
 	return Simbolo.Simbolo{
 		Id:    "",
 		Tipo:  p.Tipo,

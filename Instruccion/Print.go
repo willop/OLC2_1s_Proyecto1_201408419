@@ -35,6 +35,7 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 		return resultado.Valor
 	} else {
 		//si vienen parametros
+		var arrtemp arrayList.List
 		st := resultado.Valor
 		for j := 0; j < p.Bloqueinst.Len(); j++ {
 			instr := p.Bloqueinst.GetValue(j).(Interfaces.Expresion)
@@ -44,12 +45,21 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 				simb := val.Valor
 				a := simb.(Simbolo.Simbolo).Valor
 				fmt.Println("Tipo de a: ", reflect.TypeOf(a))
+				fmt.Println("Imprimiendo a:", a)
 				var recol string = ""
-				//recorro todo el arreglo y lo almaceno en una temrporal recol donde se almacena el valor de cada posicion del arreglo
-				for _, s := range a.(*arrayList.List).ToArray() {
-					fmt.Println("s: ", s.(Simbolo.Simbolo).Valor)
-					tmpDato := fmt.Sprintf("%v", s.(Simbolo.Simbolo).Valor)
-					recol += tmpDato
+				if reflect.TypeOf(a) != reflect.TypeOf(arrtemp) {
+					fmt.Println("Esta dentro del if ya que es un simbolo y no un arraylist")
+					tmpDato := fmt.Sprintf("%v", a)
+					st = strings.Replace(st.(string), "{:?}", tmpDato, 1)
+					recolector.Consolavirtual.Add(st.(string) + "\n")
+					return st
+				} else {
+					//recorro todo el arreglo y lo almaceno en una temrporal recol donde se almacena el valor de cada posicion del arreglo
+					for _, s := range a.(*arrayList.List).ToArray() {
+						fmt.Println("s: ", s.(Simbolo.Simbolo).Valor)
+						tmpDato := fmt.Sprintf("%v", s.(Simbolo.Simbolo).Valor)
+						recol += tmpDato
+					}
 				}
 				//recol += "]"
 				st = strings.Replace(st.(string), "{:?}", recol, 1)
@@ -62,7 +72,6 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 				st = strings.Replace(st.(string), "{}", tmpDato, 1)
 			}
 		}
-
 		recolector.Consolavirtual.Add(st.(string) + "\n")
 		fmt.Println("************El resultado de la sustitucion es: ", st)
 		return st

@@ -33,6 +33,12 @@ func (s *BasegramaticaListener) EnterFunciones(ctx *FuncionesContext) {}
 // ExitFunciones is called when production funciones is exited.
 func (s *BasegramaticaListener) ExitFunciones(ctx *FuncionesContext) {}
 
+// EnterDeclararParametros is called when production declararParametros is entered.
+func (s *BasegramaticaListener) EnterDeclararParametros(ctx *DeclararParametrosContext) {}
+
+// ExitDeclararParametros is called when production declararParametros is exited.
+func (s *BasegramaticaListener) ExitDeclararParametros(ctx *DeclararParametrosContext) {}
+
 // EnterMain is called when production main is entered.
 func (s *BasegramaticaListener) EnterMain(ctx *MainContext) {}
 
@@ -86,6 +92,12 @@ func (s *BasegramaticaListener) EnterValores(ctx *ValoresContext) {}
 
 // ExitValores is called when production valores is exited.
 func (s *BasegramaticaListener) ExitValores(ctx *ValoresContext) {}
+
+// EnterArreglo is called when production arreglo is entered.
+func (s *BasegramaticaListener) EnterArreglo(ctx *ArregloContext) {}
+
+// ExitArreglo is called when production arreglo is exited.
+func (s *BasegramaticaListener) ExitArreglo(ctx *ArregloContext) {}
 
 // EnterExpresion is called when production expresion is entered.
 func (s *BasegramaticaListener) EnterExpresion(ctx *ExpresionContext) {}

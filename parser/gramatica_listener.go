@@ -14,6 +14,9 @@ type gramaticaListener interface {
 	// EnterFunciones is called when entering the funciones production.
 	EnterFunciones(c *FuncionesContext)
 
+	// EnterDeclararParametros is called when entering the declararParametros production.
+	EnterDeclararParametros(c *DeclararParametrosContext)
+
 	// EnterMain is called when entering the main production.
 	EnterMain(c *MainContext)
 
@@ -40,6 +43,9 @@ type gramaticaListener interface {
 
 	// EnterValores is called when entering the valores production.
 	EnterValores(c *ValoresContext)
+
+	// EnterArreglo is called when entering the arreglo production.
+	EnterArreglo(c *ArregloContext)
 
 	// EnterExpresion is called when entering the expresion production.
 	EnterExpresion(c *ExpresionContext)
@@ -83,6 +89,9 @@ type gramaticaListener interface {
 	// ExitFunciones is called when exiting the funciones production.
 	ExitFunciones(c *FuncionesContext)
 
+	// ExitDeclararParametros is called when exiting the declararParametros production.
+	ExitDeclararParametros(c *DeclararParametrosContext)
+
 	// ExitMain is called when exiting the main production.
 	ExitMain(c *MainContext)
 
@@ -109,6 +118,9 @@ type gramaticaListener interface {
 
 	// ExitValores is called when exiting the valores production.
 	ExitValores(c *ValoresContext)
+
+	// ExitArreglo is called when exiting the arreglo production.
+	ExitArreglo(c *ArregloContext)
 
 	// ExitExpresion is called when exiting the expresion production.
 	ExitExpresion(c *ExpresionContext)

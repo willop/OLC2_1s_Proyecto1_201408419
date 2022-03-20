@@ -23,13 +23,43 @@ grammar gramatica;
 
 
 start returns [*arrayList.List listainstrucciones]
-        :funciones*  main  funciones*                                                                          {$listainstrucciones = $main.listainstrucciones}
+        :e+=funciones*  listtt=main  r+=funciones*                     {$listainstrucciones = arrayList.New()
+                                                                       listaInst := localctx.(*StartContext).GetE() 
+                                                                                for _, e:= range listaInst {
+                                                                                        $listainstrucciones.Add(e.GetInst())
+                                                                                }
+                                                                                //fmt.Println("La lista es: --------",$listainstrucciones)
+                                                                        listaInst2 := localctx.(*StartContext).GetR() 
+                                                                                for _, r:= range listaInst2 {
+                                                                                        $listainstrucciones.Add(r.GetInst())
+                                                                                }
+                                                                                //fmt.Println("La lista es: --------",$listainstrucciones)
+                                                                        
+                                                                        //fmt.Println("\n\n\nLa lista es: ",$listtt.listainstrucciones)
+                                                                        listatemp :=$listtt.listainstrucciones
+                                                                                for _, s:= range listatemp.ToArray(){
+                                                                                        $listainstrucciones.Add(s)
+                                                                                }
+                                                                                fmt.Println("Fin del for")                                                                                
+                                                                                fmt.Println("Lista final: ", $listainstrucciones)
+                                                                        }
 ;
 
 
 funciones returns [Interfaces.Instruccion inst]
-        :TKR_fn idd=TK_id TK_par_apertura TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre   {Funcion.NewFuncion("",Enum.STRING,$instrucciones.lista,nil)}
+        :TKR_fn idd=TK_id TK_par_apertura TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre                       {$inst = Funcion.NewFuncion($idd.text,Enum.STRING,nil,$instrucciones.lista)}
+        |TKR_fn idd=TK_id TK_par_apertura  declararParametros TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre   {$inst = Funcion.NewFuncion($idd.text,Enum.STRING,$declararParametros.lista,$instrucciones.lista)}
 ;
+
+declararParametros returns  [*arrayList.List lista]
+
+        :list=declararParametros TK_coma e1=TK_id TK_dosPuntos e2=tipovariable                    { $list.lista.Add(Funcion.NewParam($e1.text,$e2.tipovar))
+                                                                                                        $lista = $list.lista}
+
+        |e1=TK_id TK_dosPuntos e2=tipovariable                                                        {$lista = arrayList.New()
+                                                                                                        $lista.Add(Funcion.NewParam($e1.text,$e2.tipovar))}
+;
+
 
 main returns [*arrayList.List listainstrucciones]
         :TKR_fn TKR_main TK_par_apertura TK_par_cierre TK_corchete_apertura instrucciones TK_corchete_cierre   {$listainstrucciones = $instrucciones.lista} 
@@ -58,7 +88,7 @@ instruccion returns[Interfaces.Instruccion inst]
 ;
 
 asignacion returns [Interfaces.Instruccion inst]
-        :TK_id TK_llave_apertura expresion TK_llave_cierre 
+        :TK_id TK_par_apertura TK_par_cierre TK_pcoma                                       {$inst = Funcion.NewLlamadafuncion($TK_id.text,true,nil)}
 ;
 
 control returns [Interfaces.Instruccion inst]
@@ -89,7 +119,6 @@ tipovariable returns[Enum.Tipoexpresion tipovar]
  
 identificadores returns[Interfaces.Instruccion inst]
                 : e1=TK_id TK_igual e2=expresion  TK_pcoma             {$inst = Instruccion.NewAsignacion($e1.text,$e2.exp)}                                                             
-
 ;
 
 
@@ -116,8 +145,16 @@ valores returns[Interfaces.Expresion exp]
                 $exp = Expresion.NuevoPrimitivo(str,Enum.STR)}
         |TKR_true              {$exp = Expresion.NuevoPrimitivo(true, Enum.BOOLEAN)}
         |TKR_false             {$exp = Expresion.NuevoPrimitivo(false,Enum.BOOLEAN)}
-        |TK_id                 {$exp = Expresiones.NewLlamarvariable($TK_id.text)}
+        |ar=arreglo            {$exp = $ar.exp}
+        //|TK_id                 {$exp = Expresiones.NewLlamarvariable($TK_id.text)}
 ;
+
+arreglo returns[Interfaces.Expresion exp]
+        :ar=arreglo TK_llave_apertura expresion TK_llave_cierre                                 {$exp = Expresiones.NewAccesoArray($ar.exp,$expresion.exp)}
+        |TK_id                                                                                  {$exp = Expresiones.NewLlamarvariable($TK_id.text)}
+
+;
+
 
 expresion returns [Interfaces.Expresion exp]
         : TK_menos e1=expresion                                                                 {numero := -1

@@ -7,7 +7,8 @@ import (
 )
 
 type Llamadavariable struct {
-	Id string
+	Id  string
+	pos interface{}
 }
 
 func NewLlamarvariable(id string) Llamadavariable {

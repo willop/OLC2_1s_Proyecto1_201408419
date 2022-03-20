@@ -2,6 +2,7 @@ package Funcion
 
 import (
 	//"fmt"
+	"fmt"
 	"proyecto1/Enum"
 	"proyecto1/Estructura"
 	"proyecto1/Utilitario"
@@ -22,6 +23,7 @@ func NewFuncion(_id string, _tipo Enum.Tipoexpresion, _parametros *arrayList.Lis
 }
 
 func (f Funcion) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {
+	fmt.Println("Funcion: ", f)
 	env.(Estructura.Entorno).GuardarFuncion(f, f.Id)
 	return nil
 }
