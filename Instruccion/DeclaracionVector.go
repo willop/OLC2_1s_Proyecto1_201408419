@@ -10,25 +10,23 @@ import (
 	//arrayList "github.com/colegno/arraylist"
 )
 
-type DeclaracionArray struct {
+type DeclaracionVector struct {
 	Id        string
 	Tipo      Enum.Tipoexpresion
-	Cant      Interfaces.Expresion
 	Expresion Interfaces.Expresion
 	Mutable   bool
 }
 
 // para declarar una nueva variable se recolecta toda la informacion para crear una nueva variable
-func NuevaDeclaracionArray(_id string, _tipo Enum.Tipoexpresion, _cant Interfaces.Expresion, _expresion Interfaces.Expresion, _mut bool) DeclaracionArray {
-	return DeclaracionArray{_id, _tipo, _cant, _expresion, _mut}
+func NuevaDeclaracionVector(_id string, _tipo Enum.Tipoexpresion, _expresion Interfaces.Expresion, _mut bool) DeclaracionVector {
+	return DeclaracionVector{_id, _tipo, _expresion, _mut}
 }
 
-func (d DeclaracionArray) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {
+func (d DeclaracionVector) Ejecutar(env interface{}, recolector *Utilitario.Recolector) interface{} {
 	fmt.Println("En declaracion de variable array\nImprimiendo las variables:")
 
 	valor := d.Expresion.Ejecutar(env, recolector)
-	//fmt.Println("valores a guardar en array: ", d.Id, valor, d.Mutable, Enum.ARRAY)
-	env.(Estructura.Entorno).GuardarSimbolo(d.Id, valor, d.Mutable, Enum.ARRAY)
+	env.(Estructura.Entorno).GuardarSimbolo(d.Id, valor, d.Mutable, Enum.VECTOR)
 
 	/*fmt.Println(d)
 	arreglo := d.Expresion.Ejecutar(env, recolector)

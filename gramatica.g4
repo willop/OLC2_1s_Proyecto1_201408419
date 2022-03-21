@@ -77,18 +77,20 @@ instrucciones returns [*arrayList.List lista]
 ;
 
 instruccion returns[Interfaces.Instruccion inst]
-            : expresion                                                                 {fmt.Println("mensaje en instrucciones: ",$expresion.exp)}
-            |impresion                                                                  {$inst = $impresion.inst}
+            //: expresion                                                                 {fmt.Println("mensaje en instrucciones: ",$expresion.exp)}
+            :impresion                                                                  {$inst = $impresion.inst}
+            |asignacion                                                                 {$inst = $asignacion.inst}
             |declaracion                                                                {$inst = $declaracion.inst}
-            |identificadores                                                            {$inst = $identificadores.inst}
             |condicionales                                                              {$inst = $condicionales.inst}
             |bucles                                                                     {$inst = $bucles.inst}
             |control                                                                    {$inst = $control.inst}
-            |asignacion                                                                 {$inst = $asignacion.inst}
+            
 ;
 
 asignacion returns [Interfaces.Instruccion inst]
         :TK_id TK_par_apertura TK_par_cierre TK_pcoma                                       {$inst = Funcion.NewLlamadafuncion($TK_id.text,true,nil)}
+        |e1=TK_id TK_igual e2=expresion  TK_pcoma             {$inst = Instruccion.NewAsignacion($e1.text,$e2.exp)}          
+        |arreglo TK_igual ee=expresion TK_pcoma                {$inst = Instruccion.NewAsignacionArray($arreglo.exp,$ee.exp)}
 ;
 
 control returns [Interfaces.Instruccion inst]
@@ -102,6 +104,10 @@ declaracion returns[Interfaces.Instruccion inst]
         //arreglos
         |TKR_let TKR_mut idd=TK_id TK_dosPuntos TK_llave_apertura tipovariable TK_pcoma cant=valores TK_llave_cierre TK_igual expresion TK_pcoma         {$inst = Instruccion.NuevaDeclaracionArray($idd.text,$tipovariable.tipovar,$cant.exp,$expresion.exp,true)}
         |TKR_let idd=TK_id TK_dosPuntos TK_llave_apertura tipovariable TK_pcoma cant=valores TK_llave_cierre TK_igual expresion TK_pcoma                 {$inst = Instruccion.NuevaDeclaracionArray($idd.text,$tipovariable.tipovar,$cant.exp,$expresion.exp,false)}
+        //vector
+        |TKR_let TKR_mut idd=TK_id TK_dosPuntos TKR_vec TK_menor tipovariable TK_mayor TK_igual expresion TK_pcoma       {$inst = Instruccion.NuevaDeclaracionVector($idd.text,$tipovariable.tipovar, $expresion.exp,true) }
+        |TKR_let idd=TK_id TK_dosPuntos TKR_vec TK_menor tipovariable TK_mayor TK_igual expresion TK_pcoma       {$inst = Instruccion.NuevaDeclaracionVector($idd.text,$tipovariable.tipovar, $expresion.exp,false) }
+        
         //no mutables
         |TKR_let idd=TK_id TK_dosPuntos tipovariable TK_igual expresion  TK_pcoma                       {$inst = Instruccion.NuevaDeclaracion($idd.text,$tipovariable.tipovar,$expresion.exp,false,false,false) }
         |TKR_let idd=TK_id TK_igual expresion TK_pcoma                                                  {$inst = Instruccion.NuevaDeclaracion($idd.text,Enum.SINTIPO,$expresion.exp,false,false,false) }
@@ -117,9 +123,7 @@ tipovariable returns[Enum.Tipoexpresion tipovar]
 ;
 
  
-identificadores returns[Interfaces.Instruccion inst]
-                : e1=TK_id TK_igual e2=expresion  TK_pcoma             {$inst = Instruccion.NewAsignacion($e1.text,$e2.exp)}                                                             
-;
+
 
 
 valores returns[Interfaces.Expresion exp]
@@ -197,6 +201,9 @@ expresion returns [Interfaces.Expresion exp]
         |vll=expresion TK_punto TKR_clone TK_par_apertura TK_par_cierre
         |TK_llave_apertura e1=expresion TK_pcoma e2=expresion TK_llave_cierre                   {$exp = Expresion.NewArray($e1.exp,$e2.exp,nil,Enum.MULTIPLE)}
         |TK_llave_apertura e1=expresion l1=impresionexpresion TK_llave_cierre                   {$exp = Expresion.NewArray($e1.exp,nil,$l1.lista,Enum.NORMAL)}
+        |TKR_vec TK_sig_admiracion TK_llave_apertura e1=expresion TK_pcoma e2=expresion TK_llave_cierre         {$exp = Expresion.NewVector($e1.exp,$e2.exp,nil,Enum.MULTIPLE)}
+        |TKR_vec TK_sig_admiracion TK_llave_apertura e1=expresion l1=impresionexpresion TK_llave_cierre         {$exp = Expresion.NewVector($e1.exp,nil,$l1.lista,Enum.NORMAL)}
+        |TKR_vec TK_dosPuntos TK_dosPuntos TKR_new TK_par_apertura TK_par_cierre                                {$exp = Expresion.NewVector($e1.exp,nil,$l1.lista,Enum.NORMAL)}
         |vall=valores                                                                   {$exp = $vall.exp
                                                                                         fmt.Println($exp)}
 ; 
@@ -332,7 +339,7 @@ TK_comentario_lineal: '//' ~[\r\n]* -> skip;
 TKR_numericos_enteros: 'i64';
 TKR_numericos_flotantes: 'f64';
 TKR_pow: 'pow';  //creo que les falta
-TKR_vec: 'vec';  //creo que les falta
+TKR_vec: 'Vec';  //creo que les falta
 TKR_powf: 'powf';
 TKR_bool: 'bool';
 TKR_char: 'char';

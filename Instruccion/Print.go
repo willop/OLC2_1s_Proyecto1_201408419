@@ -35,20 +35,20 @@ func (p Print) Ejecutar(env interface{}, recolector *Utilitario.Recolector) inte
 		return resultado.Valor
 	} else {
 		//si vienen parametros
-		var arrtemp arrayList.List
+		var arrtemp *arrayList.List
 		st := resultado.Valor
 		for j := 0; j < p.Bloqueinst.Len(); j++ {
 			instr := p.Bloqueinst.GetValue(j).(Interfaces.Expresion)
 			val := instr.Ejecutar(env, recolector)
 			//verifico si ese parametro es un arreglo
-			if val.Tipo == Enum.ARRAY {
+			if val.Tipo == Enum.ARRAY || val.Tipo == Enum.VECTOR {
 				simb := val.Valor
 				a := simb.(Simbolo.Simbolo).Valor
 				fmt.Println("Tipo de a: ", reflect.TypeOf(a))
 				fmt.Println("Imprimiendo a:", a)
 				var recol string = ""
 				if reflect.TypeOf(a) != reflect.TypeOf(arrtemp) {
-					fmt.Println("Esta dentro del if ya que es un simbolo y no un arraylist")
+					fmt.Println("Esta dentro del if ya que es un simbolo y no un arraylist por que es: ", reflect.TypeOf(a))
 					tmpDato := fmt.Sprintf("%v", a)
 					st = strings.Replace(st.(string), "{:?}", tmpDato, 1)
 					recolector.Consolavirtual.Add(st.(string) + "\n")

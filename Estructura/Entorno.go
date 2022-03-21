@@ -5,6 +5,8 @@ import (
 	"proyecto1/Enum"
 	Interfaces "proyecto1/Enum"
 
+	//arrayList "github.com/colegno/arraylist"
+
 	//"proyecto1/Funcion"
 	"proyecto1/Simbolo"
 )
@@ -66,7 +68,8 @@ func (env Entorno) ActualizarSimbolo(_id string, _valor interface{}, _mut bool, 
 
 	for {
 		if variable, ok := tmpEnv.variable[_id]; ok {
-			tmpEnv.variable[_id] = Simbolo.Simbolo{Id: _id, Tipo: _tipo, Valor: _valor, Mut: _mut}
+			varr := tmpEnv.variable[_id]
+			tmpEnv.variable[_id] = Simbolo.Simbolo{Id: _id, Tipo: _tipo, Valor: _valor, Mut: varr.Mut}
 			return variable
 		}
 

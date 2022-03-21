@@ -14,11 +14,12 @@ const (
 	BREAK                         //6
 	NULL                          //7
 	ARRAY                         //8
-	STRUCT                        //9
-	RETURN                        //10
-	USIZE                         //11
-	FLOAT                         //12
-	SINTIPO                       //13
+	VECTOR
+	STRUCT  //9
+	RETURN  //10
+	USIZE   //11
+	FLOAT   //12
+	SINTIPO //13
 	STR
 	ERROREXPRESION
 	ERRORTIPOEXPRESION
@@ -29,6 +30,7 @@ type Tipoarray int
 const (
 	NORMAL Tipoarray = iota //variable que funciona
 	MULTIPLE
+	VACIO
 )
 
 type Tipooperacion int

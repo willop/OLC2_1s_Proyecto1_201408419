@@ -38,9 +38,6 @@ type gramaticaListener interface {
 	// EnterTipovariable is called when entering the tipovariable production.
 	EnterTipovariable(c *TipovariableContext)
 
-	// EnterIdentificadores is called when entering the identificadores production.
-	EnterIdentificadores(c *IdentificadoresContext)
-
 	// EnterValores is called when entering the valores production.
 	EnterValores(c *ValoresContext)
 
@@ -112,9 +109,6 @@ type gramaticaListener interface {
 
 	// ExitTipovariable is called when exiting the tipovariable production.
 	ExitTipovariable(c *TipovariableContext)
-
-	// ExitIdentificadores is called when exiting the identificadores production.
-	ExitIdentificadores(c *IdentificadoresContext)
 
 	// ExitValores is called when exiting the valores production.
 	ExitValores(c *ValoresContext)
